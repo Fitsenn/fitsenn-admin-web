@@ -1,14 +1,13 @@
-import type { FieldValues, SubmitHandler, UseFormProps, UseFormReturn } from 'react-hook-form';
+import type { ReactNode } from 'react';
+import type { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import type { ZodType, z } from 'zod';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
-type FormProps<TFormValues extends FieldValues, Schema> = {
+type FormProps<TFormValues extends FieldValues> = {
   onSubmit: SubmitHandler<TFormValues>;
-  schema: Schema;
-  options?: UseFormProps<TFormValues>;
-  children: (methods: UseFormReturn<TFormValues>) => React.ReactNode;
+  methods: UseFormReturn<TFormValues>;
+  children: ReactNode;
 };
 
 const FormRHF = <
@@ -17,15 +16,12 @@ const FormRHF = <
   TFormValues extends FieldValues = z.infer<Schema>,
 >({
   onSubmit,
-  schema,
-  options,
   children,
-}: FormProps<TFormValues, Schema>) => {
-  const form = useForm({ ...options, resolver: zodResolver(schema) });
-
+  methods,
+}: FormProps<TFormValues>) => {
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>{children(form)}</form>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
     </FormProvider>
   );
 };

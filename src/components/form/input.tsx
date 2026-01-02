@@ -1,5 +1,3 @@
-'use client';
-
 import type { HTMLChakraProps } from '@chakra-ui/react';
 import type { HTMLInputTypeAttribute, ReactNode } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
