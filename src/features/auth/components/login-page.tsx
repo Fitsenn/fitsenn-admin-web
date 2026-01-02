@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
+import { ColorModeButton } from '@/components/ui/color-mode-button';
 import { loginValidationSchema } from './login-page.schema';
 
 export const LoginPage = () => {
@@ -26,6 +27,7 @@ export const LoginPage = () => {
 
   return (
     <Container maxW="md" py={20}>
+      <ColorModeButton />
       <Box bg="bg.panel" p={8} borderRadius="lg" boxShadow="sm">
         <Stack gap={6}>
           <Heading size="lg">Sign In</Heading>
@@ -33,7 +35,7 @@ export const LoginPage = () => {
           <FormRHF methods={methods} onSubmit={handleSubmit}>
             <InputRHF control={control} label="Email Address" name="email" />
             <InputRHF control={control} type="password" label="Password" name="password" />
-            <Button type="submit">Log in</Button>
+            <Button type="submit" w="100%" mt="2">Log in</Button>
           </FormRHF>
         </Stack>
       </Box>

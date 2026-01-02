@@ -1,6 +1,8 @@
 import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
 import { Link } from '@tanstack/react-router';
 
+import { ColorModeButton } from '@/components/ui/color-mode-button';
+
 const Navbar = () => {
   return (
     <Box as="nav" bg="bg.panel" borderBottomWidth="1px" py={4}>
@@ -14,6 +16,7 @@ const Navbar = () => {
               <Button variant="ghost">Users</Button>
             </Link>
           </HStack>
+          <ColorModeButton />
         </Flex>
       </Container>
     </Box>

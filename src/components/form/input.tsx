@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FieldWrapperRHF } from './field-wrapper';
 
-type InputRHFProps<TFieldValues extends FieldValues> = {
+export type InputRHFProps<TFieldValues extends FieldValues> = {
   name: FieldPath<TFieldValues>;
   control: Control<TFieldValues>;
   label?: ReactNode;
@@ -45,4 +45,3 @@ const InputRHF = <TFieldValues extends FieldValues>({
 };
 
 export { InputRHF };
-export type { InputRHFProps };
