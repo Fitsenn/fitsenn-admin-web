@@ -45,6 +45,9 @@ src/
 ├── types/                     # Global TypeScript types
 │
 ├── utils/                     # Utility functions
+|
+├── config/                    # Config files 
+│   └── paths.ts               # Project paths
 │
 ├── app-root.tsx               # Root App component
 └── main.tsx                   # Application entry point

@@ -1,13 +1,14 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
+import { paths } from '@/config/paths';
 import { isAuthenticated } from '@/features/auth';
 
 export const Route = createFileRoute('/')({
-  beforeLoad: () => {
-    if (!isAuthenticated()) {
-      throw redirect({ to: '/login' });
+  beforeLoad: async () => {
+    if (!(await isAuthenticated())) {
+      throw redirect({ to: paths.auth.login.getHref() });
     }
 
-    throw redirect({ to: '/dashboard' });
+    throw redirect({ to: paths.app.dashboard.getHref() });
   },
 });
