@@ -1,7 +1,8 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { paths } from '@/config/paths';
-import { ProtectedLayout, isAuthenticated } from '@/features/auth';
+import { ProtectedLayout } from '@/features/auth';
+import { isAuthenticated } from '@/lib/auth';
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async () => {

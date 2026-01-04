@@ -1,25 +1,30 @@
-import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
-import { Link } from '@tanstack/react-router';
+import { Box, Flex, Heading, HStack } from '@chakra-ui/react';
 
 import { ColorModeButton } from '@/components/ui/color-mode-button';
 
-const Navbar = () => {
+import { ProfileDropdown } from './profile-dropdown';
+
+type NavbarProps = {
+  user?: {
+    name?: string | null;
+    avatar?: string | null;
+  } | null;
+};
+
+const Navbar = ({ user = null }: NavbarProps) => {
   return (
-    <Box as="nav" bg="bg.panel" borderBottomWidth="1px" py={4}>
-      <Container maxW="7xl">
-        <Flex justify="space-between" align="center">
-          <HStack gap={4}>
-            <Link to="/dashboard">
-              <Button variant="ghost">Dashboard</Button>
-            </Link>
-            <Link to="/users">
-              <Button variant="ghost">Users</Button>
-            </Link>
-          </HStack>
+    <Box as="nav" bg="bg.panel" borderBottomWidth="1px" py={3} px={6}>
+      <Flex justify="space-between" align="center">
+        <Heading size="md" fontWeight="semibold">
+          Page title
+        </Heading>
+        <HStack gap={2}>
           <ColorModeButton />
-        </Flex>
-      </Container>
+          <ProfileDropdown user={user} />
+        </HStack>
+      </Flex>
     </Box>
   );
 };
+
 export { Navbar };

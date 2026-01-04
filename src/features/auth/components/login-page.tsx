@@ -7,9 +7,8 @@ import { useForm } from 'react-hook-form';
 
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
-import { ColorModeButton } from '@/components/ui/color-mode-button';
 import { paths } from '@/config/paths';
-import { useLogin } from '../api/login';
+import { useLogin } from '@/lib/auth';
 import { loginValidationSchema } from './login-page.schema';
 
 const LoginPage = () => {
@@ -37,7 +36,6 @@ const LoginPage = () => {
 
   return (
     <Container maxW="md" py={20}>
-      <ColorModeButton />
       <Box bg="bg.panel" p={8} borderRadius="lg" boxShadow="sm">
         <Stack gap={6}>
           <Heading size="lg">Sign In</Heading>

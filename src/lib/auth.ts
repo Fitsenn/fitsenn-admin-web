@@ -1,16 +1,26 @@
-import type { FunctionsHttpError } from '@supabase/supabase-js';
-import type { Session, User } from '@supabase/supabase-js';
+import type { AuthError, FunctionsHttpError, Session, User } from '@supabase/supabase-js';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 
-export type LoginParams = {
+export const getSession = async (): Promise<Session | null> => {
+  const { data } = await supabase.auth.getSession();
+  return data.session;
+};
+
+// Auth guard helper (for route beforeLoad)
+export const isAuthenticated = async (): Promise<boolean> => {
+  const session = await getSession();
+  return session !== null;
+};
+
+type LoginParams = {
   email: string;
   password: string;
 };
 
-export type LoginResponse = {
+type LoginResponse = {
   user: User | null;
   session: Session | null;
   error: string | null;
@@ -69,10 +79,28 @@ const login = async ({ email, password }: LoginParams): Promise<LoginResponse> =
   };
 };
 
-const useLogin = () => {
+export const useLogin = () => {
   return useMutation({
     mutationFn: login,
   });
 };
 
-export { login, useLogin };
+type LogoutResponse = {
+  error: AuthError | null;
+};
+
+const logout = async (): Promise<LogoutResponse> => {
+  const { error } = await supabase.auth.signOut();
+  return { error };
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.clear();
+    },
+  });
+};

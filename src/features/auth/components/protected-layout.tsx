@@ -1,15 +1,24 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { Outlet } from '@tanstack/react-router';
 
 import { Navbar } from '@/components/layout/navbar';
+import { Sidebar } from '@/components/layout/sidebar';
 
-export function ProtectedLayout() {
+const ProtectedLayout = () => {
+  // TODO: Get user from auth context/query
+  const user = null;
+
   return (
-    <Box minH="100vh">
-      <Navbar />
-      <Container maxW="7xl" py={8}>
-        <Outlet />
-      </Container>
-    </Box>
+    <Flex minH="100vh">
+      <Sidebar />
+      <Flex direction="column" flex={1}>
+        <Navbar user={user} />
+        <Box flex={1} p={8} overflow="auto">
+          <Outlet />
+        </Box>
+      </Flex>
+    </Flex>
   );
-}
+};
+
+export { ProtectedLayout };
