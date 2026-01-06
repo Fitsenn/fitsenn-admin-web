@@ -5,7 +5,7 @@ const buttonRecipe = defineRecipe({
     borderRadius: 'xl',
     fontWeight: 'bold',
     px: 6,
-    py: 6,
+    py: 5,
   },
   variants: {
     variant: {
