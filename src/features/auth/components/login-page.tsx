@@ -2,17 +2,19 @@ import type { LoginFormData } from './login-page.schema';
 
 import { Box, Button, Container, Heading, Stack, Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from '@tanstack/react-router';
+import { getRouteApi, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
-import { paths } from '@/config/paths';
 import { useLogin } from '@/api/auth';
 import { loginValidationSchema } from './login-page.schema';
 
+const routeApi = getRouteApi('/login');
+
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { redirectTo } = routeApi.useSearch();
   const loginMutation = useLogin();
 
   const methods = useForm({
@@ -26,7 +28,7 @@ const LoginPage = () => {
     loginMutation.mutate(data, {
       onSuccess: (result) => {
         if (!result.error) {
-          navigate({ to: paths.app.dashboard.getHref() });
+          navigate({ to: redirectTo ?? '/' });
         }
       },
     });

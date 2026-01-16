@@ -17,7 +17,6 @@ import { useNavigate } from '@tanstack/react-router';
 import { LuLogOut, LuUser } from 'react-icons/lu';
 
 import { useLogout } from '@/api/auth';
-import { paths } from '@/config/paths';
 import { useUser } from '@/hooks/use-user';
 
 const ProfileDropdown = () => {
@@ -29,7 +28,7 @@ const ProfileDropdown = () => {
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        navigate({ to: paths.auth.login.getHref() });
+        navigate({ to: '/login' });
       },
     });
   };

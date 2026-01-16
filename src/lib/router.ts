@@ -6,8 +6,8 @@ const router = createRouter({ routeTree });
 
 export { router };
 
-// declare module "@tanstack/react-router" {
-//   interface Register {
-//     router: typeof router;
-//   }
-// }
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}

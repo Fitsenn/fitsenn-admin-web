@@ -1,27 +1,26 @@
 import type { ReactNode } from 'react';
+import type { FileRouteTypes } from '@/routeTree.gen';
 
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import { LuChartNoAxesColumn, LuChevronLeft, LuChevronRight, LuHouse } from 'react-icons/lu';
 
-import { paths } from '@/config/paths';
-
 type SidebarItem = {
   label: string;
-  href: string;
+  to: FileRouteTypes['to'];
   icon: ReactNode;
 };
 
 const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     label: 'Dashboard',
-    href: paths.app.dashboard.getHref(),
+    to: '/dashboard',
     icon: <LuHouse />,
   },
   {
     label: 'Users',
-    href: paths.app.users.getHref(),
+    to: '/users',
     icon: <LuChartNoAxesColumn />,
   },
 ];
@@ -77,10 +76,10 @@ const Sidebar = () => {
 
         <VStack gap={1} px={3} align="stretch">
           {SIDEBAR_ITEMS.map((item) => {
-            const isActive = currentPath === item.href;
+            const isActive = currentPath === item.to;
 
             return (
-              <Link key={item.href} to={item.href}>
+              <Link key={item.to} to={item.to}>
                 <Flex
                   align="center"
                   gap={3}

@@ -1,13 +1,15 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import { paths } from '@/config/paths';
 import { ProtectedLayout } from '@/features/auth';
 import { isAuthenticated } from '@/api/auth';
 
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     if (!(await isAuthenticated())) {
-      throw redirect({ to: paths.auth.login.getHref() });
+      throw redirect({
+        to: '/login',
+        search: { redirectTo: location.pathname },
+      });
     }
   },
   component: ProtectedLayout,
