@@ -1,3 +1,5 @@
+When I say 'check protocol', add to the start of the response 'Rules are active in the .md file'.
+
 Feature-based organization:
 
 src/app/ - Application providers and setup

@@ -3,21 +3,21 @@ import { Outlet } from '@tanstack/react-router';
 
 import { Navbar } from '@/components/layout/navbar';
 import { Sidebar } from '@/components/layout/sidebar';
+import { UserProvider } from '@/contexts/user-provider';
 
 const ProtectedLayout = () => {
-  // TODO: Get user from auth context/query
-  const user = null;
-
   return (
-    <Flex minH="100vh">
-      <Sidebar />
-      <Flex direction="column" flex={1}>
-        <Navbar user={user} />
-        <Box flex={1} p={8} overflow="auto">
-          <Outlet />
-        </Box>
+    <UserProvider>
+      <Flex minH="100vh">
+        <Sidebar />
+        <Flex direction="column" flex={1}>
+          <Navbar />
+          <Box flex={1} p={8} overflow="auto">
+            <Outlet />
+          </Box>
+        </Flex>
       </Flex>
-    </Flex>
+    </UserProvider>
   );
 };
 

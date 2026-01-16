@@ -1,12 +1,16 @@
 import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 
+import { useUser } from '@/hooks/use-user';
+
 export function DashboardPage() {
+  const { user } = useUser();
+
   return (
     <Stack gap={6}>
       <Box>
         <Heading size="xl">Dashboard</Heading>
         <Text color="fg.muted" mt={2}>
-          Welcome to your admin dashboard
+          Welcome back, {user?.first_name} {user?.last_name}
         </Text>
       </Box>
 

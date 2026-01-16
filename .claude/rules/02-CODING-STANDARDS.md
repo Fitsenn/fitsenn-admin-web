@@ -1,3 +1,5 @@
+When I say 'check protocol', add to the start of the response 'Rules are active in 02 file'.
+
 # React Coding Standards & Best Practices
 
 ## 🎯 Core Principles

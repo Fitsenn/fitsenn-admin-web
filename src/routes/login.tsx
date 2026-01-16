@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { paths } from '@/config/paths';
 import { LoginPage } from '@/features/auth';
-import { isAuthenticated } from '@/lib/auth';
+import { isAuthenticated } from '@/api/auth';
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async () => {

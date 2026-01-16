@@ -16,19 +16,15 @@ import {
 import { useNavigate } from '@tanstack/react-router';
 import { LuLogOut, LuUser } from 'react-icons/lu';
 
+import { useLogout } from '@/api/auth';
 import { paths } from '@/config/paths';
-import { useLogout } from '@/lib/auth';
+import { useUser } from '@/hooks/use-user';
 
-type ProfileDropdownProps = {
-  user: {
-    name?: string | null;
-    avatar?: string | null;
-  } | null;
-};
-
-const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
+const ProfileDropdown = () => {
   const navigate = useNavigate();
   const logoutMutation = useLogout();
+
+  const { user } = useUser();
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
@@ -38,15 +34,15 @@ const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
     });
   };
 
-  const displayName = user?.name ?? 'User';
+  const displayName = user?.first_name + ' ' + user?.last_name;
 
   return (
     <MenuRoot>
       <MenuTrigger asChild>
         <Button variant="ghost" p={1} borderRadius="full" cursor="pointer">
           <Avatar.Root size="sm">
-            {user?.avatar ? (
-              <Avatar.Image src={user.avatar} alt={displayName} />
+            {user?.avatar_url ? (
+              <Avatar.Image src={user.avatar_url} alt={displayName} />
             ) : (
               <Avatar.Fallback>
                 <Icon boxSize={5}>
@@ -63,8 +59,8 @@ const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
             <Box px={3} py={2}>
               <Flex align="center" gap={3}>
                 <Avatar.Root size="sm">
-                  {user?.avatar ? (
-                    <Avatar.Image src={user.avatar} alt={displayName} />
+                  {user?.avatar_url ? (
+                    <Avatar.Image src={user.avatar_url} alt={displayName} />
                   ) : (
                     <Avatar.Fallback>
                       <Icon boxSize={5}>
@@ -73,7 +69,10 @@ const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
                     </Avatar.Fallback>
                   )}
                 </Avatar.Root>
-                <Text fontWeight="medium">{displayName}</Text>
+                <div>
+                  <Text fontWeight="medium">{displayName}</Text>
+                  <Text fontSize="xs">{user?.email}</Text>
+                </div>
               </Flex>
             </Box>
             <MenuSeparator />

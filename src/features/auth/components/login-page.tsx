@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { paths } from '@/config/paths';
-import { useLogin } from '@/lib/auth';
+import { useLogin } from '@/api/auth';
 import { loginValidationSchema } from './login-page.schema';
 
 const LoginPage = () => {
