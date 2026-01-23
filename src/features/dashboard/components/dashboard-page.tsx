@@ -1,31 +1,33 @@
 import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 import { useUser } from '@/hooks/use-user';
 
 export function DashboardPage() {
+  const { t } = useTranslation();
   const { user } = useUser();
 
   return (
     <Stack gap={6}>
       <Box>
-        <Heading size="xl">Dashboard</Heading>
+        <Heading size="xl">{t('dashboard.title')}</Heading>
         <Text color="fg.muted" mt={2}>
-          Welcome back, {user?.first_name} {user?.last_name}
+          {t('dashboard.welcomeBack', { firstName: user?.first_name, lastName: user?.last_name })}
         </Text>
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>
-        <StatCard title="Total Users" value="1,234" />
-        <StatCard title="Active Sessions" value="856" />
-        <StatCard title="Revenue" value="$12,345" />
-        <StatCard title="Growth" value="+12.5%" />
+        <StatCard title={t('dashboard.totalUsers')} value="1,234" />
+        <StatCard title={t('dashboard.activeSessions')} value="856" />
+        <StatCard title={t('dashboard.revenue')} value="$12,345" />
+        <StatCard title={t('dashboard.growth')} value="+12.5%" />
       </SimpleGrid>
 
       <Box bg="bg.panel" p={6} borderRadius="lg">
         <Heading size="md" mb={4}>
-          Recent Activity
+          {t('dashboard.recentActivity')}
         </Heading>
-        <Text color="fg.muted">No recent activity to display</Text>
+        <Text color="fg.muted">{t('dashboard.noRecentActivity')}</Text>
       </Box>
     </Stack>
   );

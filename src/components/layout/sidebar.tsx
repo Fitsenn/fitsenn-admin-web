@@ -4,22 +4,23 @@ import type { FileRouteTypes } from '@/routeTree.gen';
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LuChartNoAxesColumn, LuChevronLeft, LuChevronRight, LuHouse } from 'react-icons/lu';
 
 type SidebarItem = {
-  label: string;
+  labelKey: string;
   to: FileRouteTypes['to'];
   icon: ReactNode;
 };
 
 const SIDEBAR_ITEMS: SidebarItem[] = [
   {
-    label: 'Dashboard',
+    labelKey: 'navigation.dashboard',
     to: '/dashboard',
     icon: <LuHouse />,
   },
   {
-    label: 'Users',
+    labelKey: 'navigation.users',
     to: '/users',
     icon: <LuChartNoAxesColumn />,
   },
@@ -29,6 +30,7 @@ const SIDEBAR_WIDTH_EXPANDED = '240px';
 const SIDEBAR_WIDTH_COLLAPSED = '72px';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
@@ -96,7 +98,7 @@ const Sidebar = () => {
                 >
                   <Icon boxSize={5}>{item.icon}</Icon>
                   {!isCollapsed && (
-                    <Text fontWeight={isActive ? 'semibold' : 'medium'}>{item.label}</Text>
+                    <Text fontWeight={isActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>
                   )}
                 </Flex>
               </Link>

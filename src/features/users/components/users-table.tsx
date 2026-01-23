@@ -1,6 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Badge, Box, Button, HStack, Heading } from '@chakra-ui/react';
 
@@ -122,76 +123,78 @@ const mockUsers: User[] = [
   },
 ];
 
-// Column definitions
-const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: 'id',
-    header: 'ID',
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    enableSorting: true,
-    cell: (info: { getValue: () => unknown }) => {
-      const status = info.getValue() as User['status'];
-      const colorScheme = {
-        active: 'green',
-        inactive: 'gray',
-        pending: 'yellow',
-      }[status];
-
-      return (
-        <Badge colorPalette={colorScheme} textTransform="capitalize">
-          {status}
-        </Badge>
-      );
-    },
-  },
-  {
-    accessorKey: 'role',
-    header: 'Role',
-    enableSorting: true,
-  },
-];
-
 type TableState = 'data' | 'loading' | 'error' | 'empty';
 
 const searchFields: (keyof User)[] = ['name', 'email', 'role'];
 
-const tableData = {
-  data: mockUsers,
-  columns,
-  enableSorting: true,
-  enablePagination: true,
-  pageSize: 10,
-  enableSearch: true,
-  searchFields,
-  searchPlaceholder: 'Search users...',
-  enableColumnVisibility: true,
-  storageKey: 'users-table',
-  toolbarActions: (
-    <Button size="sm" colorPalette="blue">
-      Add User
-    </Button>
-  ),
-};
-
 const UsersTable = () => {
+  const { t } = useTranslation();
   const [state, setState] = useState<TableState>('data');
 
-  // Simulate different states
+  const columns: ColumnDef<User>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'id',
+        header: t('table.id'),
+        enableSorting: false,
+        enableHiding: false,
+      },
+      {
+        accessorKey: 'name',
+        header: t('table.name'),
+        enableSorting: true,
+      },
+      {
+        accessorKey: 'email',
+        header: t('table.email'),
+        enableSorting: true,
+      },
+      {
+        accessorKey: 'status',
+        header: t('table.status'),
+        enableSorting: true,
+        cell: (info: { getValue: () => unknown }) => {
+          const status = info.getValue() as User['status'];
+          const colorScheme = {
+            active: 'green',
+            inactive: 'gray',
+            pending: 'yellow',
+          }[status];
+
+          return (
+            <Badge colorPalette={colorScheme} textTransform="capitalize">
+              {t(`table.${status}`)}
+            </Badge>
+          );
+        },
+      },
+      {
+        accessorKey: 'role',
+        header: t('table.role'),
+        enableSorting: true,
+      },
+    ],
+    [t],
+  );
+
+  const tableData = {
+    data: mockUsers,
+    columns,
+    enableSorting: true,
+    enablePagination: true,
+    pageSize: 10,
+    enableSearch: true,
+    searchFields,
+    searchPlaceholder: t('users.searchPlaceholder'),
+    enableColumnVisibility: true,
+    storageKey: 'users-table',
+    toolbarActions: (
+      <Button size="sm" colorPalette="blue">
+        {t('users.addUser')}
+      </Button>
+    ),
+  };
+
   const getTableProps = () => {
     switch (state) {
       case 'loading':
@@ -202,7 +205,7 @@ const UsersTable = () => {
       case 'error':
         return {
           ...tableData,
-          error: new Error('Failed to load users. Please try again.'),
+          error: new Error(t('users.loadError')),
         };
       case 'empty':
         return {
@@ -220,19 +223,19 @@ const UsersTable = () => {
     <>
       <Box pb={3} borderBottomWidth="1px">
         <HStack justifyContent="space-between" alignItems="center">
-          <Heading size="md">Table component usage example</Heading>
+          <Heading size="md">{t('users.tableExample')}</Heading>
           <HStack gap={2}>
             <Button size="sm" variant={state === 'data' ? 'solid' : 'outline'} onClick={() => setState('data')}>
-              Data
+              {t('common.data')}
             </Button>
             <Button size="sm" variant={state === 'loading' ? 'solid' : 'outline'} onClick={() => setState('loading')}>
-              Loading
+              {t('common.loading')}
             </Button>
             <Button size="sm" variant={state === 'error' ? 'solid' : 'outline'} onClick={() => setState('error')}>
-              Error
+              {t('common.error')}
             </Button>
             <Button size="sm" variant={state === 'empty' ? 'solid' : 'outline'} onClick={() => setState('empty')}>
-              Empty
+              {t('common.empty')}
             </Button>
           </HStack>
         </HStack>

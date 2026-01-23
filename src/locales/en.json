@@ -1,0 +1,63 @@
+{
+  "common": {
+    "loading": "Loading",
+    "error": "Error",
+    "data": "Data",
+    "empty": "Empty",
+    "tryAgain": "Try Again",
+    "logOut": "Log out",
+    "toggleColorMode": "Toggle color mode"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "enterCredentials": "Enter your credentials to access your account",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "logIn": "Log in",
+    "unexpectedError": "An unexpected error occurred"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "users": "Users"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcomeBack": "Welcome back, {{firstName}} {{lastName}}",
+    "totalUsers": "Total Users",
+    "activeSessions": "Active Sessions",
+    "revenue": "Revenue",
+    "growth": "Growth",
+    "recentActivity": "Recent Activity",
+    "noRecentActivity": "No recent activity to display"
+  },
+  "users": {
+    "title": "Users",
+    "description": "Manage your application users",
+    "addUser": "Add User",
+    "searchPlaceholder": "Search users...",
+    "tableExample": "Table component usage example",
+    "loadError": "Failed to load users. Please try again."
+  },
+  "table": {
+    "columns": "Columns",
+    "noData": "No data available",
+    "noDataHint": "Try adjusting your filters or check back later.",
+    "somethingWentWrong": "Something went wrong",
+    "unexpectedError": "An unexpected error occurred",
+    "showing": "Showing {{start}}-{{end}} of {{total}}",
+    "rowsPerPage": "Rows per page:",
+    "pageOf": "Page {{current}} of {{total}}",
+    "firstPage": "First page",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "lastPage": "Last page",
+    "id": "ID",
+    "name": "Name",
+    "email": "Email",
+    "status": "Status",
+    "role": "Role",
+    "active": "active",
+    "inactive": "inactive",
+    "pending": "pending"
+  }
+}

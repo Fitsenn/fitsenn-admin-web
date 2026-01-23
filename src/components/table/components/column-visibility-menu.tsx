@@ -10,6 +10,7 @@ import {
   MenuTrigger,
   Portal,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { LuColumns3 } from 'react-icons/lu';
 
 type ColumnVisibilityMenuProps<TData> = {
@@ -17,10 +18,9 @@ type ColumnVisibilityMenuProps<TData> = {
 };
 
 const ColumnVisibilityMenu = <TData,>({ table }: ColumnVisibilityMenuProps<TData>) => {
-  // Get all columns that can be hidden
+  const { t } = useTranslation();
   const columns = table.getAllColumns().filter((column) => column.getCanHide());
 
-  // If no hideable columns, don't render the menu
   if (columns.length === 0) {
     return null;
   }
@@ -30,7 +30,7 @@ const ColumnVisibilityMenu = <TData,>({ table }: ColumnVisibilityMenuProps<TData
       <MenuTrigger asChild>
         <Button size="sm" variant="outline">
           <LuColumns3 />
-          Columns
+          {t('table.columns')}
         </Button>
       </MenuTrigger>
       <Portal>

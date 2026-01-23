@@ -14,12 +14,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 import { LuLogOut, LuUser } from 'react-icons/lu';
 
 import { useLogout } from '@/api/auth';
 import { useUser } from '@/hooks/use-user';
 
 const ProfileDropdown = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const logoutMutation = useLogout();
 
@@ -79,7 +81,7 @@ const ProfileDropdown = () => {
               <Icon boxSize={4}>
                 <LuLogOut />
               </Icon>
-              <Text>Log out</Text>
+              <Text>{t('common.logOut')}</Text>
             </MenuItem>
           </MenuContent>
         </MenuPositioner>

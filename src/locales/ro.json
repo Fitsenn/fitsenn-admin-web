@@ -1,0 +1,63 @@
+{
+  "common": {
+    "loading": "Se încarcă",
+    "error": "Eroare",
+    "data": "Date",
+    "empty": "Gol",
+    "tryAgain": "Încearcă din nou",
+    "logOut": "Deconectare",
+    "toggleColorMode": "Schimbă modul de culoare"
+  },
+  "auth": {
+    "signIn": "Autentificare",
+    "enterCredentials": "Introduceți datele de autentificare pentru a accesa contul",
+    "emailAddress": "Adresă de email",
+    "password": "Parolă",
+    "logIn": "Conectare",
+    "unexpectedError": "A apărut o eroare neașteptată"
+  },
+  "navigation": {
+    "dashboard": "Panou de control",
+    "users": "Utilizatori"
+  },
+  "dashboard": {
+    "title": "Panou de control",
+    "welcomeBack": "Bine ai revenit, {{firstName}} {{lastName}}",
+    "totalUsers": "Total utilizatori",
+    "activeSessions": "Sesiuni active",
+    "revenue": "Venituri",
+    "growth": "Creștere",
+    "recentActivity": "Activitate recentă",
+    "noRecentActivity": "Nu există activitate recentă de afișat"
+  },
+  "users": {
+    "title": "Utilizatori",
+    "description": "Gestionează utilizatorii aplicației",
+    "addUser": "Adaugă utilizator",
+    "searchPlaceholder": "Caută utilizatori...",
+    "tableExample": "Exemplu de utilizare a componentei tabel",
+    "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou."
+  },
+  "table": {
+    "columns": "Coloane",
+    "noData": "Nu există date disponibile",
+    "noDataHint": "Încearcă să ajustezi filtrele sau revino mai târziu.",
+    "somethingWentWrong": "Ceva nu a funcționat corect",
+    "unexpectedError": "A apărut o eroare neașteptată",
+    "showing": "Se afișează {{start}}-{{end}} din {{total}}",
+    "rowsPerPage": "Rânduri pe pagină:",
+    "pageOf": "Pagina {{current}} din {{total}}",
+    "firstPage": "Prima pagină",
+    "previousPage": "Pagina anterioară",
+    "nextPage": "Pagina următoare",
+    "lastPage": "Ultima pagină",
+    "id": "ID",
+    "name": "Nume",
+    "email": "Email",
+    "status": "Status",
+    "role": "Rol",
+    "active": "activ",
+    "inactive": "inactiv",
+    "pending": "în așteptare"
+  }
+}

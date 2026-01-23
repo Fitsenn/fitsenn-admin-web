@@ -112,6 +112,11 @@ const DataTable = <TData,>({
   const table = useReactTable({
     data,
     columns,
+    defaultColumn: {
+      minSize: 60,
+      maxSize: 800,
+    },
+    columnResizeMode: 'onChange',
     getCoreRowModel: getCoreRowModel(),
     // Initial state
     initialState: {
