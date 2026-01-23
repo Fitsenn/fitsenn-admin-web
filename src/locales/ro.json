@@ -89,6 +89,7 @@
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",
+    "cantChangeEmail": "Emailul nu poate fi schimbat",
     "phone": "Telefon",
     "saveChanges": "Salvează modificările",
     "saving": "Se salvează...",

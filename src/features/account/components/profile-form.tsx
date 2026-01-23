@@ -1,14 +1,14 @@
 import type { ProfileFormData } from './profile-form.schema';
 
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 
-import { Box, Button, Fieldset, Input, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Fieldset, Stack, Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FieldWrapperRHF } from '@/components/form/field-wrapper';
 import { FormRHF } from '@/components/form/form';
+import { InputRHF } from '@/components/form/input';
 import { toaster } from '@/components/ui/toaster';
 import { useUser } from '@/hooks/use-user';
 import { useUpdateProfile } from '../api/update-profile';
@@ -19,24 +19,23 @@ const ProfileForm = () => {
   const { user } = useUser();
   const updateProfileMutation = useUpdateProfile();
 
+  const values = useMemo(() => {
+    return user
+      ? {
+          firstName: user.first_name,
+          lastName: user.last_name,
+          phone: user.phone,
+          email: user.email,
+        }
+      : undefined;
+  }, [user]);
+
   const methods = useForm<ProfileFormData>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      firstName: user?.first_name ?? '',
-      lastName: user?.last_name ?? '',
-      phone: user?.phone ?? '',
-    },
+    values,
   });
 
-  useEffect(() => {
-    if (user) {
-      methods.reset({
-        firstName: user.first_name ?? '',
-        lastName: user.last_name ?? '',
-        phone: user.phone ?? '',
-      });
-    }
-  }, [user, methods]);
+  const { control } = methods;
 
   const handleSubmit = (data: ProfileFormData) => {
     updateProfileMutation.mutate(
@@ -72,27 +71,16 @@ const ProfileForm = () => {
         <Fieldset.Content>
           <FormRHF methods={methods} onSubmit={handleSubmit}>
             <Stack gap={4}>
-              <FieldWrapperRHF<ProfileFormData> name="firstName" label={t('account.firstName')} required>
-                <Input {...methods.register('firstName')} />
-              </FieldWrapperRHF>
-
-              <FieldWrapperRHF<ProfileFormData> name="lastName" label={t('account.lastName')} required>
-                <Input {...methods.register('lastName')} />
-              </FieldWrapperRHF>
-
-              <FieldWrapperRHF<ProfileFormData> name="phone" label={t('account.phone')}>
-                <Input {...methods.register('phone')} type="tel" />
-              </FieldWrapperRHF>
-
-              <Box>
-                <Text fontWeight="medium" mb={1}>
-                  {t('account.email')}
-                </Text>
-                <Input value={user?.email ?? ''} disabled />
-                <Text color="fg.muted" fontSize="sm" mt={1}>
-                  Email cannot be changed
-                </Text>
-              </Box>
+              <InputRHF control={control} name="firstName" label={t('account.firstName')} required />
+              <InputRHF control={control} name="lastName" label={t('account.lastName')} required />
+              <InputRHF control={control} name="phone" type="tel" label={t('account.phone')} required />
+              <InputRHF
+                control={control}
+                name="email"
+                disabled
+                label={t('account.email')}
+                helperText={t('account.cantChangeEmail')}
+              />
 
               <Button
                 type="submit"

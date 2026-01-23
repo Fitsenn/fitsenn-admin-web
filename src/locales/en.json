@@ -89,6 +89,7 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
+    "cantChangeEmail": "Email cannot be changed",
     "phone": "Phone",
     "saveChanges": "Save Changes",
     "saving": "Saving...",

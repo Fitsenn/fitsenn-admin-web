@@ -34,7 +34,12 @@ const FieldWrapperRHF = <TFieldValues extends FieldValues>({
 
   return (
     <ChakraField.Root invalid={isInvalid} required={required} disabled={disabled} gap="0.5" mb="2" {...containerSx}>
-      {label && <ChakraField.Label>{label}</ChakraField.Label>}
+      {label && (
+        <ChakraField.Label mb="1.5">
+          {label}
+          {/* <ChakraField.RequiredIndicator /> */}
+        </ChakraField.Label>
+      )}
       {children}
       {helperText && !isInvalid && <ChakraField.HelperText>{helperText}</ChakraField.HelperText>}
       {isInvalid && errorMessage && <ChakraField.ErrorText>{errorMessage}</ChakraField.ErrorText>}

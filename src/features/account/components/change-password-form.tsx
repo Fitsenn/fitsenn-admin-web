@@ -1,17 +1,15 @@
-import { Box, Button, Fieldset, Input, Stack, Text } from '@chakra-ui/react';
+import type { ChangePasswordFormData } from './change-password-form.schema';
+
+import { Box, Button, Fieldset, Stack, Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FieldWrapperRHF } from '@/components/form/field-wrapper';
 import { FormRHF } from '@/components/form/form';
+import { InputRHF } from '@/components/form/input';
 import { toaster } from '@/components/ui/toaster';
-
 import { useUpdatePassword } from '../api/update-password';
-
 import { changePasswordFormSchema } from './change-password-form.schema';
-
-import type { ChangePasswordFormData } from './change-password-form.schema';
 
 const ChangePasswordForm = () => {
   const { t } = useTranslation();
@@ -25,6 +23,8 @@ const ChangePasswordForm = () => {
       confirmPassword: '',
     },
   });
+
+  const { control } = methods;
 
   const handleSubmit = (data: ChangePasswordFormData) => {
     updatePasswordMutation.mutate(
@@ -45,7 +45,7 @@ const ChangePasswordForm = () => {
             description: error.message,
           });
         },
-      }
+      },
     );
   };
 
@@ -61,23 +61,27 @@ const ChangePasswordForm = () => {
         <Fieldset.Content>
           <FormRHF methods={methods} onSubmit={handleSubmit}>
             <Stack gap={4}>
-              <FieldWrapperRHF<ChangePasswordFormData>
+              <InputRHF
+                control={control}
                 name="currentPassword"
                 label={t('account.currentPassword')}
-                required>
-                <Input {...methods.register('currentPassword')} type="password" />
-              </FieldWrapperRHF>
-
-              <FieldWrapperRHF<ChangePasswordFormData> name="newPassword" label={t('account.newPassword')} required>
-                <Input {...methods.register('newPassword')} type="password" />
-              </FieldWrapperRHF>
-
-              <FieldWrapperRHF<ChangePasswordFormData>
+                type="password"
+                required
+              />
+              <InputRHF
+                control={control}
+                name="newPassword"
+                label={t('account.newPassword')}
+                type="password"
+                required
+              />
+              <InputRHF
+                control={control}
                 name="confirmPassword"
                 label={t('account.confirmPassword')}
-                required>
-                <Input {...methods.register('confirmPassword')} type="password" />
-              </FieldWrapperRHF>
+                type="password"
+                required
+              />
 
               <Button
                 type="submit"
