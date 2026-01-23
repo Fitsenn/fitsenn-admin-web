@@ -6,7 +6,8 @@
     "empty": "Empty",
     "tryAgain": "Try Again",
     "logOut": "Log out",
-    "toggleColorMode": "Toggle color mode"
+    "toggleColorMode": "Toggle color mode",
+    "settings": "Settings"
   },
   "auth": {
     "signIn": "Sign In",
@@ -59,5 +60,25 @@
     "active": "active",
     "inactive": "inactive",
     "pending": "pending"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your account preferences",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeDescription": "Change the appearance of the application",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "themeSystemDescription": "We'll automatically adjust the display based on your device's system settings.",
+    "languageRegion": "Language & Region",
+    "language": "Language",
+    "languageDescription": "Select your preferred language for the application interface",
+    "languageEnglish": "English",
+    "languageRomanian": "Romanian",
+    "timezone": "Timezone",
+    "timezoneDescription": "Set your preferred timezone for displaying dates and times",
+    "timezoneUTC": "(GMT+00:00) UTC",
+    "timezoneBucharest": "(GMT+02:00) Eastern European Time — Bucharest"
   }
 }

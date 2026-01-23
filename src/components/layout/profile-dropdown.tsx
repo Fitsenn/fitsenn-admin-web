@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { LuLogOut, LuUser } from 'react-icons/lu';
+import { LuLogOut, LuSettings, LuUser } from 'react-icons/lu';
 
 import { useLogout } from '@/api/auth';
 import { useUser } from '@/hooks/use-user';
@@ -77,6 +77,12 @@ const ProfileDropdown = () => {
               </Flex>
             </Box>
             <MenuSeparator />
+            <MenuItem value="settings" onClick={() => navigate({ to: '/settings' })} cursor="pointer">
+              <Icon boxSize={4}>
+                <LuSettings />
+              </Icon>
+              <Text>{t('common.settings')}</Text>
+            </MenuItem>
             <MenuItem value="logout" onClick={handleLogout} cursor="pointer">
               <Icon boxSize={4}>
                 <LuLogOut />

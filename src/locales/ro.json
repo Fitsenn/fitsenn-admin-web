@@ -6,7 +6,8 @@
     "empty": "Gol",
     "tryAgain": "Încearcă din nou",
     "logOut": "Deconectare",
-    "toggleColorMode": "Schimbă modul de culoare"
+    "toggleColorMode": "Schimbă modul de culoare",
+    "settings": "Setări"
   },
   "auth": {
     "signIn": "Autentificare",
@@ -59,5 +60,25 @@
     "active": "activ",
     "inactive": "inactiv",
     "pending": "în așteptare"
+  },
+  "settings": {
+    "title": "Setări",
+    "description": "Gestionează preferințele contului tău",
+    "appearance": "Aspect",
+    "theme": "Temă",
+    "themeDescription": "Schimbă aspectul aplicației",
+    "themeLight": "Luminos",
+    "themeDark": "Întunecat",
+    "themeSystem": "Sistem",
+    "themeSystemDescription": "Vom ajusta automat afișarea în funcție de setările de sistem ale dispozitivului tău.",
+    "languageRegion": "Limbă și regiune",
+    "language": "Limbă",
+    "languageDescription": "Selectează limba preferată pentru interfața aplicației",
+    "languageEnglish": "Engleză",
+    "languageRomanian": "Română",
+    "timezone": "Fus orar",
+    "timezoneDescription": "Setează fusul orar preferat pentru afișarea datelor și orelor",
+    "timezoneUTC": "(GMT+00:00) UTC",
+    "timezoneBucharest": "(GMT+02:00) București"
   }
 }
