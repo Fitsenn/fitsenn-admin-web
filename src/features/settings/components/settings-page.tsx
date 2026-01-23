@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 import {
   Box,
   Fieldset,
@@ -21,13 +19,6 @@ import { useLocalStorage } from '@/hooks/use-local-storage';
 import { useTimezone } from '@/hooks/use-timezone';
 import { LANGUAGE_STORAGE_KEY } from '@/lib/i18n';
 
-type ThemeOption = {
-  label: string;
-  value: string;
-  icon: ReactNode;
-  description?: string;
-};
-
 const SettingsPage = () => {
   const [, setStoredLanguage] = useLocalStorage(LANGUAGE_STORAGE_KEY, 'ro');
 
@@ -35,7 +26,7 @@ const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
   const { timezone, setTimezone } = useTimezone();
 
-  const themeOptions = createListCollection<ThemeOption>({
+  const themeOptions = createListCollection({
     items: [
       { label: t('settings.themeLight'), value: 'light', icon: <LuSun /> },
       { label: t('settings.themeDark'), value: 'dark', icon: <LuMoon /> },

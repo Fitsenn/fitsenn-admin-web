@@ -5,6 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 
+import { Toaster } from '@/components/ui/toaster';
 import { queryClient } from '@/lib/query-client';
 import { router } from '@/lib/router';
 import { system } from '@/lib/theme';
@@ -26,6 +27,7 @@ export function AppProvider({ children }: AppProviderProps) {
     <ChakraProvider value={system}>
       <ThemeProvider attribute="class" disableTransitionOnChange>
         <QueryProvider>{children}</QueryProvider>
+        <Toaster />
       </ThemeProvider>
     </ChakraProvider>
   );

@@ -9,12 +9,6 @@ const buttonRecipe = defineRecipe({
   },
   variants: {
     variant: {
-      solid: {
-        bg: 'brand.300',
-        color: 'white',
-        _hover: { bg: 'brand.400' },
-        _active: { bg: 'brand.500' },
-      },
       secondary: {
         bg: { base: 'white', _dark: 'black' },
         color: { base: 'black', _dark: 'white' },
@@ -40,6 +34,20 @@ const config = defineConfig({
           700: { value: '#285e61' },
           800: { value: '#234e52' },
           900: { value: '#1d4044' },
+          950: { value: '#153e3d' },
+        },
+      },
+    },
+    semanticTokens: {
+      colors: {
+        brand: {
+          solid: { value: '{colors.brand.400}' },
+          contrast: { value: '{colors.white}' },
+          fg: { value: '{colors.brand.700}' },
+          muted: { value: '{colors.brand.100}' },
+          subtle: { value: '{colors.brand.200}' },
+          emphasized: { value: '{colors.brand.300}' },
+          focusRing: { value: '{colors.brand.500}' },
         },
       },
     },
