@@ -6,6 +6,7 @@ import { Badge, Button } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 import { DataTable } from '@/components/table';
+import { useCompany } from '@/hooks/use-company';
 import { useCompanyMembers } from '../api/get-company-members';
 
 type MemberTableRow = {
@@ -17,12 +18,13 @@ type MemberTableRow = {
 
 const searchFields: (keyof MemberTableRow)[] = ['name', 'phone'];
 
-const HARDCODED_COMPANY_ID = 'dcd1db1e-7753-4ca6-ac7e-4c7e95a43bc7';
-
 const UsersTable = () => {
   const { t } = useTranslation();
+  const { selectedCompany } = useCompany();
 
-  const { data, error, isLoading } = useCompanyMembers({ companyId: HARDCODED_COMPANY_ID });
+  const { data, error, isLoading } = useCompanyMembers({
+    companyId: selectedCompany?.id ?? '',
+  });
 
   const members: MemberTableRow[] = useMemo(() => {
     if (!data) return [];

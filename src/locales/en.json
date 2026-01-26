@@ -1,4 +1,11 @@
 {
+  "company": {
+    "selectCompany": "Select Company",
+    "yourCompanies": "Your Companies"
+  },
+  "location": {
+    "selectLocation": "Select Location"
+  },
   "common": {
     "loading": "Loading",
     "error": "Error",
@@ -7,7 +14,11 @@
     "tryAgain": "Try Again",
     "logOut": "Log out",
     "toggleColorMode": "Toggle color mode",
-    "settings": "Settings"
+    "settings": "Settings",
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create",
+    "edit": "Edit"
   },
   "auth": {
     "signIn": "Sign In",
@@ -19,7 +30,54 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
+    "locations": "Locations",
     "users": "Users"
+  },
+  "locations": {
+    "title": "Locations",
+    "description": "Manage your company locations",
+    "addLocation": "Add Location",
+    "editLocation": "Edit Location",
+    "searchPlaceholder": "Search locations...",
+    "loadError": "Failed to load locations. Please try again.",
+    "table": {
+      "name": "Name",
+      "address": "Address",
+      "tier": "Tier",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "deactivate": {
+      "title": "Deactivate Location",
+      "confirm": "Are you sure you want to deactivate \"{{name}}\"?",
+      "confirm_button": "Deactivate",
+      "checking": "Checking for active plans and memberships...",
+      "warningTitle": "Warning",
+      "activePlans": "This location has {{count}} active membership plan(s).",
+      "activeMemberships": "This location has {{count}} active membership(s)."
+    },
+    "form": {
+      "name": "Name",
+      "address": "Address",
+      "tier": "Tier",
+      "selectTier": "Select tier",
+      "isActive": "Active",
+      "operatingHours": "Operating Hours",
+      "addTimeSlot": "Add time slot",
+      "removeTimeSlot": "Remove time slot"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
   },
   "dashboard": {
     "title": "Dashboard",

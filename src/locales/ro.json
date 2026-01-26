@@ -1,4 +1,11 @@
 {
+  "company": {
+    "selectCompany": "Selecteaza compania",
+    "yourCompanies": "Companiile tale"
+  },
+  "location": {
+    "selectLocation": "Selecteaza locatia"
+  },
   "common": {
     "loading": "Se încarcă",
     "error": "Eroare",
@@ -7,7 +14,11 @@
     "tryAgain": "Încearcă din nou",
     "logOut": "Deconectare",
     "toggleColorMode": "Schimbă modul de culoare",
-    "settings": "Setări"
+    "settings": "Setări",
+    "cancel": "Anulează",
+    "save": "Salvează",
+    "create": "Creează",
+    "edit": "Editează"
   },
   "auth": {
     "signIn": "Autentificare",
@@ -19,7 +30,54 @@
   },
   "navigation": {
     "dashboard": "Panou de control",
+    "locations": "Locații",
     "users": "Utilizatori"
+  },
+  "locations": {
+    "title": "Locații",
+    "description": "Gestionează locațiile companiei",
+    "addLocation": "Adaugă locație",
+    "editLocation": "Editează locația",
+    "searchPlaceholder": "Caută locații...",
+    "loadError": "Nu s-au putut încărca locațiile. Te rugăm să încerci din nou.",
+    "table": {
+      "name": "Nume",
+      "address": "Adresă",
+      "tier": "Nivel",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Activă",
+      "inactive": "Inactivă"
+    },
+    "deactivate": {
+      "title": "Dezactivează locația",
+      "confirm": "Ești sigur că vrei să dezactivezi \"{{name}}\"?",
+      "confirm_button": "Dezactivează",
+      "checking": "Se verifică planurile și abonamentele active...",
+      "warningTitle": "Atenție",
+      "activePlans": "Această locație are {{count}} plan(uri) de abonament activ(e).",
+      "activeMemberships": "Această locație are {{count}} abonament(e) activ(e)."
+    },
+    "form": {
+      "name": "Nume",
+      "address": "Adresă",
+      "tier": "Nivel",
+      "selectTier": "Selectează nivel",
+      "isActive": "Activă",
+      "operatingHours": "Program de funcționare",
+      "addTimeSlot": "Adaugă interval",
+      "removeTimeSlot": "Șterge interval"
+    },
+    "days": {
+      "monday": "Luni",
+      "tuesday": "Marți",
+      "wednesday": "Miercuri",
+      "thursday": "Joi",
+      "friday": "Vineri",
+      "saturday": "Sâmbătă",
+      "sunday": "Duminică"
+    }
   },
   "dashboard": {
     "title": "Panou de control",

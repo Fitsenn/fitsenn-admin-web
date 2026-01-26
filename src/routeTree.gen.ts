@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedLocationsRouteImport } from './routes/_authenticated/locations'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 
@@ -41,6 +42,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedLocationsRoute = AuthenticatedLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRoute
 }
@@ -75,14 +83,29 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/locations': typeof AuthenticatedLocationsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/account' | '/dashboard' | '/settings' | '/users'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/account'
+    | '/dashboard'
+    | '/locations'
+    | '/settings'
+    | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/account' | '/dashboard' | '/settings' | '/users'
+  to:
+    | '/'
+    | '/login'
+    | '/account'
+    | '/dashboard'
+    | '/locations'
+    | '/settings'
+    | '/users'
   id:
     | '__root__'
     | '/'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/_authenticated/account'
     | '/_authenticated/dashboard'
+    | '/_authenticated/locations'
     | '/_authenticated/settings'
     | '/_authenticated/users'
   fileRoutesById: FileRoutesById
@@ -137,6 +161,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/locations': {
+      id: '/_authenticated/locations'
+      path: '/locations'
+      fullPath: '/locations'
+      preLoaderRoute: typeof AuthenticatedLocationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -157,6 +188,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedLocationsRoute: typeof AuthenticatedLocationsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
 }
@@ -164,6 +196,7 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedLocationsRoute: AuthenticatedLocationsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
 }
