@@ -36,8 +36,14 @@
     "description": "Gestionează utilizatorii aplicației",
     "addUser": "Adaugă utilizator",
     "searchPlaceholder": "Caută utilizatori...",
-    "tableExample": "Exemplu de utilizare a componentei tabel",
-    "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou."
+    "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou.",
+    "table": {
+      "id": "ID",
+      "name": "Nume",
+      "phone": "Telefon",
+      "email": "Email",
+      "membership": "Abonament"
+    }
   },
   "table": {
     "columns": "Coloane",
@@ -51,15 +57,7 @@
     "firstPage": "Prima pagină",
     "previousPage": "Pagina anterioară",
     "nextPage": "Pagina următoare",
-    "lastPage": "Ultima pagină",
-    "id": "ID",
-    "name": "Nume",
-    "email": "Email",
-    "status": "Status",
-    "role": "Rol",
-    "active": "activ",
-    "inactive": "inactiv",
-    "pending": "în așteptare"
+    "lastPage": "Ultima pagină"
   },
   "settings": {
     "title": "Setări",

@@ -12,13 +12,13 @@ export type DataTableProps<TData> = {
   isLoading?: boolean;
 
   /** Error state */
-  error?: Error | null;
+  error?: string | null;
 
   /** Custom empty state component */
   emptyState?: ReactNode;
 
   /** Custom error state component */
-  errorState?: (error: Error) => ReactNode;
+  errorState?: (error: string) => ReactNode;
 
   // ==================== Pagination ====================
   /** Enable pagination (default: false) */
@@ -50,10 +50,7 @@ export type DataTableProps<TData> = {
   onSortingChange?: (sorting: SortingState) => void;
 
   // ==================== Search ====================
-  /** Enable global search input (searches across multiple fields) */
-  enableSearch?: boolean;
-
-  /** Fields to search when using the search input */
+  /** Fields to search when using the search input - if empty disable search */
   searchFields?: (keyof TData)[];
 
   /** Placeholder text for search input (default: "Search...") */

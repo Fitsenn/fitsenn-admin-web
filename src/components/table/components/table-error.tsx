@@ -2,7 +2,7 @@ import { Box, Button, Heading, Text, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 type TableErrorProps = {
-  error: Error;
+  error: string;
   onRetry?: () => void;
 };
 
@@ -16,7 +16,7 @@ const TableError = ({ error, onRetry }: TableErrorProps) => {
           {t('table.somethingWentWrong')}
         </Heading>
         <Text fontSize="sm" color="fg.muted">
-          {error.message || t('table.unexpectedError')}
+          {error || t('table.unexpectedError')}
         </Text>
       </VStack>
       {onRetry && (

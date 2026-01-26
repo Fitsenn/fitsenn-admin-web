@@ -38,7 +38,6 @@ const DataTable = <TData,>({
   enableSorting = true,
   manualSorting = false,
   onSortingChange,
-  enableSearch = false,
   searchFields = [],
   searchPlaceholder = 'Search...',
   manualSearch = false,
@@ -81,7 +80,7 @@ const DataTable = <TData,>({
   // function that handles search
   const globalFilterFn: FilterFn<TData> = (row, _columnId, filterValue) => {
     if (!filterValue) return true;
-    if (!enableSearch || searchFields.length === 0) return true;
+    if (searchFields.length === 0) return true;
 
     const searchQuery = String(filterValue).toLowerCase();
     const rowData = row.original;
@@ -138,7 +137,7 @@ const DataTable = <TData,>({
     onSortingChange: handleSortingChange,
     getSortedRowModel: getSortedRowModel(),
     // Search/Filtering
-    ...(enableSearch && {
+    ...(searchFields.length && {
       getFilteredRowModel: getFilteredRowModel(),
       globalFilterFn: globalFilterFn,
       manualFiltering: manualSearch,
@@ -156,13 +155,14 @@ const DataTable = <TData,>({
   });
 
   const showPagination = enablePagination && !isLoading && !error && data.length > 0;
-  const showToolbar = enableSearch || enableColumnVisibility || toolbarActions;
+  const showToolbar = searchFields.length || enableColumnVisibility || toolbarActions;
 
   return (
     <Box>
       {/* Toolbar */}
       {showToolbar && (
         <TableToolbar
+          showSearch={!!searchFields.length}
           searchValue={globalFilter}
           onSearchChange={handleSearchChange}
           searchPlaceholder={searchPlaceholder}

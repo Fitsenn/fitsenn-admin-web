@@ -36,8 +36,15 @@
     "description": "Manage your application users",
     "addUser": "Add User",
     "searchPlaceholder": "Search users...",
-    "tableExample": "Table component usage example",
-    "loadError": "Failed to load users. Please try again."
+    "loadError": "Failed to load users. Please try again.",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "membership": "Membership"
+
+    }
   },
   "table": {
     "columns": "Columns",
@@ -51,15 +58,7 @@
     "firstPage": "First page",
     "previousPage": "Previous page",
     "nextPage": "Next page",
-    "lastPage": "Last page",
-    "id": "ID",
-    "name": "Name",
-    "email": "Email",
-    "status": "Status",
-    "role": "Role",
-    "active": "active",
-    "inactive": "inactive",
-    "pending": "pending"
+    "lastPage": "Last page"
   },
   "settings": {
     "title": "Settings",
