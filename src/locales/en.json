@@ -58,7 +58,14 @@
     "firstPage": "First page",
     "previousPage": "Previous page",
     "nextPage": "Next page",
-    "lastPage": "Last page"
+    "lastPage": "Last page",
+    "actions": {
+      "openMenu": "Open actions menu",
+      "view": "View",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete"
+    }
   },
   "settings": {
     "title": "Settings",

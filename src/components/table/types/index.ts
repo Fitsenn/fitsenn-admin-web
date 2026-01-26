@@ -1,6 +1,55 @@
 import type { ColumnDef, PaginationState, SortingState } from '@tanstack/react-table';
 import type { ReactNode } from 'react';
 
+// ==================== Row Actions Types ====================
+
+/** Built-in action types with predefined icons and labels */
+export type BuiltInActionType = 'view' | 'edit' | 'duplicate' | 'delete';
+
+/** Built-in action configuration */
+export type BuiltInRowAction<TData> = {
+  type: BuiltInActionType;
+  onClick: (row: TData) => void;
+  /** Override the default translated label */
+  label?: string;
+  /** Condition to show this action (in addition to canEdit logic) */
+  isVisible?: (row: TData) => boolean;
+};
+
+/** Custom action configuration */
+export type CustomRowAction<TData> = {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  onClick: (row: TData) => void;
+  /** Whether to show a separator before this action */
+  hasSeparator?: boolean;
+  /** Whether this action is destructive (styled in red) */
+  isDestructive?: boolean;
+  /** Condition to show this action */
+  isVisible?: (row: TData) => boolean;
+};
+
+/** Union type for any row action */
+export type RowAction<TData> = BuiltInRowAction<TData> | CustomRowAction<TData>;
+
+/** Type guard to check if action is built-in */
+export const isBuiltInAction = <TData>(action: RowAction<TData>): action is BuiltInRowAction<TData> => {
+  return 'type' in action;
+};
+
+/** Row actions configuration passed to DataTable */
+export type RowActionsConfig<TData> = {
+  /** Array of actions to display */
+  actions: RowAction<TData>[];
+  /** Controls visibility of built-in edit/duplicate/delete vs view (default: true) */
+  canEdit?: boolean;
+  /** Header text for actions column */
+  columnHeader?: string;
+};
+
+// ==================== DataTable Props ====================
+
 export type DataTableProps<TData> = {
   /** The data to display in the table */
   data: TData[];
@@ -72,4 +121,8 @@ export type DataTableProps<TData> = {
   // ==================== Customization ====================
   /** Custom toolbar actions (rendered in top-right) */
   toolbarActions?: ReactNode;
+
+  // ==================== Row Actions ====================
+  /** Row-level actions configuration */
+  rowActions?: RowActionsConfig<TData>;
 };

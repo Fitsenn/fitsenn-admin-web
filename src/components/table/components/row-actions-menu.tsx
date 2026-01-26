@@ -1,0 +1,141 @@
+import type { RowAction, RowActionsConfig } from '../types';
+
+import {
+  Icon,
+  IconButton,
+  MenuContent,
+  MenuItem,
+  MenuPositioner,
+  MenuRoot,
+  MenuSeparator,
+  MenuTrigger,
+  Portal,
+  Text,
+} from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+import { LuCopy, LuEllipsisVertical, LuEye, LuPencil, LuTrash2 } from 'react-icons/lu';
+
+import { isBuiltInAction } from '../types';
+
+type RowActionsMenuProps<TData> = {
+  row: TData;
+  config: RowActionsConfig<TData>;
+};
+
+const BUILT_IN_ACTIONS = {
+  view: {
+    icon: LuEye,
+    translationKey: 'table.actions.view',
+    isDestructive: false,
+    requiresEdit: false,
+  },
+  edit: {
+    icon: LuPencil,
+    translationKey: 'table.actions.edit',
+    isDestructive: false,
+    requiresEdit: true,
+  },
+  duplicate: {
+    icon: LuCopy,
+    translationKey: 'table.actions.duplicate',
+    isDestructive: false,
+    requiresEdit: true,
+  },
+  delete: {
+    icon: LuTrash2,
+    translationKey: 'table.actions.delete',
+    isDestructive: true,
+    requiresEdit: true,
+  },
+} as const;
+
+const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => {
+  const { t } = useTranslation();
+  const { actions, canEdit = true } = config;
+
+  const visibleActions = actions.filter((action) => {
+    // Check custom isVisible condition first
+    if (action.isVisible && !action.isVisible(row)) {
+      return false;
+    }
+
+    // For built-in actions, apply canEdit logic
+    if (isBuiltInAction(action)) {
+      const builtIn = BUILT_IN_ACTIONS[action.type];
+
+      // If action requires edit permission and user can't edit, hide it
+      if (builtIn.requiresEdit && !canEdit) {
+        return false;
+      }
+
+      // If action doesn't require edit (view) and user can edit, hide it
+      if (!builtIn.requiresEdit && canEdit) {
+        return false;
+      }
+    }
+
+    // Custom actions are always visible (unless isVisible returns false above)
+    return true;
+  });
+
+  if (visibleActions.length === 0) {
+    return null;
+  }
+
+  const renderAction = (action: RowAction<TData>, index: number) => {
+    if (isBuiltInAction(action)) {
+      const builtIn = BUILT_IN_ACTIONS[action.type];
+      const IconComponent = builtIn.icon;
+
+      return (
+        <MenuItem
+          key={action.type}
+          value={action.type}
+          onClick={() => action.onClick(row)}
+          cursor="pointer"
+          color={builtIn.isDestructive ? 'red.500' : undefined}>
+          <Icon boxSize={4}>
+            <IconComponent />
+          </Icon>
+          <Text>{action.label ?? t(builtIn.translationKey)}</Text>
+        </MenuItem>
+      );
+    }
+
+    // Custom action
+    return (
+      <span key={action.id}>
+        {action.hasSeparator && index > 0 && <MenuSeparator />}
+        <MenuItem
+          value={action.id}
+          onClick={() => action.onClick(row)}
+          cursor="pointer"
+          color={action.isDestructive ? 'red.500' : undefined}>
+          {action.icon && <Icon boxSize={4}>{action.icon}</Icon>}
+          <Text>{action.label}</Text>
+        </MenuItem>
+      </span>
+    );
+  };
+
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <IconButton
+          aria-label={t('table.actions.openMenu')}
+          size="xs"
+          variant="ghost"
+          onClick={(e) => e.stopPropagation()}>
+          <LuEllipsisVertical />
+        </IconButton>
+      </MenuTrigger>
+      <Portal>
+        <MenuPositioner>
+          <MenuContent minW="150px">{visibleActions.map((action, index) => renderAction(action, index))}</MenuContent>
+        </MenuPositioner>
+      </Portal>
+    </MenuRoot>
+  );
+};
+
+export { RowActionsMenu };

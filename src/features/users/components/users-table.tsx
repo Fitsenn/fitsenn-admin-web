@@ -50,11 +50,7 @@ const UsersTable = () => {
           const membership = getValue<string>();
           const isActive = membership === 'Active';
 
-          return (
-            <Badge colorPalette={isActive ? 'green' : 'orange'}>
-              {membership}
-            </Badge>
-          );
+          return <Badge colorPalette={isActive ? 'green' : 'orange'}>{membership}</Badge>;
         },
       },
       {
@@ -88,6 +84,17 @@ const UsersTable = () => {
           {t('users.addUser')}
         </Button>
       }
+      rowActions={{
+        canEdit: true,
+        actions: [
+          {
+            type: 'edit',
+            onClick: (row) => {
+              console.log('Edit user:', row);
+            },
+          },
+        ],
+      }}
     />
   );
 };

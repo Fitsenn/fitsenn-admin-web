@@ -57,7 +57,14 @@
     "firstPage": "Prima pagină",
     "previousPage": "Pagina anterioară",
     "nextPage": "Pagina următoare",
-    "lastPage": "Ultima pagină"
+    "lastPage": "Ultima pagină",
+    "actions": {
+      "openMenu": "Deschide meniul de acțiuni",
+      "view": "Vizualizare",
+      "edit": "Editare",
+      "duplicate": "Duplicare",
+      "delete": "Ștergere"
+    }
   },
   "settings": {
     "title": "Setări",
