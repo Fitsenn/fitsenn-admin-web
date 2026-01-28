@@ -16,6 +16,7 @@ import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedLocationsRouteImport } from './routes/_authenticated/locations'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company-settings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 
 const LoginRoute = LoginRouteImport.update({
@@ -52,6 +53,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedCompanySettingsRoute =
+  AuthenticatedCompanySettingsRouteImport.update({
+    id: '/company-settings',
+    path: '/company-settings',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -62,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -71,6 +79,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -82,6 +91,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/locations': typeof AuthenticatedLocationsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/account'
+    | '/company-settings'
     | '/dashboard'
     | '/locations'
     | '/settings'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/account'
+    | '/company-settings'
     | '/dashboard'
     | '/locations'
     | '/settings'
@@ -112,6 +124,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/_authenticated/account'
+    | '/_authenticated/company-settings'
     | '/_authenticated/dashboard'
     | '/_authenticated/locations'
     | '/_authenticated/settings'
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/company-settings': {
+      id: '/_authenticated/company-settings'
+      path: '/company-settings'
+      fullPath: '/company-settings'
+      preLoaderRoute: typeof AuthenticatedCompanySettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/account': {
       id: '/_authenticated/account'
       path: '/account'
@@ -187,6 +207,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedLocationsRoute: typeof AuthenticatedLocationsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -195,6 +216,7 @@ interface AuthenticatedRouteChildren {
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedLocationsRoute: AuthenticatedLocationsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,

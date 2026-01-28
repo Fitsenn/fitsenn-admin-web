@@ -5,7 +5,14 @@ import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LuChartNoAxesColumn, LuChevronLeft, LuChevronRight, LuHouse, LuMapPin } from 'react-icons/lu';
+import {
+  LuBuilding2,
+  LuChartNoAxesColumn,
+  LuChevronLeft,
+  LuChevronRight,
+  LuHouse,
+  LuMapPin,
+} from 'react-icons/lu';
 
 type SidebarItem = {
   labelKey: string;
@@ -28,6 +35,11 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     labelKey: 'navigation.users',
     to: '/users',
     icon: <LuChartNoAxesColumn />,
+  },
+  {
+    labelKey: 'navigation.companySettings',
+    to: '/company-settings',
+    icon: <LuBuilding2 />,
   },
 ];
 

@@ -31,7 +31,8 @@
   "navigation": {
     "dashboard": "Panou de control",
     "locations": "Locații",
-    "users": "Utilizatori"
+    "users": "Utilizatori",
+    "companySettings": "Setări companie"
   },
   "locations": {
     "title": "Locații",
@@ -171,5 +172,61 @@
     "deleting": "Se șterge...",
     "typeToConfirm": "Scrie DELETE pentru a confirma",
     "deleteConfirmationRequired": "Te rugăm să scrii DELETE pentru a confirma"
+  },
+  "companySettings": {
+    "title": "Setări companie",
+    "description": "Gestionează profilul companiei și echipa",
+    "tabs": {
+      "general": "General",
+      "users": "Utilizatori"
+    },
+    "general": {
+      "companyInfo": "Informații companie",
+      "companyInfoDescription": "Actualizează detaliile companiei",
+      "name": "Numele companiei",
+      "code": "Codul companiei",
+      "codeHelperText": "Cod unic folosit de membri pentru a găsi compania",
+      "codeUnavailable": "Acest cod este deja folosit",
+      "logo": "Logo companie",
+      "logoDescription": "Încarcă logo-ul companiei (max 5MB, JPG/PNG/WebP/SVG)",
+      "changeLogo": "Schimbă logo",
+      "removeLogo": "Șterge logo",
+      "saveChanges": "Salvează modificările",
+      "saving": "Se salvează...",
+      "updateSuccess": "Setările companiei au fost actualizate cu succes",
+      "updateError": "Nu s-au putut actualiza setările companiei",
+      "validation": {
+        "nameRequired": "Numele companiei este obligatoriu",
+        "codeRequired": "Codul companiei este obligatoriu",
+        "codeFormat": "Codul poate conține doar litere, cifre, cratime și underscore"
+      }
+    },
+    "users": {
+      "inviteUser": "Invită utilizator",
+      "searchPlaceholder": "Caută utilizatori...",
+      "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou.",
+      "table": {
+        "name": "Nume",
+        "email": "Email",
+        "phone": "Telefon",
+        "roles": "Roluri",
+        "joinedAt": "Data înscrierii"
+      },
+      "invite": {
+        "title": "Invită utilizator",
+        "email": "Adresa de email",
+        "emailPlaceholder": "utilizator@exemplu.com",
+        "send": "Trimite invitație",
+        "sending": "Se trimite...",
+        "addedSuccess": "Utilizatorul a fost adăugat în companie cu succes",
+        "alreadyMember": "Acest utilizator este deja membru al companiei tale",
+        "notFound": "Nu a fost găsit niciun utilizator cu această adresă de email",
+        "inviteError": "Nu s-a putut invita utilizatorul",
+        "validation": {
+          "emailRequired": "Adresa de email este obligatorie",
+          "emailInvalid": "Te rugăm să introduci o adresă de email validă"
+        }
+      }
+    }
   }
 }

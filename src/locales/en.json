@@ -31,7 +31,8 @@
   "navigation": {
     "dashboard": "Dashboard",
     "locations": "Locations",
-    "users": "Users"
+    "users": "Users",
+    "companySettings": "Company Settings"
   },
   "locations": {
     "title": "Locations",
@@ -172,5 +173,61 @@
     "deleting": "Deleting...",
     "typeToConfirm": "Type DELETE to confirm",
     "deleteConfirmationRequired": "Please type DELETE to confirm"
+  },
+  "companySettings": {
+    "title": "Company Settings",
+    "description": "Manage your company profile and team",
+    "tabs": {
+      "general": "General",
+      "users": "Users"
+    },
+    "general": {
+      "companyInfo": "Company Information",
+      "companyInfoDescription": "Update your company details",
+      "name": "Company Name",
+      "code": "Company Code",
+      "codeHelperText": "Unique code used by members to find your company",
+      "codeUnavailable": "This code is already taken",
+      "logo": "Company Logo",
+      "logoDescription": "Upload your company logo (max 5MB, JPG/PNG/WebP/SVG)",
+      "changeLogo": "Change Logo",
+      "removeLogo": "Remove Logo",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "updateSuccess": "Company settings updated successfully",
+      "updateError": "Failed to update company settings",
+      "validation": {
+        "nameRequired": "Company name is required",
+        "codeRequired": "Company code is required",
+        "codeFormat": "Code can only contain letters, numbers, hyphens, and underscores"
+      }
+    },
+    "users": {
+      "inviteUser": "Invite User",
+      "searchPlaceholder": "Search users...",
+      "loadError": "Failed to load users. Please try again.",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "roles": "Roles",
+        "joinedAt": "Joined"
+      },
+      "invite": {
+        "title": "Invite User",
+        "email": "Email Address",
+        "emailPlaceholder": "user@example.com",
+        "send": "Send Invite",
+        "sending": "Sending...",
+        "addedSuccess": "User added to company successfully",
+        "alreadyMember": "This user is already a member of your company",
+        "notFound": "No user found with this email address",
+        "inviteError": "Failed to invite user",
+        "validation": {
+          "emailRequired": "Email address is required",
+          "emailInvalid": "Please enter a valid email address"
+        }
+      }
+    }
   }
 }

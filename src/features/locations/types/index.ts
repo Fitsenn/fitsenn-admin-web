@@ -1,29 +1,4 @@
-export type TimeSlot = {
-  open: string;
-  close: string;
-};
-
-export type OperatingHours = {
-  monday?: TimeSlot[] | null;
-  tuesday?: TimeSlot[] | null;
-  wednesday?: TimeSlot[] | null;
-  thursday?: TimeSlot[] | null;
-  friday?: TimeSlot[] | null;
-  saturday?: TimeSlot[] | null;
-  sunday?: TimeSlot[] | null;
-};
-
-export type Location = {
-  id: string;
-  company_id: string;
-  name: string;
-  address: string | null;
-  tier: string | null;
-  is_active: boolean;
-  operating_hours: OperatingHours | null;
-  created_at: string;
-  updated_at: string;
-};
+export type { Location, OperatingHours, TimeSlot } from '@/types/location';
 
 export type CreateLocationInput = {
   company_id: string;
@@ -31,7 +6,7 @@ export type CreateLocationInput = {
   address?: string | null;
   tier?: string | null;
   is_active?: boolean;
-  operating_hours?: OperatingHours | null;
+  operating_hours?: import('@/types/location').OperatingHours | null;
 };
 
 export type UpdateLocationInput = {
@@ -40,5 +15,5 @@ export type UpdateLocationInput = {
   address?: string | null;
   tier?: string | null;
   is_active?: boolean;
-  operating_hours?: OperatingHours | null;
+  operating_hours?: import('@/types/location').OperatingHours | null;
 };
