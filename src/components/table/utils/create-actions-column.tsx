@@ -9,9 +9,9 @@ const createActionsColumn = <TData,>(config: RowActionsConfig<TData>): ColumnDef
     header: config.columnHeader ?? '',
     enableSorting: false,
     enableHiding: false,
-    size: 30,
-    minSize: 30,
-    maxSize: 30,
+    size: 45,
+    minSize: 45,
+    maxSize: 45,
     cell: ({ row }) => (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <RowActionsMenu row={row.original} config={config} />

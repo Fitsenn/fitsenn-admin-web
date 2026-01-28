@@ -184,6 +184,12 @@ const DataTable = <TData,>({
       )}
 
       <Table.Root variant="outline" size="sm">
+        <Table.ColumnGroup>
+          {table.getAllColumns().map((column) => (
+            // de investigat aici de ce default size e 150px in tanstack/react-table
+            <Table.Column key={column.id} {...(column.getSize() !== 150 && { htmlWidth: column.getSize() })} />
+          ))}
+        </Table.ColumnGroup>
         <Table.Header>
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.Row key={headerGroup.id}>

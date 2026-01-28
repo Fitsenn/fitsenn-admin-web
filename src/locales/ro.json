@@ -39,10 +39,21 @@
     "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou.",
     "table": {
       "id": "ID",
+      "avatar": "Poza",
       "name": "Nume",
       "phone": "Telefon",
       "email": "Email",
       "membership": "Abonament"
+    },
+    "editProfile": {
+      "firstName": "Prenume",
+      "lastName": "Nume",
+      "email": "Email",
+      "phone": "Telefon",
+      "save": "Salvează modificările",
+      "saving": "Se salvează...",
+      "updateSuccess": "Profilul utilizatorului a fost actualizat cu succes",
+      "updateError": "Nu s-a putut actualiza profilul utilizatorului"
     }
   },
   "table": {

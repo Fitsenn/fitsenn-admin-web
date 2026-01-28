@@ -1,5 +1,7 @@
 import type { RowAction, RowActionsConfig } from '../types';
 
+import { useMemo } from 'react';
+
 import {
   Icon,
   IconButton,
@@ -51,32 +53,40 @@ const BUILT_IN_ACTIONS = {
 
 const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => {
   const { t } = useTranslation();
-  const { actions, canEdit = true } = config;
+  const { actions, canEdit = false } = config;
 
-  const visibleActions = actions.filter((action) => {
-    // Check custom isVisible condition first
-    if (action.isVisible && !action.isVisible(row)) {
-      return false;
-    }
+  const visibleActions = useMemo(() => {
+    return actions
+      .map((action) => {
+        // Check custom isVisible condition first
+        if (action.isVisible && !action.isVisible(row)) {
+          return undefined;
+        }
 
-    // For built-in actions, apply canEdit logic
-    if (isBuiltInAction(action)) {
-      const builtIn = BUILT_IN_ACTIONS[action.type];
+        // For built-in actions, apply canEdit logic
+        if (isBuiltInAction(action)) {
+          const builtIn = BUILT_IN_ACTIONS[action.type];
 
-      // If action requires edit permission and user can't edit, hide it
-      if (builtIn.requiresEdit && !canEdit) {
-        return false;
-      }
+          // If action requires edit permission and user can't edit, hide it
+          if (builtIn.requiresEdit && !canEdit) {
+            if (action.type === 'edit') {
+              // If action is edit and user doesn't have edit permission, show 'view' action
+              return { ...action, type: 'view' };
+            }
+            return undefined;
+          }
 
-      // If action doesn't require edit (view) and user can edit, hide it
-      if (!builtIn.requiresEdit && canEdit) {
-        return false;
-      }
-    }
+          // If action doesn't require edit (view) and user can edit, hide it
+          if (!builtIn.requiresEdit && canEdit) {
+            return undefined;
+          }
+        }
 
-    // Custom actions are always visible (unless isVisible returns false above)
-    return true;
-  });
+        // Custom actions are always visible (unless isVisible returns false above)
+        return action;
+      })
+      .filter(Boolean) as RowAction<TData>[];
+  }, [actions, canEdit, row]);
 
   if (visibleActions.length === 0) {
     return null;

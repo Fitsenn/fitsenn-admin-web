@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Flex,
@@ -15,10 +14,11 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { LuLogOut, LuSettings, LuUser, LuUserCog } from 'react-icons/lu';
+import { LuLogOut, LuSettings, LuUserCog } from 'react-icons/lu';
 
 import { useLogout } from '@/api/auth';
 import { useUser } from '@/hooks/use-user';
+import { Avatar } from '../ui/avatar';
 
 const ProfileDropdown = () => {
   const { t } = useTranslation();
@@ -41,17 +41,7 @@ const ProfileDropdown = () => {
     <MenuRoot>
       <MenuTrigger asChild>
         <Button variant="ghost" p={1} borderRadius="full" cursor="pointer">
-          <Avatar.Root size="sm">
-            {user?.avatar_url ? (
-              <Avatar.Image src={user.avatar_url} alt={displayName} />
-            ) : (
-              <Avatar.Fallback>
-                <Icon boxSize={5}>
-                  <LuUser />
-                </Icon>
-              </Avatar.Fallback>
-            )}
-          </Avatar.Root>
+          <Avatar url={user?.avatar_url} />
         </Button>
       </MenuTrigger>
       <Portal>
@@ -59,17 +49,7 @@ const ProfileDropdown = () => {
           <MenuContent minW="200px">
             <Box px={3} py={2}>
               <Flex align="center" gap={3}>
-                <Avatar.Root size="sm">
-                  {user?.avatar_url ? (
-                    <Avatar.Image src={user.avatar_url} alt={displayName} />
-                  ) : (
-                    <Avatar.Fallback>
-                      <Icon boxSize={5}>
-                        <LuUser />
-                      </Icon>
-                    </Avatar.Fallback>
-                  )}
-                </Avatar.Root>
+                <Avatar url={user?.avatar_url} />
                 <div>
                   <Text fontWeight="medium">{displayName}</Text>
                   <Text fontSize="xs">{user?.email}</Text>

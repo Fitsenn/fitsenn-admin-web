@@ -39,11 +39,21 @@
     "loadError": "Failed to load users. Please try again.",
     "table": {
       "id": "ID",
+      "avatar": "Picture",
       "name": "Name",
       "phone": "Phone",
       "email": "Email",
       "membership": "Membership"
-
+    },
+    "editProfile": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "updateSuccess": "User profile updated successfully",
+      "updateError": "Failed to update user profile"
     }
   },
   "table": {
