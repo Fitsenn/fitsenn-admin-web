@@ -3,20 +3,26 @@ import { Outlet } from '@tanstack/react-router';
 
 import { Navbar } from '@/components/layout/navbar';
 import { Sidebar } from '@/components/layout/sidebar';
+import { CompanyProvider } from '@/contexts/company-provider';
+import { LocationProvider } from '@/contexts/location-provider';
 import { UserProvider } from '@/contexts/user-provider';
 
 const ProtectedLayout = () => {
   return (
     <UserProvider>
-      <Flex minH="100vh">
-        <Sidebar />
-        <Flex direction="column" flex={1}>
-          <Navbar />
-          <Box flex={1} p={8} overflow="auto">
-            <Outlet />
-          </Box>
-        </Flex>
-      </Flex>
+      <CompanyProvider>
+        <LocationProvider>
+          <Flex minH="100vh">
+            <Sidebar />
+            <Flex direction="column" flex={1}>
+              <Navbar />
+              <Box flex={1} p={8} overflow="auto">
+                <Outlet />
+              </Box>
+            </Flex>
+          </Flex>
+        </LocationProvider>
+      </CompanyProvider>
     </UserProvider>
   );
 };
