@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react';
 import type { FileRouteTypes } from '@/routeTree.gen';
+import type { ReactNode } from 'react';
+
+import { useState } from 'react';
 
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LuChartNoAxesColumn, LuChevronLeft, LuChevronRight, LuHouse } from 'react-icons/lu';
 
@@ -50,35 +51,22 @@ const Sidebar = () => {
       top={0}
       left={0}
       transition="width 0.2s ease"
-      flexShrink={0}
-    >
+      flexShrink={0}>
       <Flex direction="column" h="full" py={4}>
-        <Flex
-          px={4}
-          mb={6}
-          align="center"
-          justify={isCollapsed ? 'center' : 'space-between'}
-        >
+        <Flex px={4} mb={6} align="center" justify={isCollapsed ? 'center' : 'space-between'}>
           {!isCollapsed && (
             <Text fontWeight="bold" fontSize="xl">
               Fitsenn
             </Text>
           )}
-          <Box
-            as="button"
-            onClick={toggleSidebar}
-            p={2}
-            borderRadius="md"
-            _hover={{ bg: 'bg.muted' }}
-            cursor="pointer"
-          >
+          <Box as="button" onClick={toggleSidebar} p={2} borderRadius="md" _hover={{ bg: 'bg.muted' }} cursor="pointer">
             <Icon boxSize={5}>{isCollapsed ? <LuChevronRight /> : <LuChevronLeft />}</Icon>
           </Box>
         </Flex>
 
         <VStack gap={1} px={3} align="stretch">
           {SIDEBAR_ITEMS.map((item) => {
-            const isActive = currentPath === item.to;
+            const isActive = currentPath.includes(item.to);
 
             return (
               <Link key={item.to} to={item.to}>
@@ -94,12 +82,9 @@ const Sidebar = () => {
                     bg: isActive ? 'teal.500' : 'bg.muted',
                   }}
                   transition="all 0.15s ease"
-                  justify={isCollapsed ? 'center' : 'flex-start'}
-                >
+                  justify={isCollapsed ? 'center' : 'flex-start'}>
                   <Icon boxSize={5}>{item.icon}</Icon>
-                  {!isCollapsed && (
-                    <Text fontWeight={isActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>
-                  )}
+                  {!isCollapsed && <Text fontWeight={isActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>}
                 </Flex>
               </Link>
             );

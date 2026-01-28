@@ -1,4 +1,4 @@
-import { Badge, Box, Flex, IconButton, Image, Tabs, Text } from '@chakra-ui/react';
+import { Badge, Box, Flex, Image, Tabs, Text } from '@chakra-ui/react';
 import { LuMail, LuPhone } from 'react-icons/lu';
 
 import { HARDCODED_COMPANY_ID, useCompanyUser } from '../../api/get-company-users';
