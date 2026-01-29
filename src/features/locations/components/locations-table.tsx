@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Location } from '../types';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Badge, Button, HStack, Icon, IconButton, Switch } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
@@ -46,18 +46,21 @@ const LocationsTable = () => {
     setEditingLocation(null);
   };
 
-  const handleToggleStatus = (location: Location, newStatus: boolean) => {
-    if (newStatus) {
-      // Activating - no confirmation needed
-      toggleMutation.mutate({
-        locationId: location.id,
-        isActive: true,
-      });
-    } else {
-      // Deactivating - show confirmation dialog
-      setDeactivatingLocation(location);
-    }
-  };
+  const handleToggleStatus = useCallback(
+    (location: Location, newStatus: boolean) => {
+      if (newStatus) {
+        // Activating - no confirmation needed
+        toggleMutation.mutate({
+          locationId: location.id,
+          isActive: true,
+        });
+      } else {
+        // Deactivating - show confirmation dialog
+        setDeactivatingLocation(location);
+      }
+    },
+    [toggleMutation],
+  );
 
   const handleCloseDeactivateDialog = () => {
     setDeactivatingLocation(null);
@@ -134,7 +137,7 @@ const LocationsTable = () => {
         ),
       },
     ],
-    [t, toggleMutation.isPending],
+    [t, toggleMutation.isPending, handleToggleStatus],
   );
 
   return (

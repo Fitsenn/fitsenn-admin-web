@@ -1,7 +1,4 @@
 import type { Location } from '../types';
-import type { LocationDependencies } from '../api/check-location-dependencies';
-
-import { useEffect, useState } from 'react';
 
 import {
   Alert,
@@ -14,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useCompany } from '@/hooks/use-company';
-import { checkLocationDependencies } from '../api/check-location-dependencies';
+import { useLocationDependencies } from '../api/check-location-dependencies';
 import { useToggleLocationStatus } from '../api/toggle-location-status';
 
 type DeactivateLocationDialogProps = {
@@ -28,28 +25,12 @@ const DeactivateLocationDialog = ({ isOpen, onClose, location }: DeactivateLocat
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
 
-  const [isCheckingDependencies, setIsCheckingDependencies] = useState(false);
-  const [dependencies, setDependencies] = useState<LocationDependencies | null>(null);
+  const { data: dependencies, isLoading: isCheckingDependencies } = useLocationDependencies(
+    location?.id ?? '',
+    isOpen && !!location,
+  );
 
   const toggleMutation = useToggleLocationStatus(companyId);
-
-  useEffect(() => {
-    if (isOpen && location) {
-      setIsCheckingDependencies(true);
-      setDependencies(null);
-
-      checkLocationDependencies(location.id)
-        .then((deps) => {
-          setDependencies(deps);
-        })
-        .catch((error) => {
-          console.error('Failed to check dependencies:', error);
-        })
-        .finally(() => {
-          setIsCheckingDependencies(false);
-        });
-    }
-  }, [isOpen, location]);
 
   const handleConfirm = async () => {
     if (!location) return;

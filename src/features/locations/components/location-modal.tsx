@@ -64,6 +64,8 @@ type LocationModalProps = {
 const DEFAULT_TIME_SLOT: FormTimeSlot = { open: '09:00', close: '21:00' };
 
 const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
+  'use no memo'; // react-hook-form's watch() is incompatible with React Compiler
+
   const { t } = useTranslation();
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
