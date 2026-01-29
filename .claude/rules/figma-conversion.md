@@ -95,10 +95,10 @@
 ## Icon Usage
 
 ```typescript
-import { FiEdit, FiTrash, FiPlus } from 'react-icons/fi'
+import { Pencil, Trash, Plus } from 'lucide-react'
 
 <Button>
-  <FiPlus />
+  <Plus />
   {t('common.add')}
 </Button>
 ```

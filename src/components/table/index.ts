@@ -1,2 +1,9 @@
-export { DataTable } from './data-table'
-export type { DataTableProps } from './types'
+export { DataTable } from './data-table';
+export type {
+  BuiltInActionType,
+  BuiltInRowAction,
+  CustomRowAction,
+  DataTableProps,
+  RowAction,
+  RowActionsConfig,
+} from './types';

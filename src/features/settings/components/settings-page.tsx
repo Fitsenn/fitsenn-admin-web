@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
-import { LuCheck, LuMonitor, LuMoon, LuSun } from 'react-icons/lu';
+import { Check, Monitor, Moon, Sun } from 'lucide-react';
 
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { useTimezone } from '@/hooks/use-timezone';
@@ -28,12 +28,12 @@ const SettingsPage = () => {
 
   const themeOptions = createListCollection({
     items: [
-      { label: t('settings.themeLight'), value: 'light', icon: <LuSun /> },
-      { label: t('settings.themeDark'), value: 'dark', icon: <LuMoon /> },
+      { label: t('settings.themeLight'), value: 'light', icon: <Sun /> },
+      { label: t('settings.themeDark'), value: 'dark', icon: <Moon /> },
       {
         label: t('settings.themeSystem'),
         value: 'system',
-        icon: <LuMonitor />,
+        icon: <Monitor />,
         description: t('settings.themeSystemDescription'),
       },
     ],
@@ -119,7 +119,7 @@ const SettingsPage = () => {
                               </Stack>
                             </HStack>
                             <Select.ItemIndicator>
-                              <LuCheck />
+                              <Check />
                             </Select.ItemIndicator>
                           </Select.Item>
                         ))}
@@ -165,7 +165,7 @@ const SettingsPage = () => {
                             <Select.Item key={item.value} item={item}>
                               <Select.ItemText>{item.label}</Select.ItemText>
                               <Select.ItemIndicator>
-                                <LuCheck />
+                                <Check />
                               </Select.ItemIndicator>
                             </Select.Item>
                           ))}
@@ -201,7 +201,7 @@ const SettingsPage = () => {
                             <Select.Item key={item.value} item={item}>
                               <Select.ItemText>{item.label}</Select.ItemText>
                               <Select.ItemIndicator>
-                                <LuCheck />
+                                <Check />
                               </Select.ItemIndicator>
                             </Select.Item>
                           ))}

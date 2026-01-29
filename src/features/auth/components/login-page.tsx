@@ -6,9 +6,9 @@ import { getRouteApi, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useLogin } from '@/api/auth';
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
-import { useLogin } from '@/api/auth';
 import { loginValidationSchema } from './login-page.schema';
 
 const routeApi = getRouteApi('/login');
@@ -52,7 +52,13 @@ const LoginPage = () => {
           <FormRHF methods={methods} onSubmit={handleSubmit}>
             <InputRHF control={control} label={t('auth.emailAddress')} name="email" />
             <InputRHF control={control} type="password" label={t('auth.password')} name="password" />
-            <Button type="submit" w="100%" mt="2" loading={loginMutation.isPending} disabled={loginMutation.isPending}>
+            <Button
+              colorPalette="brand"
+              type="submit"
+              w="100%"
+              mt="2"
+              loading={loginMutation.isPending}
+              disabled={loginMutation.isPending}>
               {t('auth.logIn')}
             </Button>
           </FormRHF>

@@ -35,7 +35,10 @@ const ProfileForm = () => {
     values,
   });
 
-  const { control } = methods;
+  const {
+    control,
+    formState: { isDirty },
+  } = methods;
 
   const handleSubmit = (data: ProfileFormData) => {
     updateProfileMutation.mutate(
@@ -84,6 +87,7 @@ const ProfileForm = () => {
 
               <Button
                 type="submit"
+                disabled={!isDirty}
                 colorPalette="brand"
                 alignSelf="flex-start"
                 loading={updateProfileMutation.isPending}

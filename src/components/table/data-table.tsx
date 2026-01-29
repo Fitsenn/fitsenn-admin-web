@@ -1,7 +1,7 @@
 import type { FilterFn, OnChangeFn, PaginationState, SortingState, VisibilityState } from '@tanstack/react-table';
 import type { DataTableProps } from './types';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Box, Table } from '@chakra-ui/react';
 import {
@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { LuArrowDown, LuArrowUp, LuArrowUpDown } from 'react-icons/lu';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 import { ColumnVisibilityMenu } from './components/column-visibility-menu';
 import { TableEmpty } from './components/table-empty';
@@ -21,6 +21,7 @@ import { TablePagination } from './components/table-pagination';
 import { TableSkeleton } from './components/table-skeleton';
 import { TableToolbar } from './components/table-toolbar';
 import { useTableStorage } from './hooks/use-table-storage';
+import { createActionsColumn } from './utils/create-actions-column';
 
 const DataTable = <TData,>({
   data,
@@ -45,6 +46,7 @@ const DataTable = <TData,>({
   storageKey,
   enableColumnVisibility = false,
   toolbarActions,
+  rowActions,
 }: DataTableProps<TData>) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -106,11 +108,21 @@ const DataTable = <TData,>({
   // Determine which column visibility state to use
   const currentColumnVisibility = storageKey && enableColumnVisibility ? columnVisibility : localColumnVisibility;
 
+  // Add actions column if rowActions is provided
+  const columnsWithActions = useMemo(() => {
+    if (!rowActions || rowActions.actions.length === 0) {
+      return columns;
+    }
+
+    const actionsColumn = createActionsColumn(rowActions);
+    return [...columns, actionsColumn];
+  }, [columns, rowActions]);
+
   // TanStack Table is incompatible with React Compiler (expected) - disable warning
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
-    columns,
+    columns: columnsWithActions,
     defaultColumn: {
       minSize: 60,
       maxSize: 800,
@@ -172,6 +184,12 @@ const DataTable = <TData,>({
       )}
 
       <Table.Root variant="outline" size="sm">
+        <Table.ColumnGroup>
+          {table.getAllColumns().map((column) => (
+            // de investigat aici de ce default size e 150px in tanstack/react-table
+            <Table.Column key={column.id} {...(column.getSize() !== 150 && { htmlWidth: column.getSize() })} />
+          ))}
+        </Table.ColumnGroup>
         <Table.Header>
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.Row key={headerGroup.id}>
@@ -186,9 +204,9 @@ const DataTable = <TData,>({
                     {header.column.getCanSort() && (
                       <Box display="inline-flex" color="fg.muted">
                         {{
-                          asc: <LuArrowUp size={14} />,
-                          desc: <LuArrowDown size={14} />,
-                        }[header.column.getIsSorted() as string] ?? <LuArrowUpDown size={14} />}
+                          asc: <ArrowUp size={14} />,
+                          desc: <ArrowDown size={14} />,
+                        }[header.column.getIsSorted() as string] ?? <ArrowUpDown size={14} />}
                       </Box>
                     )}
                   </Box>
@@ -201,7 +219,7 @@ const DataTable = <TData,>({
           {/* Loading state */}
           {isLoading && (
             <Table.Row>
-              <Table.Cell colSpan={columns.length}>
+              <Table.Cell colSpan={columnsWithActions.length}>
                 <TableSkeleton rows={5} columns={columns.length} />
               </Table.Cell>
             </Table.Row>
@@ -210,7 +228,7 @@ const DataTable = <TData,>({
           {/* Error state */}
           {!isLoading && error && (
             <Table.Row>
-              <Table.Cell colSpan={columns.length}>
+              <Table.Cell colSpan={columnsWithActions.length}>
                 {errorState ? <>{errorState(error)}</> : <TableError error={error} />}
               </Table.Cell>
             </Table.Row>
@@ -219,7 +237,9 @@ const DataTable = <TData,>({
           {/* Empty state */}
           {!isLoading && !error && data.length === 0 && (
             <Table.Row>
-              <Table.Cell colSpan={columns.length}>{emptyState ? <>{emptyState}</> : <TableEmpty />}</Table.Cell>
+              <Table.Cell colSpan={columnsWithActions.length}>
+                {emptyState ? <>{emptyState}</> : <TableEmpty />}
+              </Table.Cell>
             </Table.Row>
           )}
 

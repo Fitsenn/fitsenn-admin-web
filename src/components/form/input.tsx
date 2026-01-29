@@ -1,4 +1,4 @@
-import type { HTMLChakraProps } from '@chakra-ui/react';
+import type { HTMLChakraProps, InputProps } from '@chakra-ui/react';
 import type { HTMLInputTypeAttribute, ReactNode } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
 
@@ -17,7 +17,7 @@ export type InputRHFProps<TFieldValues extends FieldValues> = {
   disabled?: boolean;
   required?: boolean;
   containerSx?: HTMLChakraProps<'div'>;
-};
+} & InputProps;
 
 const InputRHF = <TFieldValues extends FieldValues>({
   name,
@@ -28,6 +28,7 @@ const InputRHF = <TFieldValues extends FieldValues>({
   disabled,
   required,
   containerSx = {},
+  ...inputProps
 }: InputRHFProps<TFieldValues>) => {
   const { register } = useFormContext<TFieldValues>();
 
@@ -39,7 +40,7 @@ const InputRHF = <TFieldValues extends FieldValues>({
       label={label}
       name={name}
       {...containerSx}>
-      <Input type={type} placeholder={placeholder} {...register(name)} />
+      <Input type={type} placeholder={placeholder} {...register(name)} {...inputProps} />
     </FieldWrapperRHF>
   );
 };
