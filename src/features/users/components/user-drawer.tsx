@@ -42,7 +42,7 @@ const UserDrawer = () => {
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content maxW="6xl" bg="bg.subtle">
+          <Drawer.Content maxW="6xl" bg={{ base: 'bg.subtle', _dark: 'bg.subtleDark' }}>
             <Drawer.Body>
               {open && userId && (
                 <Suspense fallback={<Spinner />}>

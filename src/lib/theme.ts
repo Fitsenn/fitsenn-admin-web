@@ -51,7 +51,8 @@ const config = defineConfig({
         subtle: {
           value: {
             _light: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-            _dark: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            // dont show shadow in dark mode for now
+            _dark: 'rgba(99, 99, 99, 0) 0px 2px 8px 0px',
           },
         },
       },

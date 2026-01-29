@@ -91,7 +91,7 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
   return (
     <>
       <Flex gap={8} flexDirection={{ base: 'column', md: 'row' }}>
-        <Box bgColor="white" borderRadius="xl" boxShadow="subtle" flex={2}>
+        <Box bgColor={{ base: 'white', _dark: 'gray.900' }} borderRadius="xl" boxShadow="subtle" flex={2}>
           <FormRHF methods={methods} onSubmit={handleSubmit}>
             <Flex alignItems="center" justifyContent="space-between" px={6} h="70px">
               <Text textStyle="md" fontWeight="bold">
@@ -123,7 +123,7 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
           </FormRHF>
         </Box>
 
-        <Box bgColor="white" borderRadius="xl" boxShadow="subtle" flex={1}>
+        <Box bgColor={{ base: 'white', _dark: 'gray.900' }} borderRadius="xl" boxShadow="subtle" flex={1}>
           <Text textStyle="md" fontWeight="bold" px={6} lineHeight="70px">
             Account information
           </Text>
