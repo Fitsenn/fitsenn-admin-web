@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type, no-empty-pattern */
+// Template file - empty patterns are intentional placeholders
+
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 

@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 
 import { DataTable } from '@/components/table';
 import { Avatar } from '@/components/ui/avatar';
-import { HARDCODED_COMPANY_ID, useCompanyUsers } from '../api/get-company-users';
+import { useCompany } from '@/hooks/use-company';
+import { useCompanyUsers } from '../api/get-company-users';
 import { UserDrawer } from './user-drawer';
 
 type MemberTableRow = {
@@ -25,8 +26,9 @@ const searchFields: (keyof MemberTableRow)[] = ['name', 'phone'];
 const UsersTable = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { selectedCompany } = useCompany();
 
-  const { data: membersRaw, error, isLoading } = useCompanyUsers({ companyId: HARDCODED_COMPANY_ID });
+  const { data: membersRaw, error, isLoading } = useCompanyUsers({ companyId: selectedCompany?.id ?? '' });
 
   const members: MemberTableRow[] = useMemo(() => {
     if (!membersRaw) return [];

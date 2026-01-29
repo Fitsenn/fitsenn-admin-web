@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
+import { Building2, ChevronLeft, ChevronRight, House, MapPin, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, House, Users } from 'lucide-react';
 
 type SidebarItem = {
   labelKey: string;
@@ -21,9 +21,19 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: <House />,
   },
   {
+    labelKey: 'navigation.locations',
+    to: '/locations',
+    icon: <MapPin />,
+  },
+  {
     labelKey: 'navigation.users',
     to: '/users',
     icon: <Users />,
+  },
+  {
+    labelKey: 'navigation.companySettings',
+    to: '/company-settings',
+    icon: <Building2 />,
   },
 ];
 

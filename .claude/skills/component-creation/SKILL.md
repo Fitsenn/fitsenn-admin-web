@@ -1,121 +1,66 @@
-# Component Creation Skill
+---
+name: creating-components
+description: Creates React components with Chakra UI, TypeScript, and i18n. Use when creating new components, pages, or refactoring existing UI. Triggers on requests for UI elements, pages, cards, modals, or any visual component.
+---
 
-**Rule Tag**: `COMPONENT`
+# Creating Components
 
-## Critical Rules
-
-1. **NO hardcoded text** - ALL user-facing strings use `t()` function
-2. **NO `any` types** - Properly type all props and state
-3. **NO default exports** - Always use named exports
-4. **NO relative imports** outside component folder - Use `@/` prefix
-5. **ALWAYS use Chakra UI** components for layout and styling
-6. **ALWAYS support dark/light mode** via Chakra semantic tokens
-
-## Component Categories
-
-### Feature Components
-Location: `features/[feature]/components/`
-- Page components (e.g., `users-page.tsx`)
-- Feature-specific UI (e.g., `users-table.tsx`)
-
-### Shared Components
-Location: `components/`
-- Reusable across features
-- UI primitives and wrappers
-
-## Templates
-
-See `templates/` folder for:
-- `page.tsx` - Feature page component
-- `component.tsx` - Generic component
-- `table.tsx` - Data table component
-
-## Localization Pattern
+## Quick Start
 
 ```typescript
 import { useTranslation } from 'react-i18next'
+import { Box, Heading, Text } from '@chakra-ui/react'
 
-const Component = () => {
+type ComponentProps = {
+  title: string
+}
+
+const Component = ({ title }: ComponentProps) => {
   const { t } = useTranslation()
 
   return (
     <Box>
       <Heading>{t('feature.title')}</Heading>
-      <Text>{t('feature.description')}</Text>
-      {/* For interpolation */}
-      <Text>{t('feature.greeting', { name: user.name })}</Text>
+      <Text color="fg.muted">{t('feature.description')}</Text>
     </Box>
   )
 }
+
+export { Component }
 ```
 
-## Chakra UI Patterns
+## Critical Rules
 
-### Layout
-```typescript
-import { Box, Stack, Flex, Grid } from '@chakra-ui/react'
+1. **NO hardcoded text** - All strings via `t()` function
+2. **NO `any` types** - Properly type all props
+3. **Named exports only** - No default exports
+4. **Absolute imports** - Use `@/` prefix outside component folder
+5. **Chakra UI only** - No custom CSS or inline styles
+6. **Semantic tokens** - Use `fg.muted`, `bg.subtle` for dark/light mode
 
-// Vertical stack with gap
-<Stack gap={6}>...</Stack>
+## File Locations
 
-// Horizontal layout
-<Flex justify="space-between" align="center">...</Flex>
-```
+| Type | Location |
+|------|----------|
+| Feature-specific | `features/[feature]/components/` |
+| Shared/Reusable | `components/[category]/` |
 
-### Typography
-```typescript
-import { Heading, Text } from '@chakra-ui/react'
+## Templates
 
-<Heading size="xl">{t('title')}</Heading>
-<Text color="fg.muted">{t('description')}</Text>
-```
+- **Page component**: See [templates/page.tsx](templates/page.tsx)
+- **Generic component**: See [templates/component.tsx](templates/component.tsx)
 
-### Colors (Semantic)
-```typescript
-// Use semantic tokens for dark/light mode support
-color="fg.muted"      // Muted foreground
-color="fg.subtle"     // Subtle foreground
-bg="bg.subtle"        // Subtle background
-colorPalette="brand"  // Brand colors
-```
+## Reference
 
-## Loading States
-
-```typescript
-import { Spinner, Skeleton } from '@chakra-ui/react'
-
-// Simple loading
-if (isLoading) return <Spinner />
-
-// Skeleton for layout
-if (isLoading) return <Skeleton height="200px" />
-```
-
-## Error States
-
-```typescript
-import { Alert } from '@chakra-ui/react'
-
-if (error) {
-  return (
-    <Alert.Root status="error">
-      <Alert.Indicator />
-      <Alert.Title>{t('common.error')}</Alert.Title>
-      <Alert.Description>{error.message}</Alert.Description>
-    </Alert.Root>
-  )
-}
-```
+- **Decision trees & patterns**: See [reference.md](reference.md)
 
 ## Checklist
 
-- [ ] Component follows standard structure (imports → types → component → export)
 - [ ] All text uses `t()` function
-- [ ] Translation keys added to `locales/en.json` and `locales/ro.json`
+- [ ] Translations added to `locales/en.json` and `locales/ro.json`
 - [ ] Uses Chakra UI components
 - [ ] Props properly typed (no `any`)
 - [ ] Named export
-- [ ] Absolute imports with `@/`
 - [ ] File under 300 lines
-- [ ] Handles loading state
-- [ ] Handles error state
+- [ ] Loading state handled
+- [ ] Error state handled

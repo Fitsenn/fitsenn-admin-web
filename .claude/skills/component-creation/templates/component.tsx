@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Template file - variables are intentionally unused as placeholders
+
 import { Box } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 

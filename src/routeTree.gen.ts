@@ -14,7 +14,9 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedLocationsRouteImport } from './routes/_authenticated/locations'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company-settings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedUsersUserIdRouteImport } from './routes/_authenticated/users/$userId'
 
@@ -42,11 +44,22 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedLocationsRoute = AuthenticatedLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedCompanySettingsRoute =
+  AuthenticatedCompanySettingsRouteImport.update({
+    id: '/company-settings',
+    path: '/company-settings',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -63,7 +76,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
@@ -72,7 +87,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/locations': typeof AuthenticatedLocationsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
@@ -83,7 +100,9 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/company-settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/locations': typeof AuthenticatedLocationsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRouteWithChildren
   '/_authenticated/users/$userId': typeof AuthenticatedUsersUserIdRoute
@@ -94,7 +113,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/account'
+    | '/company-settings'
     | '/dashboard'
+    | '/locations'
     | '/settings'
     | '/users'
     | '/users/$userId'
@@ -103,7 +124,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/account'
+    | '/company-settings'
     | '/dashboard'
+    | '/locations'
     | '/settings'
     | '/users'
     | '/users/$userId'
@@ -113,7 +136,9 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/_authenticated/account'
+    | '/_authenticated/company-settings'
     | '/_authenticated/dashboard'
+    | '/_authenticated/locations'
     | '/_authenticated/settings'
     | '/_authenticated/users'
     | '/_authenticated/users/$userId'
@@ -162,11 +187,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/locations': {
+      id: '/_authenticated/locations'
+      path: '/locations'
+      fullPath: '/locations'
+      preLoaderRoute: typeof AuthenticatedLocationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/company-settings': {
+      id: '/_authenticated/company-settings'
+      path: '/company-settings'
+      fullPath: '/company-settings'
+      preLoaderRoute: typeof AuthenticatedCompanySettingsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/account': {
@@ -199,14 +238,18 @@ const AuthenticatedUsersRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedLocationsRoute: typeof AuthenticatedLocationsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedLocationsRoute: AuthenticatedLocationsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRouteWithChildren,
 }
