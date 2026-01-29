@@ -1,4 +1,4 @@
-import type { Location, OperatingHours, TimeSlot } from '../types';
+import type { Location, OperatingHours } from '../types';
 
 import { useEffect } from 'react';
 
@@ -10,6 +10,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  Input,
   NativeSelect,
   Stack,
   Switch,
@@ -23,6 +24,7 @@ import { z } from 'zod';
 
 import { InputRHF } from '@/components/form/input';
 import { useCompany } from '@/hooks/use-company';
+import { minutesToTimeString, timeStringToMinutes } from '@/utils/time';
 import { useCreateLocation } from '../api/create-location';
 import { useUpdateLocation } from '../api/update-location';
 
@@ -34,6 +36,9 @@ const TIER_OPTIONS = [
   { value: 'gold', label: 'Gold' },
   { value: 'platinum', label: 'Platinum' },
 ];
+
+// Form uses string times for input compatibility (HH:MM format)
+type FormTimeSlot = { open: string; close: string };
 
 const timeSlotSchema = z.object({
   open: z.string(),
@@ -56,7 +61,7 @@ type LocationModalProps = {
   location?: Location | null;
 };
 
-const DEFAULT_TIME_SLOT: TimeSlot = { open: '09:00', close: '21:00' };
+const DEFAULT_TIME_SLOT: FormTimeSlot = { open: '09:00', close: '21:00' };
 
 const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
   const { t } = useTranslation();
@@ -83,22 +88,19 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
   const { handleSubmit, reset, watch, setValue, control } = methods;
   const operatingHours = watch('operating_hours') ?? {};
 
+  // Convert DB format (minutes) to form format (time strings) on load
   useEffect(() => {
     if (isOpen) {
       if (location) {
-        // Convert existing data - handle both old format (single slot) and new format (array)
-        const convertedHours: Record<string, TimeSlot[] | null> = {};
+        const convertedHours: Record<string, FormTimeSlot[] | null> = {};
         if (location.operating_hours) {
           DAYS.forEach((day) => {
             const dayData = location.operating_hours?.[day];
-            if (dayData) {
-              // Check if it's already an array or old single-slot format
-              if (Array.isArray(dayData)) {
-                convertedHours[day] = dayData;
-              } else if (typeof dayData === 'object' && 'open' in dayData) {
-                // Old format - convert to array
-                convertedHours[day] = [dayData as TimeSlot];
-              }
+            if (dayData && Array.isArray(dayData)) {
+              convertedHours[day] = dayData.map((slot) => ({
+                open: minutesToTimeString(slot.open),
+                close: minutesToTimeString(slot.close),
+              }));
             }
           });
         }
@@ -121,13 +123,19 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
     }
   }, [isOpen, location, reset]);
 
+  // Convert form format (time strings) to DB format (minutes) on save
   const onSubmit = async (data: LocationFormData) => {
     const operatingHoursData: OperatingHours = {};
     DAYS.forEach((day) => {
       const daySlots = data.operating_hours?.[day];
       if (daySlots && daySlots.length > 0) {
-        // Filter out empty slots
-        const validSlots = daySlots.filter((slot) => slot.open && slot.close);
+        // Filter out empty slots and convert to minutes
+        const validSlots = daySlots
+          .filter((slot) => slot.open && slot.close)
+          .map((slot) => ({
+            open: timeStringToMinutes(slot.open),
+            close: timeStringToMinutes(slot.close),
+          }));
         if (validSlots.length > 0) {
           operatingHoursData[day] = validSlots;
         }
@@ -296,30 +304,20 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                               <Stack gap={1} pl={8}>
                                 {daySlots.map((slot, index) => (
                                   <HStack key={index} gap={2}>
-                                    <input
+                                    <Input
                                       type="time"
+                                      size="sm"
                                       value={slot.open}
                                       onChange={(e) => handleUpdateTimeSlot(day, index, 'open', e.target.value)}
-                                      style={{
-                                        padding: '4px 8px',
-                                        borderRadius: '4px',
-                                        border: '1px solid var(--chakra-colors-border)',
-                                        background: 'transparent',
-                                        fontSize: '13px',
-                                      }}
+                                      w="auto"
                                     />
                                     <Text fontSize="sm" color="fg.muted">-</Text>
-                                    <input
+                                    <Input
                                       type="time"
+                                      size="sm"
                                       value={slot.close}
                                       onChange={(e) => handleUpdateTimeSlot(day, index, 'close', e.target.value)}
-                                      style={{
-                                        padding: '4px 8px',
-                                        borderRadius: '4px',
-                                        border: '1px solid var(--chakra-colors-border)',
-                                        background: 'transparent',
-                                        fontSize: '13px',
-                                      }}
+                                      w="auto"
                                     />
                                     <IconButton
                                       aria-label={t('locations.form.removeTimeSlot')}

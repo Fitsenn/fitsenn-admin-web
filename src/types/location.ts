@@ -1,6 +1,9 @@
+/** Time slot with open/close times as minutes from midnight in UTC */
 export type TimeSlot = {
-  open: string;
-  close: string;
+  /** Minutes from midnight (0-1439) in UTC */
+  open: number;
+  /** Minutes from midnight (0-1439) in UTC */
+  close: number;
 };
 
 export type OperatingHours = {

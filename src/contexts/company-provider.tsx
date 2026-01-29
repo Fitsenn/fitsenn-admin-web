@@ -1,7 +1,8 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import { useUserCompanies } from '@/api/get-user-companies';
 import { type CompanyContextValue, CompanyContext } from '@/contexts/company-context';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const STORAGE_KEY = 'fitsenn_selected_company_id';
 
@@ -11,35 +12,15 @@ type CompanyProviderProps = {
 
 const CompanyProvider = ({ children }: CompanyProviderProps) => {
   const { data: companies = [], isLoading, isError } = useUserCompanies();
-  const [selectedCompanyId, setSelectedCompanyIdState] = useState<string | null>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem(STORAGE_KEY);
-    }
-    return null;
-  });
+  const [selectedCompanyId, setSelectedCompanyId] = useLocalStorage(STORAGE_KEY, '');
 
-  const setSelectedCompanyId = (companyId: string) => {
-    setSelectedCompanyIdState(companyId);
-    localStorage.setItem(STORAGE_KEY, companyId);
-  };
-
+  // Auto-select first company if none selected or selected no longer exists
   useEffect(() => {
-    if (companies.length > 0 && !selectedCompanyId) {
-      const firstCompany = companies[0];
-      setSelectedCompanyId(firstCompany.id);
+    const hasValidSelection = selectedCompanyId && companies.some((c) => c.id === selectedCompanyId);
+    if (companies.length > 0 && !hasValidSelection) {
+      setSelectedCompanyId(companies[0].id);
     }
-  }, [companies, selectedCompanyId]);
-
-  useEffect(() => {
-    if (
-      companies.length > 0 &&
-      selectedCompanyId &&
-      !companies.some((c) => c.id === selectedCompanyId)
-    ) {
-      const firstCompany = companies[0];
-      setSelectedCompanyId(firstCompany.id);
-    }
-  }, [companies, selectedCompanyId]);
+  }, [companies, selectedCompanyId, setSelectedCompanyId]);
 
   const selectedCompany = companies.find((c) => c.id === selectedCompanyId) ?? null;
 

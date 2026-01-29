@@ -1,8 +1,9 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { type LocationContextValue, LocationContext } from '@/contexts/location-context';
 import { useCompany } from '@/hooks/use-company';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const STORAGE_KEY_PREFIX = 'fitsenn_selected_location_';
 
@@ -14,52 +15,21 @@ const LocationProvider = ({ children }: LocationProviderProps) => {
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
 
-  const { data: locations = [], isLoading, isError } = useCompanyLocations({
-    companyId,
-    activeOnly: true,
-  });
+  const { data: locations = [], isLoading, isError } = useCompanyLocations({ companyId });
 
-  const [selectedLocationId, setSelectedLocationIdState] = useState<string | null>(() => {
-    if (typeof window !== 'undefined' && companyId) {
-      return localStorage.getItem(`${STORAGE_KEY_PREFIX}${companyId}`);
-    }
-    return null;
-  });
+  // Dynamic key per company - hook automatically syncs when companyId changes
+  const [selectedLocationId, setSelectedLocationId] = useLocalStorage(
+    `${STORAGE_KEY_PREFIX}${companyId}`,
+    '',
+  );
 
-  const setSelectedLocationId = (locationId: string) => {
-    setSelectedLocationIdState(locationId);
-    if (companyId) {
-      localStorage.setItem(`${STORAGE_KEY_PREFIX}${companyId}`, locationId);
-    }
-  };
-
-  // Load stored location when company changes
+  // Auto-select first location if none selected or selected no longer exists
   useEffect(() => {
-    if (companyId) {
-      const stored = localStorage.getItem(`${STORAGE_KEY_PREFIX}${companyId}`);
-      setSelectedLocationIdState(stored);
+    const hasValidSelection = selectedLocationId && locations.some((l) => l.id === selectedLocationId);
+    if (locations.length > 0 && !hasValidSelection) {
+      setSelectedLocationId(locations[0].id);
     }
-  }, [companyId]);
-
-  // Auto-select first location if none selected
-  useEffect(() => {
-    if (locations.length > 0 && !selectedLocationId) {
-      const firstLocation = locations[0];
-      setSelectedLocationId(firstLocation.id);
-    }
-  }, [locations, selectedLocationId]);
-
-  // Reset if selected location no longer exists in current company
-  useEffect(() => {
-    if (
-      locations.length > 0 &&
-      selectedLocationId &&
-      !locations.some((l) => l.id === selectedLocationId)
-    ) {
-      const firstLocation = locations[0];
-      setSelectedLocationId(firstLocation.id);
-    }
-  }, [locations, selectedLocationId]);
+  }, [locations, selectedLocationId, setSelectedLocationId]);
 
   const selectedLocation = locations.find((l) => l.id === selectedLocationId) ?? null;
 

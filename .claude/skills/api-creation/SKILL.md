@@ -1,50 +1,18 @@
-# API Creation Skill
+---
+name: creating-api-hooks
+description: Creates TanStack Query hooks with Supabase integration. Use when adding data fetching, mutations, or API layer code. Triggers on requests for queries, mutations, API hooks, or data fetching.
+---
 
-**Rule Tag**: `API`
-
-## Critical Rules
-
-1. **ALWAYS use `queryOptions`** pattern for queries
-2. **ALWAYS structure query keys** with factory pattern
-3. **ALWAYS invalidate related queries** in mutations
-4. **ALWAYS type request params and responses**
-5. **NEVER store server data** in component state
-6. **NEVER use `any`** for API types
-
-## File Structure
-
-```
-features/[feature]/api/
-├── get-[resource].ts         # Query hook
-├── get-[resources].ts        # List query hook
-├── create-[resource].ts      # Create mutation
-├── update-[resource].ts      # Update mutation
-├── delete-[resource].ts      # Delete mutation
-└── query-keys.ts             # Query key factory (optional)
-```
-
-## Templates
-
-See `templates/` folder for:
-- `query.ts` - Query hook template
-- `mutation.ts` - Mutation hook template
-- `query-keys.ts` - Query key factory
+# Creating API Hooks
 
 ## Query Pattern
 
 ```typescript
-import type { User } from '@/types/user'
-
 import { queryOptions, useQuery } from '@tanstack/react-query'
-
 import { supabase } from '@/lib/supabase'
 
-// 1. Types
-type GetUserParams = {
-  userId: string
-}
+type GetUserParams = { userId: string }
 
-// 2. API function (private)
 const getUser = async ({ userId }: GetUserParams): Promise<User> => {
   const { data, error } = await supabase
     .from('users')
@@ -56,18 +24,14 @@ const getUser = async ({ userId }: GetUserParams): Promise<User> => {
   return data
 }
 
-// 3. Query options (exported for prefetching)
-export const getUserQueryOptions = (userId: string) => {
-  return queryOptions({
+export const getUserQueryOptions = (userId: string) =>
+  queryOptions({
     queryKey: ['users', userId],
     queryFn: () => getUser({ userId }),
   })
-}
 
-// 4. Hook (main export)
-export const useUser = (userId: string) => {
-  return useQuery(getUserQueryOptions(userId))
-}
+export const useUser = (userId: string) =>
+  useQuery(getUserQueryOptions(userId))
 ```
 
 ## Mutation Pattern
@@ -75,32 +39,12 @@ export const useUser = (userId: string) => {
 ```typescript
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { supabase } from '@/lib/supabase'
-
-type UpdateUserParams = {
-  userId: string
-  data: Partial<User>
-}
-
-const updateUser = async ({ userId, data }: UpdateUserParams): Promise<User> => {
-  const { data: user, error } = await supabase
-    .from('users')
-    .update(data)
-    .eq('id', userId)
-    .select()
-    .single()
-
-  if (error) throw error
-  return user
-}
-
 export const useUpdateUser = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: updateUser,
     onSuccess: (user) => {
-      // Invalidate related queries
       queryClient.invalidateQueries({ queryKey: ['users', user.id] })
       queryClient.invalidateQueries({ queryKey: ['users', 'list'] })
     },
@@ -108,54 +52,39 @@ export const useUpdateUser = () => {
 }
 ```
 
+## Critical Rules
+
+1. **ALWAYS use `queryOptions`** pattern for queries
+2. **ALWAYS invalidate** related queries in mutations
+3. **ALWAYS type** request params and responses
+4. **NEVER store** server data in useState
+5. **NEVER use `any`** for API types
+
 ## Query Key Structure
 
 ```typescript
 export const userKeys = {
   all: ['users'] as const,
   lists: () => [...userKeys.all, 'list'] as const,
-  list: (filters: UserFilters) => [...userKeys.lists(), filters] as const,
-  details: () => [...userKeys.all, 'detail'] as const,
-  detail: (id: string) => [...userKeys.details(), id] as const,
+  list: (filters: Filters) => [...userKeys.lists(), filters] as const,
+  detail: (id: string) => [...userKeys.all, 'detail', id] as const,
 }
 ```
 
-## Supabase Patterns
+## File Structure
 
-### Simple Query
-```typescript
-const { data, error } = await supabase
-  .from('table')
-  .select('*')
-  .eq('column', value)
+```
+features/[feature]/api/
+├── get-[resource].ts      # Query hook
+├── create-[resource].ts   # Create mutation
+├── update-[resource].ts   # Update mutation
+└── delete-[resource].ts   # Delete mutation
 ```
 
-### Query with Relations
-```typescript
-const { data, error } = await supabase
-  .from('users')
-  .select(`
-    *,
-    profile:profiles(*),
-    posts(id, title)
-  `)
-```
+## Reference
 
-### RPC Call
-```typescript
-const { data, error } = await supabase.rpc('function_name', {
-  param1: value1,
-  param2: value2,
-})
-```
-
-### Error Handling
-```typescript
-if (error) {
-  // Supabase errors have code, message, details
-  throw new Error(error.message)
-}
-```
+- **Templates**: See [templates/](templates/) folder
+- **Patterns & decisions**: See [reference.md](reference.md)
 
 ## Checklist
 
@@ -163,7 +92,4 @@ if (error) {
 - [ ] Query keys are structured
 - [ ] Types defined for params and response
 - [ ] Mutations invalidate related queries
-- [ ] Supabase errors handled
 - [ ] Named exports
-- [ ] No `any` types
-- [ ] Hook named with `use` prefix

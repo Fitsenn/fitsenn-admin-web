@@ -26,6 +26,7 @@ const GeneralForm = ({ companyId, settings }: GeneralFormProps) => {
   const updateMutation = useUpdateCompanySettings(companyId);
   const uploadLogoMutation = useUploadCompanyLogo();
   const selectedFileRef = useRef<File | null>(null);
+  const [hasLogoChange, setHasLogoChange] = useState(false);
   const [isRemovingLogo, setIsRemovingLogo] = useState(false);
   const [logoResetKey, setLogoResetKey] = useState(0);
 
@@ -37,9 +38,14 @@ const GeneralForm = ({ companyId, settings }: GeneralFormProps) => {
     },
   });
 
-  const { control, setError } = methods;
+  const {
+    control,
+    setError,
+    formState: { isDirty },
+  } = methods;
 
   const isPending = updateMutation.isPending || uploadLogoMutation.isPending;
+  const hasChanges = isDirty || hasLogoChange;
 
   const handleSubmit = async (data: GeneralFormData) => {
     try {
@@ -62,6 +68,7 @@ const GeneralForm = ({ companyId, settings }: GeneralFormProps) => {
       });
 
       selectedFileRef.current = null;
+      setHasLogoChange(false);
       setIsRemovingLogo(false);
       setLogoResetKey((prev) => prev + 1);
 
@@ -78,6 +85,7 @@ const GeneralForm = ({ companyId, settings }: GeneralFormProps) => {
 
   const handleFileSelected = (file: File | null) => {
     selectedFileRef.current = file;
+    setHasLogoChange(file !== null || settings.logo_url !== null);
     setIsRemovingLogo(file === null && settings.logo_url !== null);
   };
 
@@ -108,6 +116,7 @@ const GeneralForm = ({ companyId, settings }: GeneralFormProps) => {
                 type="submit"
                 colorPalette="brand"
                 alignSelf="flex-start"
+                disabled={!hasChanges}
                 loading={isPending}
                 loadingText={t('companySettings.general.saving')}
               >

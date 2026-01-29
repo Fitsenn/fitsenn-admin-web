@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 
 type GetCompanyLocationsOptions = {
   companyId: string;
+  /** Filter to only return active locations (default: true) */
   activeOnly?: boolean;
 };
 
