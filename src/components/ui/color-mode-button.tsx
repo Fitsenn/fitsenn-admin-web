@@ -3,7 +3,7 @@
 import { ClientOnly, IconButton, Skeleton } from '@chakra-ui/react';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
-import { LuMoon, LuSun } from 'react-icons/lu';
+import { Moon, Sun } from 'lucide-react';
 
 export function ColorModeButton() {
   const { t } = useTranslation();
@@ -21,7 +21,7 @@ export function ColorModeButton() {
         size="md"
         onClick={toggleColorMode}
       >
-        {resolvedTheme === 'light' ? <LuMoon /> : <LuSun />}
+        {resolvedTheme === 'light' ? <Moon /> : <Sun />}
       </IconButton>
     </ClientOnly>
   );

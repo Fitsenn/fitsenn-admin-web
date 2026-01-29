@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { LuChartNoAxesColumn, LuChevronLeft, LuChevronRight, LuHouse } from 'react-icons/lu';
+import { ChevronLeft, ChevronRight, House, Users } from 'lucide-react';
 
 type SidebarItem = {
   labelKey: string;
@@ -18,12 +18,12 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     labelKey: 'navigation.dashboard',
     to: '/dashboard',
-    icon: <LuHouse />,
+    icon: <House />,
   },
   {
     labelKey: 'navigation.users',
     to: '/users',
-    icon: <LuChartNoAxesColumn />,
+    icon: <Users />,
   },
 ];
 
@@ -60,7 +60,7 @@ const Sidebar = () => {
             </Text>
           )}
           <Box as="button" onClick={toggleSidebar} p={2} borderRadius="md" _hover={{ bg: 'bg.muted' }} cursor="pointer">
-            <Icon boxSize={5}>{isCollapsed ? <LuChevronRight /> : <LuChevronLeft />}</Icon>
+            <Icon boxSize={5}>{isCollapsed ? <ChevronRight /> : <ChevronLeft />}</Icon>
           </Box>
         </Flex>
 

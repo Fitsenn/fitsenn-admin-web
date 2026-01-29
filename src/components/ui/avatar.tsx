@@ -1,7 +1,7 @@
 import type { AvatarRootProps } from '@chakra-ui/react';
 
 import { Avatar as AvatarChakra, Icon } from '@chakra-ui/react';
-import { LuUser } from 'react-icons/lu';
+import { User } from 'lucide-react';
 
 type AvatarProps = {
   url?: string | null;
@@ -15,7 +15,7 @@ const Avatar = ({ url, size = 'sm' }: AvatarProps) => {
       ) : (
         <AvatarChakra.Fallback>
           <Icon boxSize={5}>
-            <LuUser />
+            <User />
           </Icon>
         </AvatarChakra.Fallback>
       )}

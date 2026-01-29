@@ -1,5 +1,5 @@
 import { Badge, Box, Flex, Image, Tabs, Text } from '@chakra-ui/react';
-import { LuMail, LuPhone } from 'react-icons/lu';
+import { Mail, Phone } from 'lucide-react';
 
 import { HARDCODED_COMPANY_ID, useCompanyUser } from '../../api/get-company-users';
 import { EditUserProfile } from './user-details-tab';
@@ -25,11 +25,11 @@ const UserDrawerContent = ({ userId }: { userId: string }) => {
             </Badge>
           </Flex>
           <Flex alignItems="center" gap="2">
-            <LuPhone />
+            <Phone />
             <Text>{user?.profile.phone}</Text>
           </Flex>
           <Flex alignItems="center" gap="2">
-            <LuMail />
+            <Mail />
             <Text>{user?.profile.email}</Text>
           </Flex>
         </Flex>

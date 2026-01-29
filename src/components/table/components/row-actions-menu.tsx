@@ -15,7 +15,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuCopy, LuEllipsisVertical, LuEye, LuPencil, LuTrash2 } from 'react-icons/lu';
+import { Copy, EllipsisVertical, Eye, Pencil, Trash2 } from 'lucide-react';
 
 import { isBuiltInAction } from '../types';
 
@@ -26,25 +26,25 @@ type RowActionsMenuProps<TData> = {
 
 const BUILT_IN_ACTIONS = {
   view: {
-    icon: LuEye,
+    icon: Eye,
     translationKey: 'table.actions.view',
     isDestructive: false,
     requiresEdit: false,
   },
   edit: {
-    icon: LuPencil,
+    icon: Pencil,
     translationKey: 'table.actions.edit',
     isDestructive: false,
     requiresEdit: true,
   },
   duplicate: {
-    icon: LuCopy,
+    icon: Copy,
     translationKey: 'table.actions.duplicate',
     isDestructive: false,
     requiresEdit: true,
   },
   delete: {
-    icon: LuTrash2,
+    icon: Trash2,
     translationKey: 'table.actions.delete',
     isDestructive: true,
     requiresEdit: true,
@@ -136,7 +136,7 @@ const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => 
           size="xs"
           variant="ghost"
           onClick={(e) => e.stopPropagation()}>
-          <LuEllipsisVertical />
+          <EllipsisVertical />
         </IconButton>
       </MenuTrigger>
       <Portal>

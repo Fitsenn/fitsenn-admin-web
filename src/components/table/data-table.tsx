@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { LuArrowDown, LuArrowUp, LuArrowUpDown } from 'react-icons/lu';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 import { ColumnVisibilityMenu } from './components/column-visibility-menu';
 import { TableEmpty } from './components/table-empty';
@@ -204,9 +204,9 @@ const DataTable = <TData,>({
                     {header.column.getCanSort() && (
                       <Box display="inline-flex" color="fg.muted">
                         {{
-                          asc: <LuArrowUp size={14} />,
-                          desc: <LuArrowDown size={14} />,
-                        }[header.column.getIsSorted() as string] ?? <LuArrowUpDown size={14} />}
+                          asc: <ArrowUp size={14} />,
+                          desc: <ArrowDown size={14} />,
+                        }[header.column.getIsSorted() as string] ?? <ArrowUpDown size={14} />}
                       </Box>
                     )}
                   </Box>

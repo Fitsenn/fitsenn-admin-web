@@ -11,7 +11,7 @@ import {
   Portal,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuColumns3 } from 'react-icons/lu';
+import { Columns3 } from 'lucide-react';
 
 type ColumnVisibilityMenuProps<TData> = {
   table: Table<TData>;
@@ -29,7 +29,7 @@ const ColumnVisibilityMenu = <TData,>({ table }: ColumnVisibilityMenuProps<TData
     <MenuRoot>
       <MenuTrigger asChild>
         <Button size="sm" variant="outline">
-          <LuColumns3 />
+          <Columns3 />
           {t('table.columns')}
         </Button>
       </MenuTrigger>
