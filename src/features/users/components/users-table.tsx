@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { DataTable } from '@/components/table';
 import { Avatar } from '@/components/ui/avatar';
 import { HARDCODED_COMPANY_ID, useCompanyUsers } from '../api/get-company-users';
-import { UserDetailsDrawer } from './user-details-drawer';
+import { UserDrawer } from './user-drawer';
 
 type MemberTableRow = {
   id: string;
@@ -119,7 +119,7 @@ const UsersTable = () => {
           ],
         }}
       />
-      <UserDetailsDrawer />
+      <UserDrawer />
     </>
   );
 };

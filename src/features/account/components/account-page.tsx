@@ -2,7 +2,7 @@ import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 import { ChangePasswordForm } from './change-password-form';
-import { DeleteAccountSection } from './delete-account-section';
+import { DeleteCurrentAccount } from './delete-current-account';
 import { ProfileForm } from './profile-form';
 
 const AccountPage = () => {
@@ -20,7 +20,7 @@ const AccountPage = () => {
       <Stack gap={8}>
         <ProfileForm />
         <ChangePasswordForm />
-        <DeleteAccountSection />
+        <DeleteCurrentAccount />
       </Stack>
     </Stack>
   );

@@ -1,2 +1,2 @@
 export { UsersPage } from './components/users-page';
-export { UserDetailsDrawer } from './components/user-details-drawer';
+export { UserDrawer } from './components/user-drawer';

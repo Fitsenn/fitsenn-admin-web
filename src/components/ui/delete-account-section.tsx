@@ -1,16 +1,17 @@
 import { useState } from 'react';
 
 import { Box, Button, Dialog, DialogCloseTrigger, Fieldset, Input, Portal, Stack, Text } from '@chakra-ui/react';
-import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { toaster } from '@/components/ui/toaster';
-import { useDeleteAccount } from '../api/delete-account';
 
-const DeleteAccountSection = () => {
+type DeleteAccountSectionProps = {
+  onDelete: () => void;
+  isPending: boolean;
+};
+
+const DeleteAccountSection = ({ onDelete, isPending }: DeleteAccountSectionProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const deleteAccountMutation = useDeleteAccount();
   const [confirmText, setConfirmText] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,16 +23,9 @@ const DeleteAccountSection = () => {
       return;
     }
 
-    deleteAccountMutation.mutate(undefined, {
-      onSuccess: () => {
-        navigate({ to: '/login' });
-      },
-      onError: () => {
-        toaster.error({
-          title: t('account.profileUpdateError'),
-        });
-      },
-    });
+    // aici mai trebuie lucrat. trb sa vedem cum facem exact cu delete-ul - dar nu e final codul asta
+    onDelete();
+    setIsOpen(false);
   };
 
   const handleOpenChange = (details: { open: boolean }) => {
@@ -92,7 +86,7 @@ const DeleteAccountSection = () => {
                         colorPalette="red"
                         onClick={handleDelete}
                         disabled={confirmText !== 'DELETE'}
-                        loading={deleteAccountMutation.isPending}
+                        loading={isPending}
                         loadingText={t('account.deleting')}>
                         {t('account.deleteAccountButton')}
                       </Button>

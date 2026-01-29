@@ -2,9 +2,9 @@ import { Badge, Box, Flex, Image, Tabs, Text } from '@chakra-ui/react';
 import { LuMail, LuPhone } from 'react-icons/lu';
 
 import { HARDCODED_COMPANY_ID, useCompanyUser } from '../../api/get-company-users';
-import { EditUserProfile } from './edit-user-profile';
+import { EditUserProfile } from './user-details-tab';
 
-const UserDetailsContent = ({ userId }: { userId: string }) => {
+const UserDrawerContent = ({ userId }: { userId: string }) => {
   const { data: user } = useCompanyUser({
     companyId: HARDCODED_COMPANY_ID,
     userId,
@@ -41,7 +41,7 @@ const UserDetailsContent = ({ userId }: { userId: string }) => {
           <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
           <Tabs.Trigger value="membership">Membership</Tabs.Trigger>
           <Tabs.Trigger value="transactions">Transactions</Tabs.Trigger>
-          <Tabs.Trigger value="edit-profile">Edit Profile</Tabs.Trigger>
+          <Tabs.Trigger value="edit-profile">Details</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="overview">Manage your team members</Tabs.Content>
         <Tabs.Content value="membership">Manage your projects</Tabs.Content>
@@ -54,4 +54,4 @@ const UserDetailsContent = ({ userId }: { userId: string }) => {
   );
 };
 
-export { UserDetailsContent };
+export { UserDrawerContent };

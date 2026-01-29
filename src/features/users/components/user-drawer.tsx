@@ -3,11 +3,11 @@ import { Suspense, lazy, useEffect } from 'react';
 import { CloseButton, Drawer, Portal, Spinner, useDisclosure } from '@chakra-ui/react';
 import { useMatch, useNavigate } from '@tanstack/react-router';
 
-const UserDetailsContent = lazy(() =>
-  import('./user-details-drawer/user-details-content').then((module) => ({ default: module.UserDetailsContent })),
+const UserDrawerContent = lazy(() =>
+  import('./user-drawer/user-drawer-content').then((module) => ({ default: module.UserDrawerContent })),
 );
 
-const UserDetailsDrawer = () => {
+const UserDrawer = () => {
   const { open, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -21,8 +21,10 @@ const UserDetailsDrawer = () => {
   useEffect(() => {
     if (userId) {
       onOpen();
+    } else {
+      onClose();
     }
-  }, [userId, onOpen]);
+  }, [userId, onOpen, onClose]);
 
   const handleClose = () => {
     navigate({ to: '/users' });
@@ -32,7 +34,6 @@ const UserDetailsDrawer = () => {
   return (
     <Drawer.Root
       open={open}
-      size="xl"
       onOpenChange={(details) => {
         if (!details.open) {
           handleClose();
@@ -41,11 +42,11 @@ const UserDetailsDrawer = () => {
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content>
+          <Drawer.Content maxW="6xl" bg="bg.subtle">
             <Drawer.Body>
               {open && userId && (
                 <Suspense fallback={<Spinner />}>
-                  <UserDetailsContent userId={userId} />
+                  <UserDrawerContent userId={userId} />
                 </Suspense>
               )}
             </Drawer.Body>
@@ -59,4 +60,4 @@ const UserDetailsDrawer = () => {
   );
 };
 
-export { UserDetailsDrawer };
+export { UserDrawer };

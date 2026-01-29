@@ -46,14 +46,18 @@
       "membership": "Membership"
     },
     "editProfile": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
+      "firstName": "First name",
+      "lastName": "Last name",
       "email": "Email",
       "phone": "Phone",
-      "save": "Save Changes",
+      "save": "Save changes",
       "saving": "Saving...",
       "updateSuccess": "User profile updated successfully",
-      "updateError": "Failed to update user profile"
+      "updateError": "Failed to update user profile",
+      "joinDate": "Join date",
+      "lastLogin": "Last login",
+      "registrationPoint": "Registration point",
+      "appVersion": "App version"
     }
   },
   "table": {
@@ -123,10 +127,10 @@
     "passwordMismatch": "Passwords do not match",
     "dangerZone": "Danger Zone",
     "deleteAccount": "Delete Account",
-    "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
+    "deleteAccountDescription": "Permanently delete account and all associated data. This action cannot be undone.",
     "deleteAccountButton": "Delete Account",
     "deleteAccountConfirmTitle": "Delete Account",
-    "deleteAccountConfirmDescription": "Are you sure you want to delete your account? This action is permanent and cannot be undone. All your data will be permanently removed.",
+    "deleteAccountConfirmDescription": "Are you sure you want to delete account? This action is permanent and cannot be undone. All the data will be permanently removed.",
     "cancel": "Cancel",
     "deleting": "Deleting...",
     "typeToConfirm": "Type DELETE to confirm",

@@ -4,8 +4,6 @@ const buttonRecipe = defineRecipe({
   base: {
     borderRadius: 'xl',
     fontWeight: 'bold',
-    px: 6,
-    py: 5,
   },
   variants: {
     variant: {
@@ -14,6 +12,16 @@ const buttonRecipe = defineRecipe({
         color: { base: 'black', _dark: 'white' },
         _hover: { bg: { base: 'gray.100', _dark: 'gray.800' } },
         _active: { bg: { base: 'gray.200', _dark: 'gray.700' } },
+      },
+    },
+    size: {
+      xs: {
+        px: 3,
+        py: 4,
+      },
+      sm: {
+        px: 6,
+        py: 5,
       },
     },
   },
@@ -39,6 +47,14 @@ const config = defineConfig({
       },
     },
     semanticTokens: {
+      shadows: {
+        subtle: {
+          value: {
+            _light: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            _dark: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          },
+        },
+      },
       colors: {
         brand: {
           solid: { value: '{colors.brand.400}' },
