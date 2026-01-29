@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 
 import { Badge, Button, HStack, Icon, IconButton, Switch } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuPencil, LuPlus } from 'react-icons/lu';
+import { Pencil, Plus } from 'lucide-react';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
@@ -128,7 +128,7 @@ const LocationsTable = () => {
             onClick={() => handleEditLocation(row.original)}
           >
             <Icon boxSize={4}>
-              <LuPencil />
+              <Pencil />
             </Icon>
           </IconButton>
         ),
@@ -153,7 +153,7 @@ const LocationsTable = () => {
         toolbarActions={
           <Button size="sm" colorPalette="brand" onClick={handleAddLocation}>
             <Icon boxSize={4}>
-              <LuPlus />
+              <Plus />
             </Icon>
             {t('locations.addLocation')}
           </Button>

@@ -118,9 +118,6 @@ export interface FileRouteTypes {
     | '/locations'
     | '/settings'
     | '/users'
-    | '/dashboard'
-    | '/settings'
-    | '/users'
     | '/users/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -130,9 +127,6 @@ export interface FileRouteTypes {
     | '/company-settings'
     | '/dashboard'
     | '/locations'
-    | '/settings'
-    | '/users'
-    | '/dashboard'
     | '/settings'
     | '/users'
     | '/users/$userId'

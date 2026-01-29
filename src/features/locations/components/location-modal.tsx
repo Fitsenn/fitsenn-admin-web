@@ -18,7 +18,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { LuPlus, LuX } from 'react-icons/lu';
+import { Plus, X } from 'lucide-react';
 import { z } from 'zod';
 
 import { InputRHF } from '@/components/form/input';
@@ -287,7 +287,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                   onClick={() => handleAddTimeSlot(day)}
                                 >
                                   <Icon boxSize={3}>
-                                    <LuPlus />
+                                    <Plus />
                                   </Icon>
                                 </IconButton>
                               )}
@@ -329,7 +329,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                       onClick={() => handleRemoveTimeSlot(day, index)}
                                     >
                                       <Icon boxSize={3}>
-                                        <LuX />
+                                        <X />
                                       </Icon>
                                     </IconButton>
                                   </HStack>

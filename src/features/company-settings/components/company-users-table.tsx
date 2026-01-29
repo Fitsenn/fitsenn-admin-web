@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 
 import { Badge, Button, Flex, Icon } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuPlus } from 'react-icons/lu';
+import { Plus } from 'lucide-react';
 
 import { DataTable } from '@/components/table';
 import { useCompany } from '@/hooks/use-company';
@@ -103,7 +103,7 @@ const CompanyUsersTable = () => {
         toolbarActions={
           <Button size="sm" colorPalette="brand" onClick={() => setIsInviteOpen(true)}>
             <Icon boxSize={4}>
-              <LuPlus />
+              <Plus />
             </Icon>
             {t('companySettings.users.inviteUser')}
           </Button>

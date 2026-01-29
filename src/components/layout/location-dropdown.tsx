@@ -12,7 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuCheck, LuChevronDown, LuMapPin } from 'react-icons/lu';
+import { Check, ChevronDown, MapPin } from 'lucide-react';
 
 import { useLocation } from '@/hooks/use-location';
 
@@ -34,13 +34,13 @@ const LocationDropdown = () => {
         <Button variant="ghost" px={3} cursor="pointer">
           <Flex align="center" gap={2}>
             <Icon boxSize={4} color="fg.muted">
-              <LuMapPin />
+              <MapPin />
             </Icon>
             <Text fontSize="sm" fontWeight="medium" maxW="150px" truncate>
               {selectedLocation?.name ?? t('location.selectLocation')}
             </Text>
             <Icon boxSize={4} color="fg.muted">
-              <LuChevronDown />
+              <ChevronDown />
             </Icon>
           </Flex>
         </Button>
@@ -59,7 +59,7 @@ const LocationDropdown = () => {
                 >
                   <Flex align="center" gap={3} flex={1}>
                     <Icon boxSize={4} color="fg.muted">
-                      <LuMapPin />
+                      <MapPin />
                     </Icon>
                     <Flex direction="column" flex={1}>
                       <Text fontSize="sm">{location.name}</Text>
@@ -71,7 +71,7 @@ const LocationDropdown = () => {
                     </Flex>
                     {isSelected && (
                       <Icon boxSize={4} color="brand.500">
-                        <LuCheck />
+                        <Check />
                       </Icon>
                     )}
                   </Flex>

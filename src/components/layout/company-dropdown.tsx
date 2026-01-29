@@ -14,7 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuBuilding2, LuCheck, LuChevronDown } from 'react-icons/lu';
+import { Building2, Check, ChevronDown } from 'lucide-react';
 
 import { useCompany } from '@/hooks/use-company';
 
@@ -41,7 +41,7 @@ const CompanyDropdown = () => {
               ) : (
                 <Avatar.Fallback>
                   <Icon boxSize={4}>
-                    <LuBuilding2 />
+                    <Building2 />
                   </Icon>
                 </Avatar.Fallback>
               )}
@@ -50,7 +50,7 @@ const CompanyDropdown = () => {
               {selectedCompany?.name ?? t('company.selectCompany')}
             </Text>
             <Icon boxSize={4} color="fg.muted">
-              <LuChevronDown />
+              <ChevronDown />
             </Icon>
           </Flex>
         </Button>
@@ -79,7 +79,7 @@ const CompanyDropdown = () => {
                       ) : (
                         <Avatar.Fallback>
                           <Icon boxSize={3}>
-                            <LuBuilding2 />
+                            <Building2 />
                           </Icon>
                         </Avatar.Fallback>
                       )}
@@ -89,7 +89,7 @@ const CompanyDropdown = () => {
                     </Text>
                     {isSelected && (
                       <Icon boxSize={4} color="brand.500">
-                        <LuCheck />
+                        <Check />
                       </Icon>
                     )}
                   </Flex>
