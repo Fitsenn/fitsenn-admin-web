@@ -76,10 +76,10 @@ const Sidebar = () => {
                   px={3}
                   py={3}
                   borderRadius="lg"
-                  bg={isActive ? 'teal.500' : 'transparent'}
-                  color={isActive ? 'white' : 'fg.default'}
+                  bg={isActive ? 'brand.solid' : 'transparent'}
+                  color={isActive ? 'brand.contrast' : 'fg.default'}
                   _hover={{
-                    bg: isActive ? 'teal.500' : 'bg.muted',
+                    bg: isActive ? 'brand.solid' : 'bg.muted',
                   }}
                   transition="all 0.15s ease"
                   justify={isCollapsed ? 'center' : 'flex-start'}>

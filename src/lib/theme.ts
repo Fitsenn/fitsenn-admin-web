@@ -58,7 +58,12 @@ const config = defineConfig({
       },
       colors: {
         brand: {
-          solid: { value: '{colors.brand.400}' },
+          solid: {
+            value: {
+              _light: '{colors.brand.400}',
+              _dark: '{colors.brand.500}',
+            },
+          },
           contrast: { value: '{colors.white}' },
           fg: { value: '{colors.brand.700}' },
           muted: { value: '{colors.brand.100}' },

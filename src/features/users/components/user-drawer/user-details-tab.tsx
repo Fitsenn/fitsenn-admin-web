@@ -108,7 +108,7 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
               </Button>
             </Flex>
             <Separator />
-            <SimpleGrid columns={2} gapX={10} gapY={2} p={6}>
+            <SimpleGrid columns={{ base: 1, md: 2 }} gapX={10} gapY={2} p={6}>
               <InputRHF
                 control={control}
                 name="firstName"
