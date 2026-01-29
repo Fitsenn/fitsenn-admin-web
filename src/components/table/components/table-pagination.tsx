@@ -2,7 +2,7 @@ import type { Table } from '@tanstack/react-table';
 
 import { Box, HStack, IconButton, Portal, Select, Text, createListCollection } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuChevronLeft, LuChevronRight, LuChevronsLeft, LuChevronsRight } from 'react-icons/lu';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 type TablePaginationProps<TData> = {
   table: Table<TData>;
@@ -69,7 +69,7 @@ const TablePagination = <TData,>({ table, pageSizeOptions = [10, 20, 50, 100] }:
             variant="ghost"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}>
-            <LuChevronsLeft />
+            <ChevronsLeft />
           </IconButton>
 
           <IconButton
@@ -78,7 +78,7 @@ const TablePagination = <TData,>({ table, pageSizeOptions = [10, 20, 50, 100] }:
             variant="ghost"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}>
-            <LuChevronLeft />
+            <ChevronLeft />
           </IconButton>
 
           <HStack gap={1} px={2}>
@@ -93,7 +93,7 @@ const TablePagination = <TData,>({ table, pageSizeOptions = [10, 20, 50, 100] }:
             variant="ghost"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}>
-            <LuChevronRight />
+            <ChevronRight />
           </IconButton>
 
           <IconButton
@@ -102,7 +102,7 @@ const TablePagination = <TData,>({ table, pageSizeOptions = [10, 20, 50, 100] }:
             variant="ghost"
             onClick={() => table.setPageIndex(totalPages - 1)}
             disabled={!table.getCanNextPage()}>
-            <LuChevronsRight />
+            <ChevronsRight />
           </IconButton>
         </HStack>
       </HStack>

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LuBuilding2, LuTrash2, LuUpload } from 'react-icons/lu';
+import { Building2, Trash2, Upload } from 'lucide-react';
 
 type LogoUploadProps = {
   currentLogoUrl: string | null;
@@ -58,7 +58,7 @@ const LogoUpload = ({ currentLogoUrl, onFileSelected }: LogoUploadProps) => {
             <Image src={displayUrl} alt="Company logo" objectFit="cover" w="full" h="full" />
           ) : (
             <Icon boxSize={8} color="fg.muted">
-              <LuBuilding2 />
+              <Building2 />
             </Icon>
           )}
         </Box>
@@ -69,14 +69,14 @@ const LogoUpload = ({ currentLogoUrl, onFileSelected }: LogoUploadProps) => {
           <Flex gap={2}>
             <Button size="xs" variant="outline" onClick={() => inputRef.current?.click()}>
               <Icon boxSize={3}>
-                <LuUpload />
+                <Upload />
               </Icon>
               {t('companySettings.general.changeLogo')}
             </Button>
             {displayUrl && (
               <Button size="xs" variant="ghost" colorPalette="red" onClick={handleRemove}>
                 <Icon boxSize={3}>
-                  <LuTrash2 />
+                  <Trash2 />
                 </Icon>
                 {t('companySettings.general.removeLogo')}
               </Button>

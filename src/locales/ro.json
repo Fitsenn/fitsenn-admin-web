@@ -98,10 +98,25 @@
     "loadError": "Nu s-au putut încărca utilizatorii. Te rugăm să încerci din nou.",
     "table": {
       "id": "ID",
+      "avatar": "Poza",
       "name": "Nume",
       "phone": "Telefon",
       "email": "Email",
       "membership": "Abonament"
+    },
+    "editProfile": {
+      "firstName": "Prenume",
+      "lastName": "Nume",
+      "email": "Email",
+      "phone": "Telefon",
+      "save": "Salvează modificările",
+      "saving": "Se salvează...",
+      "updateSuccess": "Profilul utilizatorului a fost actualizat cu succes",
+      "updateError": "Nu s-a putut actualiza profilul utilizatorului",
+      "joinDate": "Data înscrierii",
+      "lastLogin": "Ultima autentificare",
+      "registrationPoint": "Punct de înregistrare",
+      "appVersion": "Versiunea aplicației"
     }
   },
   "table": {
@@ -116,7 +131,14 @@
     "firstPage": "Prima pagină",
     "previousPage": "Pagina anterioară",
     "nextPage": "Pagina următoare",
-    "lastPage": "Ultima pagină"
+    "lastPage": "Ultima pagină",
+    "actions": {
+      "openMenu": "Deschide meniul de acțiuni",
+      "view": "Vizualizare",
+      "edit": "Editare",
+      "duplicate": "Duplicare",
+      "delete": "Ștergere"
+    }
   },
   "settings": {
     "title": "Setări",
