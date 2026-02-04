@@ -1,18 +1,19 @@
+import type { Location } from '@/types/location';
 import type { ColumnDef } from '@tanstack/react-table';
-import type { Location } from '../types';
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { Badge, Button, HStack, Icon, IconButton, Switch } from '@chakra-ui/react';
+import { Badge, Button, HStack, Icon, Switch } from '@chakra-ui/react';
+import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Plus } from 'lucide-react';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
 import { useCompany } from '@/hooks/use-company';
 import { useToggleLocationStatus } from '../api/toggle-location-status';
+import { CreateLocationModal } from './create-location-modal';
 import { DeactivateLocationDialog } from './deactivate-location-dialog';
-import { LocationModal } from './location-modal';
+import { EditLocationModal } from './edit-location-modal';
 
 const searchFields: (keyof Location)[] = ['name', 'address'];
 
@@ -21,28 +22,33 @@ const LocationsTable = () => {
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
 
-  const { data: locations = [], error, isLoading } = useCompanyLocations({
+  const {
+    data: locations = [],
+    error,
+    isLoading,
+  } = useCompanyLocations({
     companyId,
     activeOnly: false,
   });
   const toggleMutation = useToggleLocationStatus(companyId);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
   const [deactivatingLocation, setDeactivatingLocation] = useState<Location | null>(null);
 
   const handleAddLocation = () => {
-    setEditingLocation(null);
-    setIsModalOpen(true);
+    setIsCreateModalOpen(true);
   };
 
   const handleEditLocation = (location: Location) => {
     setEditingLocation(location);
-    setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseCreateModal = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleCloseEditModal = () => {
     setEditingLocation(null);
   };
 
@@ -86,11 +92,7 @@ const LocationsTable = () => {
         cell: ({ getValue }) => {
           const tier = getValue<string>();
           if (!tier) return '-';
-          return (
-            <Badge textTransform="capitalize">
-              {tier}
-            </Badge>
-          );
+          return <Badge textTransform="capitalize">{tier}</Badge>;
         },
       },
       {
@@ -106,8 +108,7 @@ const LocationsTable = () => {
                 size="sm"
                 checked={isActive}
                 onCheckedChange={(e) => handleToggleStatus(location, e.checked)}
-                disabled={toggleMutation.isPending}
-              >
+                disabled={toggleMutation.isPending}>
                 <Switch.HiddenInput />
                 <Switch.Control>
                   <Switch.Thumb />
@@ -119,22 +120,6 @@ const LocationsTable = () => {
             </HStack>
           );
         },
-      },
-      {
-        id: 'actions',
-        header: '',
-        cell: ({ row }) => (
-          <IconButton
-            aria-label={t('common.edit')}
-            variant="ghost"
-            size="sm"
-            onClick={() => handleEditLocation(row.original)}
-          >
-            <Icon boxSize={4}>
-              <Pencil />
-            </Icon>
-          </IconButton>
-        ),
       },
     ],
     [t, toggleMutation.isPending, handleToggleStatus],
@@ -161,12 +146,24 @@ const LocationsTable = () => {
             {t('locations.addLocation')}
           </Button>
         }
+        rowActions={{
+          //TODO: replace with permissions when we have them
+          canEdit: true,
+          actions: [
+            {
+              type: 'edit',
+              onClick: (row) => {
+                handleEditLocation(row);
+                // navigate({ to: '/users/$userId', params: { userId: row.id } });
+              },
+            },
+          ],
+        }}
       />
-      <LocationModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        location={editingLocation}
-      />
+      <CreateLocationModal isOpen={isCreateModalOpen} onClose={handleCloseCreateModal} />
+      {editingLocation && (
+        <EditLocationModal isOpen={!!editingLocation} onClose={handleCloseEditModal} location={editingLocation} />
+      )}
       <DeactivateLocationDialog
         isOpen={!!deactivatingLocation}
         onClose={handleCloseDeactivateDialog}

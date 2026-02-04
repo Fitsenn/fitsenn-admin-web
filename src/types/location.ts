@@ -1,9 +1,9 @@
-/** Time slot with open/close times as minutes from midnight in UTC */
+/** Time slot with open/close times in local HH:MM format */
 export type TimeSlot = {
-  /** Minutes from midnight (0-1439) in UTC */
-  open: number;
-  /** Minutes from midnight (0-1439) in UTC */
-  close: number;
+  /** Opening time in HH:MM format (e.g., "09:00") */
+  open: string;
+  /** Closing time in HH:MM format (e.g., "18:00") */
+  close: string;
 };
 
 export type OperatingHours = {
