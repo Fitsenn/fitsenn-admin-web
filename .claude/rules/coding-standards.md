@@ -87,6 +87,55 @@ export { Component }
 - **MAX** 200-300 lines per file - split if larger
 - **EXTRACT** functions over 25 lines into separate helpers
 
+## useEffect Rules
+
+- **NEVER** have multiple useEffects with the same dependency array - combine them
+- **ALWAYS** add a descriptive comment above useEffect explaining its purpose
+- **PREFER** combining related logic into a single effect
+
+```typescript
+// ❌ Wrong - duplicate dependency arrays
+useEffect(() => {
+  if (items.length > 0 && !selectedId) {
+    setSelectedId(items[0].id);
+  }
+}, [items, selectedId]);
+
+useEffect(() => {
+  if (items.length > 0 && selectedId && !items.some((i) => i.id === selectedId)) {
+    setSelectedId(items[0].id);
+  }
+}, [items, selectedId]);
+
+// ✅ Correct - combined into single effect
+// Auto-select first item if none selected or selected no longer exists
+useEffect(() => {
+  if (
+    items.length > 0 &&
+    (!selectedId || !items.some((i) => i.id === selectedId))
+  ) {
+    setSelectedId(items[0].id);
+  }
+}, [items, selectedId]);
+```
+
+## localStorage Rules
+
+- **ALWAYS** use `useLocalStorage` hook from `@/hooks/use-local-storage`
+- **NEVER** manually manage both useState and localStorage together
+
+```typescript
+// ❌ Wrong - manual state + localStorage
+const [value, setValue] = useState(() => localStorage.getItem('key'));
+const setValueWithStorage = (newValue: string) => {
+  setValue(newValue);
+  localStorage.setItem('key', newValue);
+};
+
+// ✅ Correct - use the hook
+const [value, setValue] = useLocalStorage('key', '');
+```
+
 ## Import Order
 
 1. React imports

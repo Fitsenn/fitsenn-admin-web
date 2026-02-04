@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { Check, Monitor, Moon, Sun } from 'lucide-react';
 
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { useTimezone } from '@/hooks/use-timezone';
+import { useDateHelpers } from '@/hooks/use-date-helpers';
 import { LANGUAGE_STORAGE_KEY } from '@/lib/i18n';
 
 const SettingsPage = () => {
@@ -24,7 +24,7 @@ const SettingsPage = () => {
 
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
-  const { timezone, setTimezone } = useTimezone();
+  const { timezone, setTimezone } = useDateHelpers();
 
   const themeOptions = createListCollection({
     items: [

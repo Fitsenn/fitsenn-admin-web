@@ -3,27 +3,76 @@ import type { ReactNode } from 'react';
 
 import { useState } from 'react';
 
-import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
+import { Box, Collapsible, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
+import {
+  Building2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  House,
+  MapPin,
+  Settings,
+  Users2,
+  Users,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, House, Users } from 'lucide-react';
 
-type SidebarItem = {
+type BaseSidebarItem = {
   labelKey: string;
-  to: FileRouteTypes['to'];
   icon: ReactNode;
 };
 
+type SidebarLinkItem = BaseSidebarItem & {
+  type: 'link';
+  to: FileRouteTypes['to'];
+};
+
+type SidebarGroupItem = BaseSidebarItem & {
+  type: 'group';
+  children: Array<{
+    labelKey: string;
+    to: FileRouteTypes['to'];
+    icon?: ReactNode;
+  }>;
+};
+
+type SidebarItem = SidebarLinkItem | SidebarGroupItem;
+
 const SIDEBAR_ITEMS: SidebarItem[] = [
   {
+    type: 'link',
     labelKey: 'navigation.dashboard',
     to: '/dashboard',
     icon: <House />,
   },
   {
+    type: 'link',
     labelKey: 'navigation.users',
     to: '/users',
     icon: <Users />,
+  },
+  {
+    type: 'group',
+    labelKey: 'navigation.company',
+    icon: <Building2 />,
+    children: [
+      {
+        labelKey: 'navigation.companyLocations',
+        to: '/company/locations',
+        icon: <MapPin />,
+      },
+      {
+        labelKey: 'navigation.companyStaff',
+        to: '/company/staff',
+        icon: <Users2 />,
+      },
+      {
+        labelKey: 'navigation.companySettings',
+        to: '/company/settings',
+        icon: <Settings />,
+      },
+    ],
   },
 ];
 
@@ -66,27 +115,100 @@ const Sidebar = () => {
 
         <VStack gap={1} px={3} align="stretch">
           {SIDEBAR_ITEMS.map((item) => {
-            const isActive = currentPath.includes(item.to);
+            if (item.type === 'link') {
+              const isActive = currentPath.includes(item.to);
+
+              return (
+                <Link key={item.to} to={item.to}>
+                  <Flex
+                    align="center"
+                    gap={3}
+                    px={3}
+                    py={3}
+                    borderRadius="lg"
+                    bg={isActive ? 'brand.solid' : 'transparent'}
+                    color={isActive ? 'brand.contrast' : 'fg.default'}
+                    _hover={{
+                      bg: isActive ? 'brand.solid' : 'bg.muted',
+                    }}
+                    transition="all 0.15s ease"
+                    justify={isCollapsed ? 'center' : 'flex-start'}>
+                    <Icon boxSize={5}>{item.icon}</Icon>
+                    {!isCollapsed && <Text fontWeight={isActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>}
+                  </Flex>
+                </Link>
+              );
+            }
+
+            const isGroupActive = item.children.some((child) => currentPath.startsWith(child.to));
+
+            const handleGroupClick = () => {
+              if (isCollapsed) {
+                setIsCollapsed(false);
+              }
+            };
 
             return (
-              <Link key={item.to} to={item.to}>
-                <Flex
-                  align="center"
-                  gap={3}
-                  px={3}
-                  py={3}
-                  borderRadius="lg"
-                  bg={isActive ? 'brand.solid' : 'transparent'}
-                  color={isActive ? 'brand.contrast' : 'fg.default'}
-                  _hover={{
-                    bg: isActive ? 'brand.solid' : 'bg.muted',
-                  }}
-                  transition="all 0.15s ease"
-                  justify={isCollapsed ? 'center' : 'flex-start'}>
-                  <Icon boxSize={5}>{item.icon}</Icon>
-                  {!isCollapsed && <Text fontWeight={isActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>}
-                </Flex>
-              </Link>
+              <Collapsible.Root key={item.labelKey} defaultOpen={isGroupActive}>
+                <Collapsible.Trigger asChild onClick={handleGroupClick}>
+                  <Flex
+                    align="center"
+                    gap={3}
+                    px={3}
+                    py={3}
+                    borderRadius="lg"
+                    bg={isGroupActive ? 'brand.solid/10' : 'transparent'}
+                    color={isGroupActive ? 'brand.solid' : 'fg.default'}
+                    _hover={{ bg: isGroupActive ? 'brand.solid/10' : 'bg.muted' }}
+                    transition="all 0.15s ease"
+                    justify={isCollapsed ? 'center' : 'space-between'}
+                    cursor="pointer">
+                    <Flex align="center" gap={3}>
+                      <Icon boxSize={5}>{item.icon}</Icon>
+                      {!isCollapsed && (
+                        <Text fontWeight={isGroupActive ? 'semibold' : 'medium'}>{t(item.labelKey)}</Text>
+                      )}
+                    </Flex>
+                    {!isCollapsed && (
+                      <Icon
+                        boxSize={4}
+                        transition="transform 0.2s ease"
+                        css={{ '[data-state=open] &': { transform: 'rotate(180deg)' } }}>
+                        <ChevronDown />
+                      </Icon>
+                    )}
+                  </Flex>
+                </Collapsible.Trigger>
+                {!isCollapsed && (
+                  <Collapsible.Content>
+                    <VStack gap={1} pl={8} mt={1} align="stretch">
+                      {item.children.map((child) => {
+                        const isChildActive = currentPath.startsWith(child.to);
+
+                        return (
+                          <Link key={child.to} to={child.to}>
+                            <Flex
+                              align="center"
+                              gap={3}
+                              px={3}
+                              py={2}
+                              borderRadius="lg"
+                              bg={isChildActive ? 'brand.solid' : 'transparent'}
+                              color={isChildActive ? 'brand.contrast' : 'fg.default'}
+                              _hover={{ bg: isChildActive ? 'brand.solid' : 'bg.muted' }}
+                              transition="all 0.15s ease">
+                              {child.icon && <Icon boxSize={4}>{child.icon}</Icon>}
+                              <Text fontSize="sm" fontWeight={isChildActive ? 'semibold' : 'medium'}>
+                                {t(child.labelKey)}
+                              </Text>
+                            </Flex>
+                          </Link>
+                        );
+                      })}
+                    </VStack>
+                  </Collapsible.Content>
+                )}
+              </Collapsible.Root>
             );
           })}
         </VStack>

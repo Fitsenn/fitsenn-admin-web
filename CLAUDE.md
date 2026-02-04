@@ -1,62 +1,48 @@
-# Fitsenn Admin Web - Project Instructions
+# Fitsenn Admin Web
 
-## Project Overview
-React admin dashboard built with TypeScript, Vite, TanStack Router/Query, Chakra UI, and Supabase.
+React admin dashboard: TypeScript, Vite, TanStack Router/Query, Chakra UI v3, Supabase.
 
-## Imported Rules
+## Rules
 
-### Core (Always Active)
-@.claude/rules/coding-standards.md
-@.claude/rules/core-architecture.md
+### Always Active
+- [Coding Standards](.claude/rules/coding-standards.md) - Types, naming, exports
+- [Core Architecture](.claude/rules/core-architecture.md) - Feature structure, data flow
 
-### Contextual (Reference as Needed)
-@.claude/rules/ui-standards.md
-@.claude/rules/tanstack-patterns.md
-@.claude/rules/figma-conversion.md
-@.claude/rules/testing.md
+### Reference as Needed
+- [UI Standards](.claude/rules/ui-standards.md) - Chakra patterns, states
+- [TanStack Patterns](.claude/rules/tanstack-patterns.md) - Router, Query
+- [Figma Conversion](.claude/rules/figma-conversion.md) - Design to code
+- [Testing](.claude/rules/testing.md) - Vitest, RTL
 
-## Project Directory Structure (Mandatory)
+## Structure
 
 ```
 src/
-├── app/                    # Application setup (providers, root)
-├── api/                    # Shared API functions
-├── components/             # Shared UI components
-│   ├── form/              # Form components (FormRHF, InputRHF)
-│   ├── layout/            # Layout (Navbar, Sidebar)
-│   ├── table/             # Table components
-│   └── ui/                # Base UI (Chakra wrappers)
-├── config/                # Global configuration
-├── contexts/              # React contexts
-├── features/              # Feature modules (self-contained)
-│   └── [feature]/
-│       ├── api/           # Feature API hooks
-│       ├── components/    # Feature components
-│       ├── hooks/         # Feature hooks
-│       ├── types/         # Feature types
-│       └── index.ts       # Public exports
-├── hooks/                 # Shared hooks
-├── lib/                   # Library configs (query-client, router, supabase, i18n)
-├── locales/               # Translation files (en.json, ro.json)
-├── routes/                # TanStack Router file-based routes
-├── types/                 # Global types
-└── utils/                 # Utility functions
+├── features/[feature]/     # Self-contained modules
+│   ├── api/               # Query/mutation hooks
+│   ├── components/        # Feature UI
+│   ├── hooks/             # Feature hooks
+│   └── types/             # Feature types
+├── components/            # Shared UI
+├── lib/                   # Configs (supabase, router, i18n)
+├── routes/                # TanStack Router
+└── locales/               # en.json, ro.json
 ```
 
-## Technology Stack
-- **Framework**: React 19 + TypeScript (strict mode)
-- **Build**: Vite
-- **Routing**: TanStack Router (file-based)
-- **Server State**: TanStack Query
-- **UI**: Chakra UI v3
-- **Forms**: React Hook Form + Zod
-- **Tables**: TanStack Table
-- **Backend**: Supabase
-- **i18n**: i18next (Romanian default)
+## Key Patterns
 
-## Feature Documentation Requirement
-Each feature folder MUST contain a README.md documenting:
-- Feature purpose and scope
-- API endpoints used
-- Component structure
-- State management approach
+| Pattern | Usage |
+|---------|-------|
+| Server data | React Query with `queryOptions` |
+| Forms | React Hook Form + Zod |
+| Routing | TanStack Router (file-based) |
+| UI | Chakra UI semantic tokens |
+| i18n | All text via `t()` function |
+
+## Critical Rules
+
+1. **NO cross-feature imports** - Compose at route level
+2. **NO `any` types** - Use proper typing
+3. **NO hardcoded text** - Use translations
+4. **Named exports only** - No default exports
+5. **Absolute imports** - Use `@/` prefix
