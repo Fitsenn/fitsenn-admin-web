@@ -12,7 +12,7 @@ type GetCompanyLocationsOptions = {
 
 const getCompanyLocations = async ({
   companyId,
-  activeOnly = true,
+  activeOnly = false,
 }: GetCompanyLocationsOptions): Promise<Location[]> => {
   if (!companyId) {
     return [];
@@ -33,7 +33,7 @@ const getCompanyLocations = async ({
 
 export const companyLocationsQueryOptions = ({
   companyId,
-  activeOnly = true,
+  activeOnly = false,
 }: GetCompanyLocationsOptions) => {
   return queryOptions({
     queryKey: ['company', companyId, 'locations', { activeOnly }],

@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useCallback, useMemo, useState } from 'react';
 
 import { Badge, Button, HStack, Icon, Switch } from '@chakra-ui/react';
+import { useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,28 +29,18 @@ const LocationsTable = () => {
     isLoading,
   } = useCompanyLocations({
     companyId,
-    activeOnly: false,
   });
   const toggleMutation = useToggleLocationStatus(companyId);
 
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingLocation, setEditingLocation] = useState<Location | null>(null);
+  const navigate = useNavigate();
   const [deactivatingLocation, setDeactivatingLocation] = useState<Location | null>(null);
 
   const handleAddLocation = () => {
-    setIsCreateModalOpen(true);
+    navigate({ to: '/company/locations/add' });
   };
 
   const handleEditLocation = (location: Location) => {
-    setEditingLocation(location);
-  };
-
-  const handleCloseCreateModal = () => {
-    setIsCreateModalOpen(false);
-  };
-
-  const handleCloseEditModal = () => {
-    setEditingLocation(null);
+    navigate({ to: '/company/locations/$locationId', params: { locationId: location.id } });
   };
 
   const handleToggleStatus = useCallback(
@@ -152,18 +143,13 @@ const LocationsTable = () => {
           actions: [
             {
               type: 'edit',
-              onClick: (row) => {
-                handleEditLocation(row);
-                // navigate({ to: '/users/$userId', params: { userId: row.id } });
-              },
+              onClick: handleEditLocation,
             },
           ],
         }}
       />
-      <CreateLocationModal isOpen={isCreateModalOpen} onClose={handleCloseCreateModal} />
-      {editingLocation && (
-        <EditLocationModal isOpen={!!editingLocation} onClose={handleCloseEditModal} location={editingLocation} />
-      )}
+      <CreateLocationModal />
+      <EditLocationModal />
       <DeactivateLocationDialog
         isOpen={!!deactivatingLocation}
         onClose={handleCloseDeactivateDialog}

@@ -21,6 +21,8 @@ import { Route as AuthenticatedUsersUserIdRouteImport } from './routes/_authenti
 import { Route as AuthenticatedCompanyStaffRouteImport } from './routes/_authenticated/company/staff'
 import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company/settings'
 import { Route as AuthenticatedCompanyLocationsRouteImport } from './routes/_authenticated/company/locations'
+import { Route as AuthenticatedCompanyLocationsAddRouteImport } from './routes/_authenticated/company/locations/add'
+import { Route as AuthenticatedCompanyLocationsLocationIdRouteImport } from './routes/_authenticated/company/locations/$locationId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -85,6 +87,18 @@ const AuthenticatedCompanyLocationsRoute =
     path: '/locations',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
+const AuthenticatedCompanyLocationsAddRoute =
+  AuthenticatedCompanyLocationsAddRouteImport.update({
+    id: '/add',
+    path: '/add',
+    getParentRoute: () => AuthenticatedCompanyLocationsRoute,
+  } as any)
+const AuthenticatedCompanyLocationsLocationIdRoute =
+  AuthenticatedCompanyLocationsLocationIdRouteImport.update({
+    id: '/$locationId',
+    path: '/$locationId',
+    getParentRoute: () => AuthenticatedCompanyLocationsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,10 +108,12 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
-  '/company/locations': typeof AuthenticatedCompanyLocationsRoute
+  '/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
+  '/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,10 +123,12 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
-  '/company/locations': typeof AuthenticatedCompanyLocationsRoute
+  '/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
+  '/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,10 +140,12 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRouteWithChildren
-  '/_authenticated/company/locations': typeof AuthenticatedCompanyLocationsRoute
+  '/_authenticated/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
   '/_authenticated/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/_authenticated/users/$userId': typeof AuthenticatedUsersUserIdRoute
+  '/_authenticated/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
+  '/_authenticated/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +161,8 @@ export interface FileRouteTypes {
     | '/company/settings'
     | '/company/staff'
     | '/users/$userId'
+    | '/company/locations/$locationId'
+    | '/company/locations/add'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -154,6 +176,8 @@ export interface FileRouteTypes {
     | '/company/settings'
     | '/company/staff'
     | '/users/$userId'
+    | '/company/locations/$locationId'
+    | '/company/locations/add'
   id:
     | '__root__'
     | '/'
@@ -168,6 +192,8 @@ export interface FileRouteTypes {
     | '/_authenticated/company/settings'
     | '/_authenticated/company/staff'
     | '/_authenticated/users/$userId'
+    | '/_authenticated/company/locations/$locationId'
+    | '/_authenticated/company/locations/add'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -262,17 +288,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyLocationsRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
+    '/_authenticated/company/locations/add': {
+      id: '/_authenticated/company/locations/add'
+      path: '/add'
+      fullPath: '/company/locations/add'
+      preLoaderRoute: typeof AuthenticatedCompanyLocationsAddRouteImport
+      parentRoute: typeof AuthenticatedCompanyLocationsRoute
+    }
+    '/_authenticated/company/locations/$locationId': {
+      id: '/_authenticated/company/locations/$locationId'
+      path: '/$locationId'
+      fullPath: '/company/locations/$locationId'
+      preLoaderRoute: typeof AuthenticatedCompanyLocationsLocationIdRouteImport
+      parentRoute: typeof AuthenticatedCompanyLocationsRoute
+    }
   }
 }
 
+interface AuthenticatedCompanyLocationsRouteChildren {
+  AuthenticatedCompanyLocationsLocationIdRoute: typeof AuthenticatedCompanyLocationsLocationIdRoute
+  AuthenticatedCompanyLocationsAddRoute: typeof AuthenticatedCompanyLocationsAddRoute
+}
+
+const AuthenticatedCompanyLocationsRouteChildren: AuthenticatedCompanyLocationsRouteChildren =
+  {
+    AuthenticatedCompanyLocationsLocationIdRoute:
+      AuthenticatedCompanyLocationsLocationIdRoute,
+    AuthenticatedCompanyLocationsAddRoute:
+      AuthenticatedCompanyLocationsAddRoute,
+  }
+
+const AuthenticatedCompanyLocationsRouteWithChildren =
+  AuthenticatedCompanyLocationsRoute._addFileChildren(
+    AuthenticatedCompanyLocationsRouteChildren,
+  )
+
 interface AuthenticatedCompanyRouteChildren {
-  AuthenticatedCompanyLocationsRoute: typeof AuthenticatedCompanyLocationsRoute
+  AuthenticatedCompanyLocationsRoute: typeof AuthenticatedCompanyLocationsRouteWithChildren
   AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
   AuthenticatedCompanyStaffRoute: typeof AuthenticatedCompanyStaffRoute
 }
 
 const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
-  AuthenticatedCompanyLocationsRoute: AuthenticatedCompanyLocationsRoute,
+  AuthenticatedCompanyLocationsRoute:
+    AuthenticatedCompanyLocationsRouteWithChildren,
   AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
   AuthenticatedCompanyStaffRoute: AuthenticatedCompanyStaffRoute,
 }
