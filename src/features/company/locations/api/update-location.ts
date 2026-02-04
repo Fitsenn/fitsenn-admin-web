@@ -1,8 +1,15 @@
-import type { UpdateLocationInput } from '../types';
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+
+type UpdateLocationInput = {
+  location_id: string;
+  name: string;
+  address?: string | null;
+  tier?: string | null;
+  is_active?: boolean;
+  operating_hours?: import('@/types/location').OperatingHours | null;
+};
 
 const updateLocation = async (input: UpdateLocationInput): Promise<boolean> => {
   const { data, error } = await supabase.rpc('update_location', {

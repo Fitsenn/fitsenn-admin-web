@@ -30,9 +30,11 @@
   },
   "navigation": {
     "dashboard": "Panou de control",
-    "locations": "Locații",
     "users": "Utilizatori",
-    "companySettings": "Setări companie"
+    "company": "Companie",
+    "companySettings": "Setări",
+    "companyLocations": "Locații",
+    "companyStaff": "Personal"
   },
   "locations": {
     "title": "Locații",
@@ -197,7 +199,7 @@
   },
   "companySettings": {
     "title": "Setări companie",
-    "description": "Gestionează profilul companiei și echipa",
+    "description": "Gestionează profilul companiei",
     "tabs": {
       "general": "General",
       "users": "Utilizatori"
@@ -249,6 +251,10 @@
           "emailInvalid": "Te rugăm să introduci o adresă de email validă"
         }
       }
+    },
+    "staff": {
+      "title": "Personal",
+      "description": "Gestionează membrii personalului companiei"
     }
   }
 }

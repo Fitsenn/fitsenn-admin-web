@@ -1,8 +1,13 @@
-import type { CompanySettings } from '../types';
-
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+
+type CompanySettings = {
+  id: string;
+  name: string;
+  code: string;
+  logo_url: string | null;
+};
 
 const getCompanySettings = async (companyId: string): Promise<CompanySettings> => {
   const { data, error } = await supabase

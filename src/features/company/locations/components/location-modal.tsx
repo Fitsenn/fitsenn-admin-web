@@ -1,4 +1,4 @@
-import type { Location, OperatingHours } from '../types';
+import type { Location, OperatingHours } from '@/types/location';
 
 import { useEffect } from 'react';
 
@@ -17,9 +17,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus, X } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Plus, X } from 'lucide-react';
 import { z } from 'zod';
 
 import { InputRHF } from '@/components/form/input';
@@ -64,8 +64,6 @@ type LocationModalProps = {
 const DEFAULT_TIME_SLOT: FormTimeSlot = { open: '09:00', close: '21:00' };
 
 const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
-  'use no memo'; // react-hook-form's watch() is incompatible with React Compiler
-
   const { t } = useTranslation();
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
@@ -88,6 +86,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
   });
 
   const { handleSubmit, reset, watch, setValue, control } = methods;
+  // eslint-disable-next-line react-hooks/incompatible-library
   const operatingHours = watch('operating_hours') ?? {};
 
   // Convert DB format (minutes) to form format (time strings) on load
@@ -211,23 +210,12 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Dialog.Header>
-                <Dialog.Title>
-                  {isEditMode ? t('locations.editLocation') : t('locations.addLocation')}
-                </Dialog.Title>
+                <Dialog.Title>{isEditMode ? t('locations.editLocation') : t('locations.addLocation')}</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
                 <Stack gap={4}>
-                  <InputRHF<LocationFormData>
-                    name="name"
-                    control={control}
-                    label={t('locations.form.name')}
-                    required
-                  />
-                  <InputRHF<LocationFormData>
-                    name="address"
-                    control={control}
-                    label={t('locations.form.address')}
-                  />
+                  <InputRHF<LocationFormData> name="name" control={control} label={t('locations.form.name')} required />
+                  <InputRHF<LocationFormData> name="address" control={control} label={t('locations.form.address')} />
                   <Fieldset.Root>
                     <Fieldset.Legend fontSize="sm" fontWeight="medium" mb={1}>
                       {t('locations.form.tier')}
@@ -235,8 +223,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                     <NativeSelect.Root>
                       <NativeSelect.Field
                         value={watch('tier') ?? ''}
-                        onChange={(e) => setValue('tier', e.target.value)}
-                      >
+                        onChange={(e) => setValue('tier', e.target.value)}>
                         {TIER_OPTIONS.map((option) => (
                           <option key={option.value} value={option.value}>
                             {option.value === '' ? t('locations.form.selectTier') : option.label}
@@ -253,8 +240,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                       </Fieldset.Legend>
                       <Switch.Root
                         checked={watch('is_active')}
-                        onCheckedChange={(e) => setValue('is_active', e.checked)}
-                      >
+                        onCheckedChange={(e) => setValue('is_active', e.checked)}>
                         <Switch.HiddenInput />
                         <Switch.Control>
                           <Switch.Thumb />
@@ -278,8 +264,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                 <Switch.Root
                                   size="sm"
                                   checked={isEnabled}
-                                  onCheckedChange={(e) => handleDayToggle(day, e.checked)}
-                                >
+                                  onCheckedChange={(e) => handleDayToggle(day, e.checked)}>
                                   <Switch.HiddenInput />
                                   <Switch.Control>
                                     <Switch.Thumb />
@@ -294,8 +279,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                   aria-label={t('locations.form.addTimeSlot')}
                                   variant="ghost"
                                   size="xs"
-                                  onClick={() => handleAddTimeSlot(day)}
-                                >
+                                  onClick={() => handleAddTimeSlot(day)}>
                                   <Icon boxSize={3}>
                                     <Plus />
                                   </Icon>
@@ -313,7 +297,9 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                       onChange={(e) => handleUpdateTimeSlot(day, index, 'open', e.target.value)}
                                       w="auto"
                                     />
-                                    <Text fontSize="sm" color="fg.muted">-</Text>
+                                    <Text fontSize="sm" color="fg.muted">
+                                      -
+                                    </Text>
                                     <Input
                                       type="time"
                                       size="sm"
@@ -326,8 +312,7 @@ const LocationModal = ({ isOpen, onClose, location }: LocationModalProps) => {
                                       variant="ghost"
                                       size="xs"
                                       colorPalette="red"
-                                      onClick={() => handleRemoveTimeSlot(day, index)}
-                                    >
+                                      onClick={() => handleRemoveTimeSlot(day, index)}>
                                       <Icon boxSize={3}>
                                         <X />
                                       </Icon>

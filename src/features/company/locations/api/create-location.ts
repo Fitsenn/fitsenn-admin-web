@@ -1,8 +1,17 @@
-import type { CreateLocationInput } from '../types';
+import type { OperatingHours } from '@/types/location';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+
+type CreateLocationInput = {
+  company_id: string;
+  name: string;
+  address?: string | null;
+  tier?: string | null;
+  is_active?: boolean;
+  operating_hours?: OperatingHours | null;
+};
 
 const createLocation = async (input: CreateLocationInput): Promise<string> => {
   const { data, error } = await supabase.rpc('create_location', {
@@ -19,7 +28,7 @@ const createLocation = async (input: CreateLocationInput): Promise<string> => {
     throw error;
   }
 
-  return data as string;
+  return data;
 };
 
 export const useCreateLocation = () => {

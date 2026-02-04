@@ -6,7 +6,7 @@ type UpdateCompanySettingsInput = {
   companyId: string;
   name: string;
   code: string;
-  logoUrl: string | null;
+  logoUrl?: string | null;
 };
 
 const updateCompanySettings = async (input: UpdateCompanySettingsInput): Promise<boolean> => {
