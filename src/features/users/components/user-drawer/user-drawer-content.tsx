@@ -14,11 +14,11 @@ const UserDrawerContent = ({ userId }: { userId: string }) => {
     <Box p="4">
       {/* Header */}
       <Flex alignItems="center" gap="4">
-        <Image src={user?.profile.avatar_url ?? ''} rounded="xl" boxSize={{ base: '100px', md: '150px' }} />
+        <Image src={user?.profile.avatarUrl ?? ''} rounded="xl" boxSize={{ base: '100px', md: '150px' }} />
         <Flex direction="column" gap="1">
           <Flex alignItems="center" gap="2" mb="2" flexWrap="wrap">
             <Text fontSize="2xl" fontWeight="bold">
-              {user?.profile.first_name} {user?.profile.last_name}
+              {user?.profile.firstName} {user?.profile.lastName}
             </Text>
             <Badge colorPalette={user?.membership ? 'green' : 'orange'}>
               {user?.membership ? 'Active Member' : 'Inactive Member'}

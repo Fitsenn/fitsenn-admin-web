@@ -87,12 +87,12 @@ const LocationsTable = () => {
         },
       },
       {
-        accessorKey: 'is_active',
+        accessorKey: 'isActive',
         header: t('locations.table.status'),
         enableSorting: true,
         cell: ({ row }) => {
           const location = row.original;
-          const isActive = location.is_active;
+          const isActive = location.isActive;
           return (
             <HStack gap={2}>
               <Switch.Root

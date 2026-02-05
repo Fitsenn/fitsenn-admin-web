@@ -50,7 +50,7 @@ const CompanySettingsPage = () => {
 
   const handleSubmit = async (data: GeneralFormData) => {
     try {
-      let logoUrl = settings?.logo_url;
+      let logoUrl = settings?.logoUrl;
 
       if (selectedFileRef.current) {
         logoUrl = await uploadLogoMutation.mutateAsync({
@@ -86,8 +86,8 @@ const CompanySettingsPage = () => {
 
   const handleFileSelected = (file: File | null) => {
     selectedFileRef.current = file;
-    setHasLogoChange(file !== null || settings?.logo_url !== null);
-    setIsRemovingLogo(file === null && settings?.logo_url !== null);
+    setHasLogoChange(file !== null || settings?.logoUrl !== null);
+    setIsRemovingLogo(file === null && settings?.logoUrl !== null);
   };
 
   if (isPending) {
@@ -136,7 +136,7 @@ const CompanySettingsPage = () => {
                   required
                 />
 
-                <LogoUpload key={logoResetKey} currentLogoUrl={settings.logo_url} onFileSelected={handleFileSelected} />
+                <LogoUpload key={logoResetKey} currentLogoUrl={settings.logoUrl} onFileSelected={handleFileSelected} />
 
                 <Button
                   type="submit"

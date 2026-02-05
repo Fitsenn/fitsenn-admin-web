@@ -1,8 +1,9 @@
-import type { Company } from '@/types/company';
+import type { Company, DatabaseCompany } from '@/types/company';
 
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
 
 const getUserCompanies = async (): Promise<Company[]> => {
   const { data: sessionData } = await supabase.auth.getSession();
@@ -19,7 +20,7 @@ const getUserCompanies = async (): Promise<Company[]> => {
     throw error;
   }
 
-  return data as Company[];
+  return transformers.fromDatabase(data as DatabaseCompany[]);
 };
 
 export const userCompaniesQueryOptions = () => {

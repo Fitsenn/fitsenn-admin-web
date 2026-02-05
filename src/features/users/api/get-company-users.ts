@@ -3,12 +3,16 @@ import type { UserProfile } from '@/types/user';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
+import type { SnakeToCamel } from '@/types/utility_types';
 
-type CompanyUser = {
+type DatabaseCompanyUser = {
   user_id: string;
   profile: UserProfile;
   membership: unknown;
 };
+
+type CompanyUser = SnakeToCamel<DatabaseCompanyUser>;
 
 type CompanyUserResult = CompanyUser[];
 
@@ -23,7 +27,7 @@ const getCompanyUsers = async (companyId: string): Promise<CompanyUserResult> =>
     throw error;
   }
 
-  return data as CompanyUserResult;
+  return transformers.fromDatabase(data as unknown as DatabaseCompanyUser[]);
 };
 
 const getCompanyUsersQueryOptions = (companyId: string) => {
@@ -40,6 +44,6 @@ export const useCompanyUsers = ({ companyId }: { companyId: string }) => {
 export const useCompanyUser = ({ companyId, userId }: { companyId: string; userId: string }) => {
   return useQuery({
     ...getCompanyUsersQueryOptions(companyId),
-    select: (data) => data.find((user) => user.user_id === userId),
+    select: (data) => data.find((user) => user.userId === userId),
   });
 };

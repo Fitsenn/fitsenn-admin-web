@@ -33,12 +33,12 @@ const EditLocationModal = () => {
     if (!location) return;
 
     await updateMutation.mutateAsync({
-      location_id: location.id,
+      locationId: location.id,
       name: data.name,
       address: data.address || null,
       tier: data.tier || null,
-      is_active: data.is_active,
-      operating_hours: data.operating_hours,
+      isActive: data.isActive,
+      operatingHours: data.operatingHours,
     });
 
     navigate({ to: '/company/locations' });
@@ -50,8 +50,8 @@ const EditLocationModal = () => {
       name: location.name,
       address: location.address ?? '',
       tier: location.tier ?? '',
-      is_active: location.is_active,
-      operating_hours: location.operating_hours ?? {},
+      isActive: location.isActive,
+      operatingHours: location.operatingHours ?? {},
     };
   }, [location]);
 

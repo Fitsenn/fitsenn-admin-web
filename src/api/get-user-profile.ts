@@ -1,8 +1,9 @@
-import type { UserProfile } from '@/types/user';
+import type { DatabaseUserProfile, UserProfile } from '@/types/user';
 
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
 
 const getUserProfile = async (): Promise<UserProfile | null> => {
   const { data: sessionData } = await supabase.auth.getSession();
@@ -27,18 +28,14 @@ const getUserProfile = async (): Promise<UserProfile | null> => {
   }
 
   return {
-    ...data,
+    ...transformers.fromDatabase(data as DatabaseUserProfile),
     email,
   };
 };
 
-export const userProfileQueryOptions = () => {
-  return queryOptions({
+export const useUserProfile = () => {
+  return useQuery({
     queryKey: ['user', 'profile'],
     queryFn: getUserProfile,
   });
-};
-
-export const useUserProfile = () => {
-  return useQuery(userProfileQueryOptions());
 };

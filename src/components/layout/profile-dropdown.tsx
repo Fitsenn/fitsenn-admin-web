@@ -35,13 +35,13 @@ const ProfileDropdown = () => {
     });
   };
 
-  const displayName = user?.first_name + ' ' + user?.last_name;
+  const displayName = user?.firstName + ' ' + user?.lastName;
 
   return (
     <MenuRoot>
       <MenuTrigger asChild>
         <Button variant="ghost" p={1} borderRadius="full" cursor="pointer">
-          <Avatar url={user?.avatar_url} />
+          <Avatar url={user?.avatarUrl} />
         </Button>
       </MenuTrigger>
       <Portal>
@@ -49,7 +49,7 @@ const ProfileDropdown = () => {
           <MenuContent minW="200px">
             <Box px={3} py={2}>
               <Flex align="center" gap={3}>
-                <Avatar url={user?.avatar_url} />
+                <Avatar url={user?.avatarUrl} />
                 <div>
                   <Text fontWeight="medium">{displayName}</Text>
                   <Text fontSize="xs">{user?.email}</Text>

@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 export const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
+export type Weekday = (typeof DAYS)[number];
+
 export const TIER_OPTIONS = [
   { value: '', label: '' },
   { value: 'standard', label: 'Standard' },
@@ -18,12 +20,24 @@ const timeSlotSchema = z.object({
   close: z.string(),
 });
 
+const daySchema = z.array(timeSlotSchema).nullable().optional();
+
 export const locationSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   address: z.string().optional(),
   tier: z.string().optional(),
-  is_active: z.boolean(),
-  operating_hours: z.record(z.array(timeSlotSchema).nullable()).optional(),
+  isActive: z.boolean(),
+  operatingHours: z
+    .object({
+      monday: daySchema,
+      tuesday: daySchema,
+      wednesday: daySchema,
+      thursday: daySchema,
+      friday: daySchema,
+      saturday: daySchema,
+      sunday: daySchema,
+    })
+    .optional(),
 });
 
 export type LocationFormData = z.infer<typeof locationSchema>;

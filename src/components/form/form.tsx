@@ -23,7 +23,7 @@ const FormRHF = <
 }: FormProps<TFormValues>) => {
   return (
     <FormProvider {...methods}>
-      <form id={id} noValidate onSubmit={methods.handleSubmit(onSubmit)}>
+      <form id={id} noValidate onSubmit={methods.handleSubmit(onSubmit)} style={{ height: '100%', overflow: 'auto' }}>
         {children}
       </form>
     </FormProvider>

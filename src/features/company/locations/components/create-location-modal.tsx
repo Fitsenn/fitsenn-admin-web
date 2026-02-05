@@ -21,12 +21,12 @@ const CreateLocationModal = () => {
 
   const handleSubmit = async (data: LocationFormData) => {
     await createMutation.mutateAsync({
-      company_id: companyId,
+      companyId,
       name: data.name,
       address: data.address || null,
       tier: data.tier || null,
-      is_active: data.is_active,
-      operating_hours: data.operating_hours,
+      isActive: data.isActive,
+      operatingHours: data.operatingHours,
     });
 
     navigate({ to: '/company/locations' });

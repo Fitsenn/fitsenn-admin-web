@@ -1,8 +1,9 @@
-import type { UserProfile } from '@/types/user';
+import type { DatabaseUserProfile, UserProfile } from '@/types/user';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
 
 export type UpdateProfileParams = {
   firstName: string;
@@ -37,7 +38,7 @@ const updateProfile = async (params: UpdateProfileParams): Promise<UserProfile> 
   }
 
   return {
-    ...data,
+    ...transformers.fromDatabase(data as DatabaseUserProfile),
     email,
   };
 };

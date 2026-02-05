@@ -1,13 +1,17 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
+import type { SnakeToCamel } from '@/types/utility_types';
 
-type CompanySettings = {
+type DatabaseCompanySettings = {
   id: string;
   name: string;
   code: string;
   logo_url: string | null;
 };
+
+type CompanySettings = SnakeToCamel<DatabaseCompanySettings>;
 
 const getCompanySettings = async (companyId: string): Promise<CompanySettings> => {
   const { data, error } = await supabase
@@ -21,7 +25,7 @@ const getCompanySettings = async (companyId: string): Promise<CompanySettings> =
     throw error;
   }
 
-  return data as CompanySettings;
+  return transformers.fromDatabase(data as DatabaseCompanySettings);
 };
 
 export const companySettingsQueryOptions = (companyId: string) => {

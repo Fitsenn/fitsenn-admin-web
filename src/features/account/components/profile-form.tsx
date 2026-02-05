@@ -22,9 +22,9 @@ const ProfileForm = () => {
   const values = useMemo(() => {
     return user
       ? {
-          firstName: user.first_name,
-          lastName: user.last_name,
-          phone: user.phone,
+          firstName: user.firstName ?? '',
+          lastName: user.lastName ?? '',
+          phone: user.phone ?? '',
           email: user.email,
         }
       : undefined;

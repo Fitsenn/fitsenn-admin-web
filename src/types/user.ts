@@ -1,9 +1,5 @@
+import type { Tables } from './database.types';
+import type { SnakeToCamel } from './utility_types';
 
-export type UserProfile = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  avatar_url: string | null;
-  phone: string;
-  email: string;
-};
+export type DatabaseUserProfile = Tables<'profiles'> & { email: string };
+export type UserProfile = SnakeToCamel<DatabaseUserProfile>;

@@ -36,8 +36,8 @@ const CompanyDropdown = () => {
         <Button variant="ghost" px={3} cursor="pointer">
           <Flex align="center" gap={2}>
             <Avatar.Root size="xs">
-              {selectedCompany?.logo_url ? (
-                <Avatar.Image src={selectedCompany.logo_url} alt={selectedCompany.name} />
+              {selectedCompany?.logoUrl ? (
+                <Avatar.Image src={selectedCompany.logoUrl} alt={selectedCompany.name} />
               ) : (
                 <Avatar.Fallback>
                   <Icon boxSize={4}>
@@ -74,8 +74,8 @@ const CompanyDropdown = () => {
                 >
                   <Flex align="center" gap={3} flex={1}>
                     <Avatar.Root size="xs">
-                      {company.logo_url ? (
-                        <Avatar.Image src={company.logo_url} alt={company.name} />
+                      {company.logoUrl ? (
+                        <Avatar.Image src={company.logoUrl} alt={company.name} />
                       ) : (
                         <Avatar.Fallback>
                           <Icon boxSize={3}>

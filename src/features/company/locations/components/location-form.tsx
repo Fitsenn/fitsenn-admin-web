@@ -1,4 +1,4 @@
-import type { LocationFormData } from './location-form.schema';
+import type { LocationFormData, Weekday } from './location-form.schema';
 
 import { useEffect } from 'react';
 
@@ -45,8 +45,8 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
       name: '',
       address: '',
       tier: '',
-      is_active: true,
-      operating_hours: {},
+      isActive: true,
+      operatingHours: {},
       ...initialValues,
     },
   });
@@ -58,7 +58,7 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
   }, [reset, initialValues]);
 
   // eslint-disable-next-line react-hooks/incompatible-library
-  const operatingHours = watch('operating_hours') ?? {};
+  const operatingHours = watch('operatingHours') ?? {};
 
   const handleClose = () => {
     reset();
@@ -70,30 +70,30 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
     reset();
   };
 
-  const handleDayToggle = (day: string, enabled: boolean) => {
+  const handleDayToggle = (day: Weekday, enabled: boolean) => {
     if (enabled) {
-      setValue(`operating_hours.${day}`, [{ ...DEFAULT_TIME_SLOT }]);
+      setValue(`operatingHours.${day}`, [{ ...DEFAULT_TIME_SLOT }]);
     } else {
-      setValue(`operating_hours.${day}`, null);
+      setValue(`operatingHours.${day}`, null);
     }
   };
 
-  const handleAddTimeSlot = (day: string) => {
+  const handleAddTimeSlot = (day: Weekday) => {
     const currentSlots = operatingHours[day] ?? [];
-    setValue(`operating_hours.${day}`, [...currentSlots, { open: '18:00', close: '22:00' }]);
+    setValue(`operatingHours.${day}`, [...currentSlots, { open: '18:00', close: '22:00' }]);
   };
 
-  const handleRemoveTimeSlot = (day: string, index: number) => {
+  const handleRemoveTimeSlot = (day: Weekday, index: number) => {
     const currentSlots = operatingHours[day] ?? [];
     if (currentSlots.length === 1) {
-      setValue(`operating_hours.${day}`, null);
+      setValue(`operatingHours.${day}`, null);
     } else {
       const newSlots = currentSlots.filter((_, i) => i !== index);
-      setValue(`operating_hours.${day}`, newSlots);
+      setValue(`operatingHours.${day}`, newSlots);
     }
   };
 
-  const handleUpdateTimeSlot = (day: string, index: number, field: 'open' | 'close', value: string) => {
+  const handleUpdateTimeSlot = (day: Weekday, index: number, field: 'open' | 'close', value: string) => {
     const currentSlots = operatingHours[day] ?? [];
     const newSlots = currentSlots.map((slot, i) => {
       if (i === index) {
@@ -101,7 +101,7 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
       }
       return slot;
     });
-    setValue(`operating_hours.${day}`, newSlots);
+    setValue(`operatingHours.${day}`, newSlots);
   };
 
   return (
@@ -136,7 +136,7 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
                 <Fieldset.Legend fontSize="sm" fontWeight="medium">
                   {t('locations.form.isActive')}
                 </Fieldset.Legend>
-                <Switch.Root checked={watch('is_active')} onCheckedChange={(e) => setValue('is_active', e.checked)}>
+                <Switch.Root checked={watch('isActive')} onCheckedChange={(e) => setValue('isActive', e.checked)}>
                   <Switch.HiddenInput />
                   <Switch.Control>
                     <Switch.Thumb />

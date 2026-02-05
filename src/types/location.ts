@@ -1,8 +1,8 @@
-/** Time slot with open/close times in local HH:MM format */
+import type { Tables } from './database.types';
+import type { Replace, SnakeToCamel } from './utility_types';
+
 export type TimeSlot = {
-  /** Opening time in HH:MM format (e.g., "09:00") */
   open: string;
-  /** Closing time in HH:MM format (e.g., "18:00") */
   close: string;
 };
 
@@ -16,14 +16,6 @@ export type OperatingHours = {
   sunday?: TimeSlot[] | null;
 };
 
-export type Location = {
-  id: string;
-  company_id: string;
-  name: string;
-  address: string | null;
-  tier: string | null;
-  is_active: boolean;
-  operating_hours: OperatingHours | null;
-  created_at: string;
-  updated_at: string;
-};
+export type DatabaseLocation = Replace<Tables<'locations'>, { operating_hours: OperatingHours }>;
+
+export type Location = SnakeToCamel<DatabaseLocation>;

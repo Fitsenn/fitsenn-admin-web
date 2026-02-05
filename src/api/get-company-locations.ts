@@ -1,8 +1,9 @@
-import type { Location } from '@/types/location';
+import type { DatabaseLocation, Location } from '@/types/location';
 
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
 
 type GetCompanyLocationsOptions = {
   companyId: string;
@@ -28,7 +29,7 @@ const getCompanyLocations = async ({
     throw error;
   }
 
-  return data as Location[];
+  return transformers.fromDatabase(data as DatabaseLocation[]);
 };
 
 export const companyLocationsQueryOptions = ({

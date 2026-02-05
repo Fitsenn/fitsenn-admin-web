@@ -16,7 +16,7 @@ type CompanyUserRow = {
   email: string;
   phone: string;
   roles: string[];
-  joined_at: string;
+  joinedAt: string;
 };
 
 const searchFields: (keyof CompanyUserRow)[] = ['name', 'email'];
@@ -32,11 +32,11 @@ const CompanyUsersTable = () => {
   const rows: CompanyUserRow[] = useMemo(
     () =>
       users.map((user) => ({
-        name: [user.profile.first_name, user.profile.last_name].filter(Boolean).join(' ') || '-',
+        name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(' ') || '-',
         email: user.profile.email ?? '-',
         phone: user.profile.phone ?? '-',
         roles: user.roles ?? [],
-        joined_at: user.joined_at,
+        joinedAt: user.joinedAt,
       })),
     [users],
   );
@@ -75,7 +75,7 @@ const CompanyUsersTable = () => {
         },
       },
       {
-        accessorKey: 'joined_at',
+        accessorKey: 'joinedAt',
         header: t('companySettings.users.table.joinedAt'),
         enableSorting: true,
         cell: ({ getValue }) => {

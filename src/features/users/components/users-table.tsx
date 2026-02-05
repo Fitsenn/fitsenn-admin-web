@@ -34,9 +34,9 @@ const UsersTable = () => {
     if (!membersRaw) return [];
 
     return membersRaw.map((item) => ({
-      id: item.user_id,
-      avatar: item.profile.avatar_url ?? '',
-      name: item.profile.first_name + ' ' + item.profile.last_name,
+      id: item.userId,
+      avatar: item.profile.avatarUrl ?? '',
+      name: item.profile.firstName + ' ' + item.profile.lastName,
       phone: item.profile.phone ?? '-',
       email: item.profile.email,
       membership: item.membership ? 'Active' : 'Inactive',

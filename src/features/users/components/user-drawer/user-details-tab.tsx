@@ -45,8 +45,8 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
   const values = useMemo(() => {
     return user
       ? {
-          firstName: user.profile.first_name,
-          lastName: user.profile.last_name,
+          firstName: user.profile.firstName,
+          lastName: user.profile.lastName,
           email: user.profile.email,
           phone: user.profile.phone,
         }

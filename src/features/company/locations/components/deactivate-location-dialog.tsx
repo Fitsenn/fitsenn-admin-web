@@ -43,7 +43,7 @@ const DeactivateLocationDialog = ({ isOpen, onClose, location }: DeactivateLocat
     onClose();
   };
 
-  const hasWarnings = dependencies?.has_active_plans || dependencies?.has_active_memberships;
+  const hasWarnings = dependencies?.hasActivePlans || dependencies?.hasActiveMemberships;
 
   return (
     <Modal open={isOpen} onClose={onClose} title={t('locations.deactivate.title')}>
@@ -68,17 +68,17 @@ const DeactivateLocationDialog = ({ isOpen, onClose, location }: DeactivateLocat
               <Stack gap={1}>
                 <Alert.Title>{t('locations.deactivate.warningTitle')}</Alert.Title>
                 <Alert.Description>
-                  {dependencies?.has_active_plans && (
+                  {dependencies?.hasActivePlans && (
                     <Text fontSize="sm">
                       {t('locations.deactivate.activePlans', {
-                        count: dependencies.active_plans_count,
+                        count: dependencies.activePlansCount,
                       })}
                     </Text>
                   )}
-                  {dependencies?.has_active_memberships && (
+                  {dependencies?.hasActiveMemberships && (
                     <Text fontSize="sm">
                       {t('locations.deactivate.activeMemberships', {
-                        count: dependencies.active_memberships_count,
+                        count: dependencies.activeMembershipsCount,
                       })}
                     </Text>
                   )}

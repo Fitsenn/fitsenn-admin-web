@@ -1,8 +1,9 @@
-import type { CompanyUser } from '../types';
+import type { CompanyUser, DatabaseCompanyUser } from '../types';
 
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
 
 const getCompanyUsers = async (companyId: string): Promise<CompanyUser[]> => {
   if (!companyId) return [];
@@ -16,7 +17,7 @@ const getCompanyUsers = async (companyId: string): Promise<CompanyUser[]> => {
     throw error;
   }
 
-  return (data ?? []) as CompanyUser[];
+  return transformers.fromDatabase((data ?? []) as unknown as DatabaseCompanyUser[]);
 };
 
 export const companyUsersQueryOptions = (companyId: string) => {

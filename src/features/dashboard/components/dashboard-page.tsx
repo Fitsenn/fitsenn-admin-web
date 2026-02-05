@@ -12,7 +12,7 @@ export function DashboardPage() {
       <Box>
         <Heading size="xl">{t('dashboard.title')}</Heading>
         <Text color="fg.muted" mt={2}>
-          {t('dashboard.welcomeBack', { firstName: user?.first_name, lastName: user?.last_name })}
+          {t('dashboard.welcomeBack', { firstName: user?.firstName, lastName: user?.lastName })}
         </Text>
       </Box>
 

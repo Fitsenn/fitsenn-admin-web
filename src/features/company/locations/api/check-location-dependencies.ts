@@ -1,13 +1,17 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
+import { transformers } from '@/utils/data-transformers';
+import type { SnakeToCamel } from '@/types/utility_types';
 
-export type LocationDependencies = {
+export type DatabaseLocationDependencies = {
   has_active_plans: boolean;
   active_plans_count: number;
   has_active_memberships: boolean;
   active_memberships_count: number;
 };
+
+export type LocationDependencies = SnakeToCamel<DatabaseLocationDependencies>;
 
 const checkLocationDependencies = async (locationId: string): Promise<LocationDependencies | null> => {
   const { data, error } = await supabase.rpc('check_location_dependencies', {
@@ -20,7 +24,7 @@ const checkLocationDependencies = async (locationId: string): Promise<LocationDe
   }
 
   if (data && data.length > 0) {
-    return data[0] as LocationDependencies;
+    return transformers.fromDatabase(data[0] as DatabaseLocationDependencies);
   }
 
   return null;
