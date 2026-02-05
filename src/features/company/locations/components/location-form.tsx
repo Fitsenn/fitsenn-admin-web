@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import {
   Box,
   Button,
-  Dialog,
   Fieldset,
   HStack,
   Icon,
@@ -24,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
+import { Modal } from '@/components/ui/modal';
 import { DAYS, DEFAULT_TIME_SLOT, TIER_OPTIONS, locationSchema } from './location-form.schema';
 
 type LocationFormProps = {
@@ -105,144 +105,135 @@ const LocationForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }:
   };
 
   return (
-    <Dialog.Root
+    <Modal
       open={isOpen}
-      onOpenChange={(e) => {
-        if (!e.open) handleClose();
-      }}>
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content maxW="550px">
-          <FormRHF methods={methods} onSubmit={handleFormSubmit}>
-            <Dialog.Header>
-              <Dialog.Title>{isEdit ? t('locations.editLocation') : t('locations.addLocation')}</Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Body>
-              <Stack gap={4}>
-                <InputRHF name="name" control={control} label={t('locations.form.name')} required />
-                <InputRHF name="address" control={control} label={t('locations.form.address')} />
+      onClose={handleClose}
+      title={isEdit ? t('locations.editLocation') : t('locations.addLocation')}>
+      <FormRHF methods={methods} onSubmit={handleFormSubmit} id="location-form">
+        <Modal.Body>
+          <Stack gap={4}>
+            <InputRHF name="name" control={control} label={t('locations.form.name')} required />
+            <InputRHF name="address" control={control} label={t('locations.form.address')} />
 
-                <Fieldset.Root>
-                  <Fieldset.Legend fontSize="sm" fontWeight="medium" mb={1}>
-                    {t('locations.form.tier')}
-                  </Fieldset.Legend>
-                  <NativeSelect.Root>
-                    <NativeSelect.Field value={watch('tier') ?? ''} onChange={(e) => setValue('tier', e.target.value)}>
-                      {TIER_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.value === '' ? t('locations.form.selectTier') : option.label}
-                        </option>
-                      ))}
-                    </NativeSelect.Field>
-                    <NativeSelect.Indicator />
-                  </NativeSelect.Root>
-                </Fieldset.Root>
+            <Fieldset.Root>
+              <Fieldset.Legend fontSize="sm" fontWeight="medium" mb={1}>
+                {t('locations.form.tier')}
+              </Fieldset.Legend>
+              <NativeSelect.Root>
+                <NativeSelect.Field value={watch('tier') ?? ''} onChange={(e) => setValue('tier', e.target.value)}>
+                  {TIER_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.value === '' ? t('locations.form.selectTier') : option.label}
+                    </option>
+                  ))}
+                </NativeSelect.Field>
+                <NativeSelect.Indicator />
+              </NativeSelect.Root>
+            </Fieldset.Root>
 
-                <Fieldset.Root>
-                  <HStack justify="space-between">
-                    <Fieldset.Legend fontSize="sm" fontWeight="medium">
-                      {t('locations.form.isActive')}
-                    </Fieldset.Legend>
-                    <Switch.Root checked={watch('is_active')} onCheckedChange={(e) => setValue('is_active', e.checked)}>
-                      <Switch.HiddenInput />
-                      <Switch.Control>
-                        <Switch.Thumb />
-                      </Switch.Control>
-                    </Switch.Root>
-                  </HStack>
-                </Fieldset.Root>
+            <Fieldset.Root>
+              <HStack justify="space-between">
+                <Fieldset.Legend fontSize="sm" fontWeight="medium">
+                  {t('locations.form.isActive')}
+                </Fieldset.Legend>
+                <Switch.Root checked={watch('is_active')} onCheckedChange={(e) => setValue('is_active', e.checked)}>
+                  <Switch.HiddenInput />
+                  <Switch.Control>
+                    <Switch.Thumb />
+                  </Switch.Control>
+                </Switch.Root>
+              </HStack>
+            </Fieldset.Root>
 
-                <Fieldset.Root>
-                  <Fieldset.Legend fontSize="sm" fontWeight="medium" mb={2}>
-                    {t('locations.form.operatingHours')}
-                  </Fieldset.Legend>
-                  <Stack gap={3}>
-                    {DAYS.map((day) => {
-                      const daySlots = operatingHours[day];
-                      const isEnabled = Array.isArray(daySlots) && daySlots.length > 0;
-                      return (
-                        <Box key={day}>
-                          <HStack justify="space-between" align="center" mb={isEnabled ? 2 : 0}>
-                            <HStack gap={2} minW="120px">
-                              <Switch.Root
+            <Fieldset.Root>
+              <Fieldset.Legend fontSize="sm" fontWeight="medium" mb={2}>
+                {t('locations.form.operatingHours')}
+              </Fieldset.Legend>
+              <Stack gap={3}>
+                {DAYS.map((day) => {
+                  const daySlots = operatingHours[day];
+                  const isEnabled = Array.isArray(daySlots) && daySlots.length > 0;
+                  return (
+                    <Box key={day}>
+                      <HStack justify="space-between" align="center" mb={isEnabled ? 2 : 0}>
+                        <HStack gap={2} minW="120px">
+                          <Switch.Root
+                            size="sm"
+                            checked={isEnabled}
+                            onCheckedChange={(e) => handleDayToggle(day, e.checked)}>
+                            <Switch.HiddenInput />
+                            <Switch.Control>
+                              <Switch.Thumb />
+                            </Switch.Control>
+                          </Switch.Root>
+                          <Text fontSize="sm" fontWeight={isEnabled ? 'medium' : 'normal'}>
+                            {t(`locations.days.${day}`)}
+                          </Text>
+                        </HStack>
+                        {isEnabled && (
+                          <IconButton
+                            aria-label={t('locations.form.addTimeSlot')}
+                            variant="ghost"
+                            size="xs"
+                            onClick={() => handleAddTimeSlot(day)}>
+                            <Icon boxSize={3}>
+                              <Plus />
+                            </Icon>
+                          </IconButton>
+                        )}
+                      </HStack>
+                      {isEnabled && (
+                        <Stack gap={1} pl={8}>
+                          {daySlots.map((slot, index) => (
+                            <HStack key={index} gap={2}>
+                              <Input
+                                type="time"
                                 size="sm"
-                                checked={isEnabled}
-                                onCheckedChange={(e) => handleDayToggle(day, e.checked)}>
-                                <Switch.HiddenInput />
-                                <Switch.Control>
-                                  <Switch.Thumb />
-                                </Switch.Control>
-                              </Switch.Root>
-                              <Text fontSize="sm" fontWeight={isEnabled ? 'medium' : 'normal'}>
-                                {t(`locations.days.${day}`)}
+                                value={slot.open}
+                                onChange={(e) => handleUpdateTimeSlot(day, index, 'open', e.target.value)}
+                                w="auto"
+                              />
+                              <Text fontSize="sm" color="fg.muted">
+                                -
                               </Text>
-                            </HStack>
-                            {isEnabled && (
+                              <Input
+                                type="time"
+                                size="sm"
+                                value={slot.close}
+                                onChange={(e) => handleUpdateTimeSlot(day, index, 'close', e.target.value)}
+                                w="auto"
+                              />
                               <IconButton
-                                aria-label={t('locations.form.addTimeSlot')}
+                                aria-label={t('locations.form.removeTimeSlot')}
                                 variant="ghost"
                                 size="xs"
-                                onClick={() => handleAddTimeSlot(day)}>
+                                colorPalette="red"
+                                onClick={() => handleRemoveTimeSlot(day, index)}>
                                 <Icon boxSize={3}>
-                                  <Plus />
+                                  <X />
                                 </Icon>
                               </IconButton>
-                            )}
-                          </HStack>
-                          {isEnabled && (
-                            <Stack gap={1} pl={8}>
-                              {daySlots.map((slot, index) => (
-                                <HStack key={index} gap={2}>
-                                  <Input
-                                    type="time"
-                                    size="sm"
-                                    value={slot.open}
-                                    onChange={(e) => handleUpdateTimeSlot(day, index, 'open', e.target.value)}
-                                    w="auto"
-                                  />
-                                  <Text fontSize="sm" color="fg.muted">
-                                    -
-                                  </Text>
-                                  <Input
-                                    type="time"
-                                    size="sm"
-                                    value={slot.close}
-                                    onChange={(e) => handleUpdateTimeSlot(day, index, 'close', e.target.value)}
-                                    w="auto"
-                                  />
-                                  <IconButton
-                                    aria-label={t('locations.form.removeTimeSlot')}
-                                    variant="ghost"
-                                    size="xs"
-                                    colorPalette="red"
-                                    onClick={() => handleRemoveTimeSlot(day, index)}>
-                                    <Icon boxSize={3}>
-                                      <X />
-                                    </Icon>
-                                  </IconButton>
-                                </HStack>
-                              ))}
-                            </Stack>
-                          )}
-                        </Box>
-                      );
-                    })}
-                  </Stack>
-                </Fieldset.Root>
+                            </HStack>
+                          ))}
+                        </Stack>
+                      )}
+                    </Box>
+                  );
+                })}
               </Stack>
-            </Dialog.Body>
-            <Dialog.Footer>
-              <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
-                {t('common.cancel')}
-              </Button>
-              <Button type="submit" colorPalette="brand" loading={isSubmitting}>
-                {isEdit ? t('common.save') : t('common.create')}
-              </Button>
-            </Dialog.Footer>
-          </FormRHF>
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+            </Fieldset.Root>
+          </Stack>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
+            {t('common.cancel')}
+          </Button>
+          <Button type="submit" form="location-form" colorPalette="brand" loading={isSubmitting}>
+            {isEdit ? t('common.save') : t('common.create')}
+          </Button>
+        </Modal.Footer>
+      </FormRHF>
+    </Modal>
   );
 };
 

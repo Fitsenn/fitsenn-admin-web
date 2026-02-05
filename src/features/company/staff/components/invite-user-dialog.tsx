@@ -1,11 +1,13 @@
 import type { InviteUserFormData } from './invite-user-form.schema';
 
-import { Button, Dialog, Stack } from '@chakra-ui/react';
+import { Button, Stack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
+import { Modal } from '@/components/ui/modal';
 import { toaster } from '@/components/ui/toaster';
 import { useCompany } from '@/hooks/use-company';
 import { useInviteUser } from '../api/invite-user';
@@ -27,7 +29,7 @@ const InviteUserDialog = ({ isOpen, onClose }: InviteUserDialogProps) => {
     defaultValues: { email: '' },
   });
 
-  const { control, handleSubmit, reset } = methods;
+  const { control, reset } = methods;
 
   const onSubmit = async (data: InviteUserFormData) => {
     try {
@@ -56,45 +58,35 @@ const InviteUserDialog = ({ isOpen, onClose }: InviteUserDialogProps) => {
   };
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && handleClose()}>
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content maxW="450px">
-          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Dialog.Header>
-                <Dialog.Title>{t('companySettings.users.invite.title')}</Dialog.Title>
-              </Dialog.Header>
-              <Dialog.Body>
-                <Stack gap={4}>
-                  <InputRHF
-                    control={control}
-                    name="email"
-                    label={t('companySettings.users.invite.email')}
-                    placeholder={t('companySettings.users.invite.emailPlaceholder')}
-                    type="email"
-                    required
-                  />
-                </Stack>
-              </Dialog.Body>
-              <Dialog.Footer>
-                <Button variant="outline" onClick={handleClose} disabled={inviteMutation.isPending}>
-                  {t('common.cancel')}
-                </Button>
-                <Button
-                  type="submit"
-                  colorPalette="brand"
-                  loading={inviteMutation.isPending}
-                  loadingText={t('companySettings.users.invite.sending')}
-                >
-                  {t('companySettings.users.invite.send')}
-                </Button>
-              </Dialog.Footer>
-            </form>
-          </FormProvider>
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+    <Modal open={isOpen} onClose={handleClose} title={t('companySettings.users.invite.title')}>
+      <FormRHF methods={methods} onSubmit={onSubmit} id="invite-user-form">
+        <Modal.Body>
+          <Stack gap={4}>
+            <InputRHF
+              control={control}
+              name="email"
+              label={t('companySettings.users.invite.email')}
+              placeholder={t('companySettings.users.invite.emailPlaceholder')}
+              type="email"
+              required
+            />
+          </Stack>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline" onClick={handleClose} disabled={inviteMutation.isPending}>
+            {t('common.cancel')}
+          </Button>
+          <Button
+            type="submit"
+            form="invite-user-form"
+            colorPalette="brand"
+            loading={inviteMutation.isPending}
+            loadingText={t('companySettings.users.invite.sending')}>
+            {t('companySettings.users.invite.send')}
+          </Button>
+        </Modal.Footer>
+      </FormRHF>
+    </Modal>
   );
 };
 

@@ -8,6 +8,7 @@ type FormProps<TFormValues extends FieldValues> = {
   onSubmit: SubmitHandler<TFormValues>;
   methods: UseFormReturn<TFormValues>;
   children: ReactNode;
+  id?: string;
 };
 
 const FormRHF = <
@@ -18,10 +19,11 @@ const FormRHF = <
   onSubmit,
   children,
   methods,
+  id,
 }: FormProps<TFormValues>) => {
   return (
     <FormProvider {...methods}>
-      <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
+      <form id={id} noValidate onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
       </form>
     </FormProvider>

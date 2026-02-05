@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-import { Box, Button, Dialog, DialogCloseTrigger, Fieldset, Input, Portal, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Fieldset, Input, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
+import { Modal } from '@/components/ui/modal';
 import { toaster } from '@/components/ui/toaster';
 
 type DeleteAccountSectionProps = {
@@ -50,52 +51,43 @@ const DeleteAccountSection = ({ onDelete, isPending }: DeleteAccountSectionProps
               </Text>
             </Box>
 
-            <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-              <Dialog.Trigger asChild>
-                <Button colorPalette="red" variant="outline" alignSelf="flex-start">
+            <Button colorPalette="red" variant="outline" alignSelf="flex-start" onClick={() => setIsOpen(true)}>
+              {t('account.deleteAccountButton')}
+            </Button>
+
+            <Modal
+              open={isOpen}
+              onClose={() => handleOpenChange({ open: false })}
+              title={t('account.deleteAccountConfirmTitle')}>
+              <Modal.Body>
+                <Stack gap={4}>
+                  <Text>{t('account.deleteAccountConfirmDescription')}</Text>
+                  <Box>
+                    <Text fontWeight="medium" mb={2}>
+                      {t('account.typeToConfirm')}
+                    </Text>
+                    <Input
+                      value={confirmText}
+                      onChange={(e) => setConfirmText(e.target.value)}
+                      placeholder="DELETE"
+                    />
+                  </Box>
+                </Stack>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="outline" onClick={() => handleOpenChange({ open: false })}>
+                  {t('account.cancel')}
+                </Button>
+                <Button
+                  colorPalette="red"
+                  onClick={handleDelete}
+                  disabled={confirmText !== 'DELETE'}
+                  loading={isPending}
+                  loadingText={t('account.deleting')}>
                   {t('account.deleteAccountButton')}
                 </Button>
-              </Dialog.Trigger>
-              <Portal>
-                <Dialog.Backdrop />
-                <Dialog.Positioner>
-                  <Dialog.Content>
-                    <Dialog.Header>
-                      <Dialog.Title>{t('account.deleteAccountConfirmTitle')}</Dialog.Title>
-                    </Dialog.Header>
-                    <Dialog.Body>
-                      <Stack gap={4}>
-                        <Text>{t('account.deleteAccountConfirmDescription')}</Text>
-                        <Box>
-                          <Text fontWeight="medium" mb={2}>
-                            {t('account.typeToConfirm')}
-                          </Text>
-                          <Input
-                            value={confirmText}
-                            onChange={(e) => setConfirmText(e.target.value)}
-                            placeholder="DELETE"
-                          />
-                        </Box>
-                      </Stack>
-                    </Dialog.Body>
-                    <Dialog.Footer>
-                      <Dialog.ActionTrigger asChild>
-                        <Button variant="outline">{t('account.cancel')}</Button>
-                      </Dialog.ActionTrigger>
-                      <Button
-                        colorPalette="red"
-                        onClick={handleDelete}
-                        disabled={confirmText !== 'DELETE'}
-                        loading={isPending}
-                        loadingText={t('account.deleting')}>
-                        {t('account.deleteAccountButton')}
-                      </Button>
-                    </Dialog.Footer>
-                    <DialogCloseTrigger />
-                  </Dialog.Content>
-                </Dialog.Positioner>
-              </Portal>
-            </Dialog.Root>
+              </Modal.Footer>
+            </Modal>
           </Stack>
         </Fieldset.Content>
       </Fieldset.Root>
