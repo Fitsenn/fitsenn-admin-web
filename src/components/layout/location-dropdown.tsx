@@ -11,10 +11,10 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { Check, ChevronDown, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-import { useLocation } from '@/hooks/use-location';
+import { useLocation } from '@/contexts';
 
 const LocationDropdown = () => {
   const { t } = useTranslation();
@@ -55,8 +55,7 @@ const LocationDropdown = () => {
                   key={location.id}
                   value={location.id}
                   onClick={() => setSelectedLocationId(location.id)}
-                  cursor="pointer"
-                >
+                  cursor="pointer">
                   <Flex align="center" gap={3} flex={1}>
                     <Icon boxSize={4} color="fg.muted">
                       <MapPin />

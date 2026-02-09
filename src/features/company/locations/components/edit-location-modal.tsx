@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-router';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useUpdateLocation } from '../api/update-location';
 import { LocationForm } from './location-form';
 

@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { toaster } from '@/components/ui/toaster';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useCompanySettings } from '../api/get-company-settings';
 import { useUpdateCompanySettings } from '../api/update-company-settings';
 import { useUploadCompanyLogo } from '../api/upload-company-logo';

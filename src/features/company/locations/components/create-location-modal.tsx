@@ -2,7 +2,7 @@ import type { LocationFormData } from './location-form.schema';
 
 import { useMatch, useNavigate } from '@tanstack/react-router';
 
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useCreateLocation } from '../api/create-location';
 import { LocationForm } from './location-form';
 

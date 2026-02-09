@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect } from 'react';
 
 import { useUserCompanies } from '@/api/get-user-companies';
-import { type CompanyContextValue, CompanyContext } from '@/contexts/company-context';
+import { type CompanyContextValue, CompanyContext } from '@/contexts';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const STORAGE_KEY = 'fitsenn_selected_company_id';

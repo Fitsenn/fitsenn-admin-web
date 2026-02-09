@@ -1,8 +1,8 @@
-import { createContext } from 'react';
-
 import type { Company } from '@/types/company';
 
-export type CompanyContextValue = {
+import { createContext, useContext } from 'react';
+
+type CompanyContextValue = {
   companies: Company[];
   selectedCompany: Company | null;
   setSelectedCompanyId: (companyId: string) => void;
@@ -10,4 +10,17 @@ export type CompanyContextValue = {
   isError: boolean;
 };
 
-export const CompanyContext = createContext<CompanyContextValue | null>(null);
+const CompanyContext = createContext<CompanyContextValue | null>(null);
+
+const useCompany = () => {
+  const context = useContext(CompanyContext);
+
+  if (!context) {
+    throw new Error('useCompany must be used within a CompanyProvider');
+  }
+
+  return context;
+};
+
+export { CompanyContext, useCompany };
+export type { CompanyContextValue };

@@ -3,9 +3,7 @@ import { Outlet } from '@tanstack/react-router';
 
 import { Navbar } from '@/components/layout/navbar';
 import { Sidebar } from '@/components/layout/sidebar';
-import { CompanyProvider } from '@/contexts/company-provider';
-import { LocationProvider } from '@/contexts/location-provider';
-import { UserProvider } from '@/contexts/user-provider';
+import { CompanyProvider, LocationProvider, UserProvider } from '@/contexts';
 
 const ProtectedLayout = () => {
   return (

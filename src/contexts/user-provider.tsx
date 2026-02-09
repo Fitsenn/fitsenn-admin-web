@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { type UserContextValue, UserContext } from '@/contexts/user-context';
+import { type UserContextValue, UserContext } from '@/contexts';
 import { useUserProfile } from '@/api/get-user-profile';
 
 type UserProviderProps = {

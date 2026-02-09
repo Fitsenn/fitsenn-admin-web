@@ -16,7 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Building2, Check, ChevronDown } from 'lucide-react';
 
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 
 const CompanyDropdown = () => {
   const { t } = useTranslation();

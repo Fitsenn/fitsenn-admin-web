@@ -9,7 +9,7 @@ import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { Modal } from '@/components/ui/modal';
 import { toaster } from '@/components/ui/toaster';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useInviteUser } from '../api/invite-user';
 import { inviteUserFormSchema } from './invite-user-form.schema';
 

@@ -1,7 +1,7 @@
 import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '@/contexts';
 
 export function DashboardPage() {
   const { t } = useTranslation();

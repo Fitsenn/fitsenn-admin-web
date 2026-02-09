@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { Modal } from '@/components/ui/modal';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useLocationDependencies } from '../api/check-location-dependencies';
 import { useToggleLocationStatus } from '../api/toggle-location-status';
 

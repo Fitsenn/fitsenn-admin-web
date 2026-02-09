@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { LogOut, Settings, UserCog } from 'lucide-react';
 
 import { useLogout } from '@/api/auth';
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '@/contexts';
 import { Avatar } from '../ui/avatar';
 
 const ProfileDropdown = () => {

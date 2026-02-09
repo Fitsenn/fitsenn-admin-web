@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useToggleLocationStatus } from '../api/toggle-location-status';
 import { CreateLocationModal } from './create-location-modal';
 import { DeactivateLocationDialog } from './deactivate-location-dialog';

@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { toaster } from '@/components/ui/toaster';
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '@/contexts';
 import { useUpdateProfile } from '../api/update-profile';
 import { profileFormSchema } from './profile-form.schema';
 

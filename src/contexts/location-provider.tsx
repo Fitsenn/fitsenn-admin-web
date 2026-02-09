@@ -1,11 +1,8 @@
-import type { LocationContextValue } from '@/contexts/location-context';
-import type { ReactNode } from 'react';
-
-import { useEffect } from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
-import { LocationContext } from '@/contexts/location-context';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
+import { type LocationContextValue, LocationContext } from '@/contexts';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 
 const STORAGE_KEY_PREFIX = 'fitsenn_selected_location_';

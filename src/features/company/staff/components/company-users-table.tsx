@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 
 import { DataTable } from '@/components/table';
-import { useCompany } from '@/hooks/use-company';
+import { useCompany } from '@/contexts';
 import { useCompanyUsers } from '../api/get-company-users';
 import { InviteUserDialog } from './invite-user-dialog';
 

@@ -1,8 +1,8 @@
-import { createContext } from 'react';
-
 import type { Location } from '@/types/location';
 
-export type LocationContextValue = {
+import { createContext, useContext } from 'react';
+
+type LocationContextValue = {
   locations: Location[];
   selectedLocation: Location | null;
   setSelectedLocationId: (locationId: string) => void;
@@ -10,4 +10,17 @@ export type LocationContextValue = {
   isError: boolean;
 };
 
-export const LocationContext = createContext<LocationContextValue | null>(null);
+const LocationContext = createContext<LocationContextValue | null>(null);
+
+const useLocation = () => {
+  const context = useContext(LocationContext);
+
+  if (!context) {
+    throw new Error('useLocation must be used within a LocationProvider');
+  }
+
+  return context;
+};
+
+export { LocationContext, useLocation };
+export type { LocationContextValue };
