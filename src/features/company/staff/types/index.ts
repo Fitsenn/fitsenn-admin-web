@@ -1,5 +1,5 @@
 import type { UserProfile } from '@/types/user';
-import type { SnakeToCamel } from '@/types/utility_types';
+import type { SnakeToCamel } from '@/types/utility-types';
 
 export type DatabaseCompanyUser = {
   user_id: string;

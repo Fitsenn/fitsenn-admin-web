@@ -1,4 +1,4 @@
-import type { CamelToSnake, SnakeToCamel } from '@/types/utility_types'
+import type { CamelToSnake, SnakeToCamel } from '@/types/utility-types'
 
 function snakeToCamel(str: string): string {
   return str.replace(/_([a-z])/g, (g) => g[1].toUpperCase())

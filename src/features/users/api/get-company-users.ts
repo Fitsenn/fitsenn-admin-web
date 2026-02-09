@@ -4,7 +4,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 import { transformers } from '@/utils/data-transformers';
-import type { SnakeToCamel } from '@/types/utility_types';
+import type { SnakeToCamel } from '@/types/utility-types';
 
 type DatabaseCompanyUser = {
   user_id: string;

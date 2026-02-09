@@ -1,6 +1,6 @@
 import type { Company, DatabaseCompany } from '@/types/company';
 
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 import { transformers } from '@/utils/data-transformers';
@@ -23,13 +23,9 @@ const getUserCompanies = async (): Promise<Company[]> => {
   return transformers.fromDatabase(data as DatabaseCompany[]);
 };
 
-export const userCompaniesQueryOptions = () => {
-  return queryOptions({
+export const useUserCompanies = () => {
+  return useQuery({
     queryKey: ['user', 'companies'],
     queryFn: getUserCompanies,
   });
-};
-
-export const useUserCompanies = () => {
-  return useQuery(userCompaniesQueryOptions());
 };

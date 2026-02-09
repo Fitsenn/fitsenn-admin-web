@@ -14,7 +14,7 @@ type AppProviderProps = {
   children: ReactNode;
 };
 
-export function QueryProvider({ children }: AppProviderProps) {
+function QueryProvider({ children }: AppProviderProps) {
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 
@@ -22,7 +22,7 @@ export function AppRouter() {
   return <RouterProvider router={router} />;
 }
 
-export function AppProvider({ children }: AppProviderProps) {
+export function AppProviders({ children }: AppProviderProps) {
   return (
     <ChakraProvider value={system}>
       <ThemeProvider attribute="class" disableTransitionOnChange>

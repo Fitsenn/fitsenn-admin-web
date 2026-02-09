@@ -1,5 +1,5 @@
 import type { Tables } from './database.types';
-import type { Replace, SnakeToCamel } from './utility_types';
+import type { Replace, SnakeToCamel } from './utility-types';
 
 export type TimeSlot = {
   open: string;

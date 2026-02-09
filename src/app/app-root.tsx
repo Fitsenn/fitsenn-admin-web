@@ -1,10 +1,10 @@
-import { AppProvider, AppRouter } from '@/app/providers';
+import { AppProviders, AppRouter } from '@/app/providers';
 
 function App() {
   return (
-    <AppProvider>
+    <AppProviders>
       <AppRouter />
-    </AppProvider>
+    </AppProviders>
   );
 }
 

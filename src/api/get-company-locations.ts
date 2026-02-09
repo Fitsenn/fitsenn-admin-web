@@ -1,6 +1,6 @@
 import type { DatabaseLocation, Location } from '@/types/location';
 
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 import { transformers } from '@/utils/data-transformers';
@@ -15,10 +15,6 @@ const getCompanyLocations = async ({
   companyId,
   activeOnly = false,
 }: GetCompanyLocationsOptions): Promise<Location[]> => {
-  if (!companyId) {
-    return [];
-  }
-
   const { data, error } = await supabase.rpc('get_company_locations', {
     p_company_id: companyId,
     p_active_only: activeOnly,
@@ -32,17 +28,10 @@ const getCompanyLocations = async ({
   return transformers.fromDatabase(data as DatabaseLocation[]);
 };
 
-export const companyLocationsQueryOptions = ({
-  companyId,
-  activeOnly = false,
-}: GetCompanyLocationsOptions) => {
-  return queryOptions({
+export const useCompanyLocations = ({ companyId, activeOnly = false }: GetCompanyLocationsOptions) => {
+  return useQuery({
     queryKey: ['company', companyId, 'locations', { activeOnly }],
     queryFn: () => getCompanyLocations({ companyId, activeOnly }),
     enabled: !!companyId,
   });
-};
-
-export const useCompanyLocations = (options: GetCompanyLocationsOptions) => {
-  return useQuery(companyLocationsQueryOptions(options));
 };
