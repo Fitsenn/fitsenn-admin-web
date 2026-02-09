@@ -2,7 +2,7 @@
 
 **Rule Tag**: `UI`
 
-## 13 Core Principles
+## 14 Core Principles
 
 1. **Chakra UI Components** - Use Chakra for all layout and styling
 2. **Semantic Color Tokens** - Use `fg.muted`, `bg.subtle`, etc. for dark/light mode
@@ -17,6 +17,7 @@
 11. **Component Structure** - Follow standard order
 12. **Accessibility** - Labels, aria attributes, focus management
 13. **Responsive Design** - Mobile-first with Chakra breakpoints
+14. **Dark/Light Mode** - Always implement both themes using semantic tokens
 
 ## Page Structure Pattern
 
@@ -91,25 +92,93 @@ colorPalette="brand" // Brand color palette
 </Alert.Root>
 ```
 
-#### Dialogs
+#### Modals (Custom Component)
+
+**Always use the custom `Modal` component** from `@/components/ui/modal`:
+
 ```typescript
-<Dialog.Root>
-  <Dialog.Trigger asChild>
-    <Button>{t('openDialog')}</Button>
-  </Dialog.Trigger>
-  <Dialog.Content>
-    <Dialog.Header>
-      <Dialog.Title>{t('dialogTitle')}</Dialog.Title>
-    </Dialog.Header>
-    <Dialog.Body>{/* Content */}</Dialog.Body>
-    <Dialog.Footer>
-      <Dialog.CloseTrigger asChild>
-        <Button variant="outline">{t('cancel')}</Button>
-      </Dialog.CloseTrigger>
-      <Button>{t('confirm')}</Button>
-    </Dialog.Footer>
-  </Dialog.Content>
-</Dialog.Root>
+import { Modal } from '@/components/ui/modal'
+
+<Modal open={isOpen} onClose={handleClose} title={t('modal.title')} size="md">
+  <Modal.Body>
+    {/* Content */}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="outline" onClick={handleClose}>{t('common.cancel')}</Button>
+    <Button colorPalette="brand">{t('common.confirm')}</Button>
+  </Modal.Footer>
+</Modal>
+```
+
+Features:
+- Slide-in animation from right
+- Scrollable content
+- Lazy mounting
+- Use `id` prop on form + `form` attribute on submit button for forms outside Modal.Footer
+
+## Icons
+
+**Use `lucide-react`** for all icons:
+
+```typescript
+import { Plus, Pencil, Trash, Search, ChevronDown } from 'lucide-react'
+
+<Button>
+  <Plus />
+  {t('common.add')}
+</Button>
+
+<IconButton aria-label={t('common.edit')}>
+  <Pencil />
+</IconButton>
+```
+
+## Form Components
+
+**Use React Hook Form components** from `@/components/form`:
+
+```typescript
+import { FormRHF, InputRHF, FieldWrapperRHF } from '@/components/form'
+
+const MyForm = () => {
+  const methods = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { name: '', email: '' },
+  })
+
+  return (
+    <FormRHF methods={methods} onSubmit={handleSubmit} id="my-form">
+      <Stack gap={4}>
+        <InputRHF
+          name="name"
+          control={methods.control}
+          label={t('form.name')}
+          required
+        />
+        <InputRHF
+          name="email"
+          control={methods.control}
+          label={t('form.email')}
+          type="email"
+        />
+      </Stack>
+    </FormRHF>
+  )
+}
+```
+
+**Form schema in separate file**: `<form-name>.schema.ts`
+
+```typescript
+// user-form.schema.ts
+import { z } from 'zod'
+
+export const userSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email'),
+})
+
+export type UserFormData = z.infer<typeof userSchema>
 ```
 
 ## State Handling
@@ -161,6 +230,83 @@ if (data.length === 0) {
 | lg | 992px |
 | xl | 1280px |
 
+## DataTable Component
+
+When implementing tables, use the `DataTable` component. **Reference the types file for all available props:**
+
+**→ [src/components/table/types/index.ts](src/components/table/types/index.ts)**
+
+```typescript
+import { DataTable } from '@/components/table/data-table'
+
+<DataTable
+  data={users}
+  columns={columns}
+  isLoading={isLoading}
+  error={error}
+  enablePagination
+  enableSorting
+  searchFields={['name', 'email']}
+  searchPlaceholder={t('users.search')}
+  enableColumnVisibility
+  storageKey="users-table"
+  toolbarActions={<Button><Plus />{t('users.add')}</Button>}
+  rowActions={{
+    actions: [
+      { type: 'edit', onClick: handleEdit },
+      { type: 'delete', onClick: handleDelete },
+    ],
+  }}
+/>
+```
+
+Key features:
+- **Pagination**: `enablePagination`, `pageSize`, `manualPagination`
+- **Sorting**: `enableSorting`, `manualSorting`
+- **Search**: `searchFields` array, `manualSearch`
+- **Column visibility**: `enableColumnVisibility`, `storageKey` (persists to localStorage)
+- **Row actions**: Built-in (`view`, `edit`, `duplicate`, `delete`) + custom actions
+
+## Create/Edit Entity Pattern
+
+**Always use three separate components** for entity CRUD:
+
+```
+features/users/components/
+├── user-form.schema.ts      # Zod schema
+├── user-form.tsx            # Shared form component
+├── create-user-modal.tsx    # Create modal (uses UserForm)
+└── edit-user-modal.tsx      # Edit modal (uses UserForm)
+```
+
+**Routes for modals** (URL = modal state):
+```
+routes/_authenticated/users.tsx        # List page with <Outlet />
+routes/_authenticated/users/add.tsx    # Create modal route
+routes/_authenticated/users/$userId.tsx  # Edit modal route (edit/:id pattern)
+```
+
+Modal components detect their route via `useMatch()`:
+
+```typescript
+// create-user-modal.tsx
+const CreateUserModal = () => {
+  const match = useMatch({ from: '/_authenticated/users/add', shouldThrow: false })
+  const isOpen = !!match
+
+  return <UserForm isOpen={isOpen} onSubmit={handleCreate} />
+}
+
+// edit-user-modal.tsx
+const EditUserModal = () => {
+  const match = useMatch({ from: '/_authenticated/users/$userId', shouldThrow: false })
+  const userId = match?.params?.userId
+  const isOpen = !!userId
+
+  return <UserForm isOpen={isOpen} onSubmit={handleUpdate} initialValues={...} />
+}
+```
+
 ## Anti-Patterns
 
 | Don't | Do |
@@ -171,15 +317,25 @@ if (data.length === 0) {
 | Default exports | Named exports |
 | Skip loading state | Spinner/Skeleton |
 | Skip error state | Alert |
+| Use Chakra Dialog directly | Use `Modal` component |
+| Import random icon libraries | Use `lucide-react` |
+| Light-mode-only colors | Semantic tokens for both themes |
+| Single component for create/edit | Separate CreateModal, EditModal, Form |
+| State-based modal open/close | Route-based modals |
 
 ## Verification Checklist
 
 - [ ] Uses Chakra UI components
 - [ ] All text via `t()` function
-- [ ] Semantic color tokens
+- [ ] Semantic color tokens (works in dark/light mode)
 - [ ] Loading state handled
 - [ ] Error state handled
 - [ ] Empty state handled
 - [ ] Named export
 - [ ] Props typed (no `any`)
 - [ ] File under 300 lines
+- [ ] Icons from `lucide-react`
+- [ ] Forms use `FormRHF` + `InputRHF`
+- [ ] Modals use `Modal` component
+- [ ] Tables reference `DataTable` types
+- [ ] Responsive breakpoints for mobile

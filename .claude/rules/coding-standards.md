@@ -80,12 +80,85 @@ export { Component }
 
 ## Code Quality Rules
 
-- **ALWAYS** use named exports (no default exports)
 - **ALWAYS** use absolute imports with `@/` prefix
 - **PREFER** destructuring props in function signature
 - **PREFER** default parameters over conditional defaults
 - **MAX** 200-300 lines per file - split if larger
 - **EXTRACT** functions over 25 lines into separate helpers
+
+## Export Rules
+
+- **Components**: Use grouped named exports at the end of the file
+- **Functions, types, constants**: Export inline where defined
+- **Types**: Always use `export type` for type exports
+
+```typescript
+// ✅ Correct - Component with grouped export
+const UserCard = ({ user }: UserCardProps) => { ... }
+const UserList = ({ users }: UserListProps) => { ... }
+
+export { UserCard, UserList }
+
+// ✅ Correct - Inline exports for functions and types
+export type User = { id: string; name: string }
+
+export const formatUserName = (user: User): string => {
+  return `${user.firstName} ${user.lastName}`
+}
+
+export const USER_ROLES = ['admin', 'user', 'guest'] as const
+
+// ❌ Wrong - Grouped export for non-components
+type User = { ... }
+const formatUserName = () => { ... }
+export { User, formatUserName }  // Should be inline
+
+// ❌ Wrong - Missing 'type' keyword
+export { User }  // Should be: export type { User }
+```
+
+## Function Extraction Rules
+
+- **EXTRACT** pure functions (no dependencies on component state/props) outside the component
+- **KEEP** event handlers and functions using hooks/state inside the component
+- **CREATE** a `<component-name>.utils.ts` file when you have 3+ utility functions
+
+```typescript
+// ✅ Correct - Pure function extracted outside
+const calculateTotal = (items: Item[]): number => {
+  return items.reduce((sum, item) => sum + item.price, 0)
+}
+
+const formatPrice = (price: number): string => {
+  return `$${price.toFixed(2)}`
+}
+
+const ShoppingCart = ({ items }: ShoppingCartProps) => {
+  // Event handler stays inside (uses component context)
+  const handleCheckout = () => {
+    const total = calculateTotal(items)
+    // ... checkout logic
+  }
+
+  return <Box>{formatPrice(calculateTotal(items))}</Box>
+}
+
+// ❌ Wrong - Pure function inside component
+const ShoppingCart = ({ items }: ShoppingCartProps) => {
+  const calculateTotal = (items: Item[]): number => {  // Should be outside
+    return items.reduce((sum, item) => sum + item.price, 0)
+  }
+}
+```
+
+When utilities grow, create a separate file:
+
+```
+components/
+└── shopping-cart/
+    ├── shopping-cart.tsx
+    └── shopping-cart.utils.ts  # calculateTotal, formatPrice, etc.
+```
 
 ## useEffect Rules
 
@@ -172,14 +245,30 @@ return <Text>{t('users.title')}</Text>
 return <Text>Users</Text>
 ```
 
+## Package Manager
+
+**Use `yarn`** for all package management. Never use `npm` or `pnpm`.
+
+```bash
+# ✅ Correct
+yarn install
+yarn add package-name
+yarn dev
+
+# ❌ Wrong
+npm install
+pnpm add package-name
+```
+
 ## Verification Checklist
 
 Before completing any task, verify:
 
 - [ ] No `any` types used
 - [ ] All user-facing text uses `t()` function
-- [ ] Named exports only
+- [ ] Components use grouped `export { }`, functions/types use inline exports
 - [ ] Absolute imports with `@/` prefix
 - [ ] Component follows standard structure
 - [ ] Files under 300 lines
 - [ ] Boolean variables have proper prefix
+- [ ] Pure functions extracted outside component
