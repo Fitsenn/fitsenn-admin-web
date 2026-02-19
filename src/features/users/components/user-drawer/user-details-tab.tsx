@@ -45,10 +45,10 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
   const values = useMemo(() => {
     return user
       ? {
-          firstName: user.profile.firstName,
-          lastName: user.profile.lastName,
+          firstName: user.profile.firstName ?? '',
+          lastName: user.profile.lastName ?? '',
           email: user.profile.email,
-          phone: user.profile.phone,
+          phone: user.profile.phone ?? undefined,
         }
       : undefined;
   }, [user]);
