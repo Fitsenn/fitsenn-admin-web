@@ -11,6 +11,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  CreditCard,
   House,
   MapPin,
   Settings,
@@ -76,6 +77,12 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
         to: '/company/staff',
         icon: <Users2 />,
         permission: 'staff:read',
+      },
+      {
+        labelKey: 'navigation.companyMemberships',
+        to: '/company/memberships',
+        icon: <CreditCard />,
+        permission: 'company-memberships:read',
       },
       {
         labelKey: 'navigation.companySettings',

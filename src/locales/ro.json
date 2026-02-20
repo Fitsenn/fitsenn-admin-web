@@ -34,7 +34,8 @@
     "company": "Companie",
     "companySettings": "Setări",
     "companyLocations": "Locații",
-    "companyStaff": "Personal"
+    "companyStaff": "Personal",
+    "companyMemberships": "Abonamente"
   },
   "locations": {
     "title": "Locații",
@@ -255,6 +256,60 @@
     "staff": {
       "title": "Personal",
       "description": "Gestionează membrii personalului companiei"
+    }
+  },
+  "memberships": {
+    "title": "Abonamente",
+    "description": "Gestionează ofertele de abonamente ale sălii",
+    "tabs": {
+      "plans": "Planuri",
+      "discounts": "Reduceri",
+      "penalties": "Penalizări"
+    },
+    "plans": {
+      "addPlan": "Creează plan",
+      "searchPlaceholder": "Caută planuri...",
+      "loadError": "Nu s-au putut încărca planurile de abonament. Te rugăm să încerci din nou.",
+      "allLocations": "Toate locațiile",
+      "table": {
+        "name": "Nume",
+        "type": "Tip",
+        "duration": "Durată",
+        "sessions": "Ședințe",
+        "price": "Preț",
+        "location": "Locație",
+        "status": "Status"
+      },
+      "type": {
+        "unlimited": "Nelimitat",
+        "sessions": "Ședințe"
+      },
+      "status": {
+        "active": "Activ",
+        "inactive": "Inactiv"
+      },
+      "duration": {
+        "year_one": "{{count}} an",
+        "year_other": "{{count}} ani",
+        "month_one": "{{count}} lună",
+        "month_other": "{{count}} luni",
+        "week_one": "{{count}} săptămână",
+        "week_other": "{{count}} săptămâni",
+        "day_one": "{{count}} zi",
+        "day_other": "{{count}} zile"
+      },
+      "delete": {
+        "title": "Șterge plan",
+        "confirm": "Ești sigur că vrei să ștergi \"{{name}}\"? Planul va fi arhivat și nu va mai fi disponibil pentru abonamente noi.",
+        "warningTitle": "Abonamente active",
+        "activeMemberships_one": "{{count}} abonament activ folosește acest plan. Va continua până la expirare.",
+        "activeMemberships_other": "{{count}} abonamente active folosesc acest plan. Vor continua până la expirare.",
+        "checking": "Se caută utilizatorii care au acest plan activ...",
+        "noActiveUsers": "Niciun utilizator nu folosește acest plan în prezent.",
+        "confirmButton": "Șterge",
+        "success": "Planul a fost șters cu succes",
+        "error": "Nu s-a putut șterge planul"
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import type { Company, DatabaseCompany } from '@/types/company';
 
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 import { transformers } from '@/utils/data-transformers';
@@ -24,7 +24,7 @@ const getUserCompanies = async (): Promise<Company[]> => {
 };
 
 export const useUserCompanies = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['user', 'companies'],
     queryFn: getUserCompanies,
   });

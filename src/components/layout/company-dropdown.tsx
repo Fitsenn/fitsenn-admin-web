@@ -10,7 +10,6 @@ import {
   MenuRoot,
   MenuTrigger,
   Portal,
-  Spinner,
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
@@ -20,11 +19,7 @@ import { useCompany } from '@/contexts';
 
 const CompanyDropdown = () => {
   const { t } = useTranslation();
-  const { companies, selectedCompany, setSelectedCompanyId, isLoading } = useCompany();
-
-  if (isLoading) {
-    return <Spinner size="sm" />;
-  }
+  const { companies, selectedCompany, setSelectedCompanyId } = useCompany();
 
   if (companies.length === 0) {
     return null;

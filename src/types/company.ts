@@ -4,3 +4,7 @@ import type { SnakeToCamel } from './utility-types';
 export type DatabaseCompany = Tables<'companies'>;
 
 export type Company = SnakeToCamel<DatabaseCompany>;
+
+export type DatabaseMembershipPlan = Tables<'membership_plans'>;
+
+export type MembershipPlan = SnakeToCamel<DatabaseMembershipPlan>;

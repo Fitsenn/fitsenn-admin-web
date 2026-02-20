@@ -5,8 +5,6 @@ import { createContext, useContext } from 'react';
 type PermissionsContextValue = {
   permissions: Permission[];
   hasPermission: HasPermissionFn;
-  isLoading: boolean;
-  isError: boolean;
 };
 
 const PermissionsContext = createContext<PermissionsContextValue | null>(null);

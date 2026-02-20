@@ -34,7 +34,8 @@
     "company": "Company",
     "companySettings": "Settings",
     "companyLocations": "Locations",
-    "companyStaff": "Staff"
+    "companyStaff": "Staff",
+    "companyMemberships": "Memberships"
   },
   "locations": {
     "title": "Locations",
@@ -255,6 +256,60 @@
     "staff": {
       "title": "Staff",
       "description": "Manage your company staff members"
+    }
+  },
+  "memberships": {
+    "title": "Memberships",
+    "description": "Manage your gym's membership offerings",
+    "tabs": {
+      "plans": "Plans",
+      "discounts": "Discounts",
+      "penalties": "Penalties"
+    },
+    "plans": {
+      "addPlan": "Create Plan",
+      "searchPlaceholder": "Search plans...",
+      "loadError": "Failed to load membership plans. Please try again.",
+      "allLocations": "All Locations",
+      "table": {
+        "name": "Name",
+        "type": "Type",
+        "duration": "Duration",
+        "sessions": "Sessions",
+        "price": "Price",
+        "location": "Location",
+        "status": "Status"
+      },
+      "type": {
+        "unlimited": "Unlimited",
+        "sessions": "Sessions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "duration": {
+        "year_one": "{{count}} year",
+        "year_other": "{{count}} years",
+        "month_one": "{{count}} month",
+        "month_other": "{{count}} months",
+        "week_one": "{{count}} week",
+        "week_other": "{{count}} weeks",
+        "day_one": "{{count}} day",
+        "day_other": "{{count}} days"
+      },
+      "delete": {
+        "title": "Delete Plan",
+        "confirm": "Are you sure you want to delete \"{{name}}\"? This plan will be archived and no longer available for new memberships.",
+        "warningTitle": "Active memberships",
+        "activeMemberships_one": "{{count}} active membership uses this plan. It will continue until expiration.",
+        "activeMemberships_other": "{{count}} active memberships use this plan. They will continue until expiration.",
+        "checking": "Looking for users who have this plan active...",
+        "noActiveUsers": "No users are currently using this plan.",
+        "confirmButton": "Delete",
+        "success": "Plan deleted successfully",
+        "error": "Failed to delete plan"
+      }
     }
   }
 }

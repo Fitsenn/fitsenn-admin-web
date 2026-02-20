@@ -11,25 +11,23 @@ type CompanyProviderProps = {
 };
 
 const CompanyProvider = ({ children }: CompanyProviderProps) => {
-  const { data: companies = [], isLoading, isError } = useUserCompanies();
+  const { data: companies } = useUserCompanies();
   const [selectedCompanyId, setSelectedCompanyId] = useLocalStorage(STORAGE_KEY, '');
 
-  // Auto-select first company if none selected or selected no longer exists
-  useEffect(() => {
-    const hasValidSelection = selectedCompanyId && companies.some((c) => c.id === selectedCompanyId);
-    if (companies.length > 0 && !hasValidSelection) {
-      setSelectedCompanyId(companies[0].id);
-    }
-  }, [companies, selectedCompanyId, setSelectedCompanyId]);
+  // Derive selected company synchronously — fall back to first company
+  const selectedCompany = companies.find((c) => c.id === selectedCompanyId) ?? companies[0] ?? null;
 
-  const selectedCompany = companies.find((c) => c.id === selectedCompanyId) ?? null;
+  // Persist auto-selected company to localStorage
+  useEffect(() => {
+    if (selectedCompany && selectedCompany.id !== selectedCompanyId) {
+      setSelectedCompanyId(selectedCompany.id);
+    }
+  }, [selectedCompany, selectedCompanyId, setSelectedCompanyId]);
 
   const value: CompanyContextValue = {
     companies,
     selectedCompany,
     setSelectedCompanyId,
-    isLoading,
-    isError,
   };
 
   return <CompanyContext.Provider value={value}>{children}</CompanyContext.Provider>;

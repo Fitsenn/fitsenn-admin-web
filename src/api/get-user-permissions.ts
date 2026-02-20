@@ -1,6 +1,6 @@
 import type { Permission } from '@/types/permissions';
 
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 
@@ -18,14 +18,9 @@ const getUserPermissions = async (companyId: string): Promise<Permission[]> => {
   return permissions as Permission[];
 };
 
-export const userPermissionsQueryOptions = (companyId: string) => {
-  return queryOptions({
+export const useUserPermissions = (companyId: string) => {
+  return useSuspenseQuery({
     queryKey: ['company', companyId, 'permissions'],
     queryFn: () => getUserPermissions(companyId),
-    enabled: !!companyId,
   });
-};
-
-export const useUserPermissions = (companyId: string) => {
-  return useQuery(userPermissionsQueryOptions(companyId));
 };

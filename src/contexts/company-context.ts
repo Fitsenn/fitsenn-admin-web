@@ -6,8 +6,6 @@ type CompanyContextValue = {
   companies: Company[];
   selectedCompany: Company | null;
   setSelectedCompanyId: (companyId: string) => void;
-  isLoading: boolean;
-  isError: boolean;
 };
 
 const CompanyContext = createContext<CompanyContextValue | null>(null);

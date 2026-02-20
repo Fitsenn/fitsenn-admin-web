@@ -13,7 +13,7 @@ const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
 
-  const { data: permissions = [], isLoading, isError } = useUserPermissions(companyId);
+  const { data: permissions } = useUserPermissions(companyId);
 
   const hasPermission: HasPermissionFn = useCallback(
     <R extends Resource>(resource: R, action: ActionForResource<R>): boolean => {
@@ -27,10 +27,8 @@ const PermissionsProvider = ({ children }: PermissionsProviderProps) => {
     () => ({
       permissions,
       hasPermission,
-      isLoading,
-      isError,
     }),
-    [permissions, hasPermission, isLoading, isError],
+    [permissions, hasPermission],
   );
 
   return <PermissionsContext.Provider value={value}>{children}</PermissionsContext.Provider>;

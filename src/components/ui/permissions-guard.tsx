@@ -22,19 +22,19 @@ const PermissionsGuard = <R extends Resource>({
   redirectTo,
   children,
 }: PermissionsGuardProps<R>) => {
-  const { hasPermission, isLoading } = usePermissions();
+  const { hasPermission } = usePermissions();
   const navigate = useNavigate();
 
   const isAllowed = hasPermission(resource, action);
 
-  // Redirect when permissions are loaded and user lacks access
+  // Redirect when user lacks access
   useEffect(() => {
-    if (!isLoading && !isAllowed) {
+    if (!isAllowed) {
       navigate({ to: redirectTo });
     }
-  }, [isLoading, isAllowed, navigate, redirectTo]);
+  }, [isAllowed, navigate, redirectTo]);
 
-  if (isLoading || !isAllowed) return null;
+  if (!isAllowed) return null;
 
   return <>{children}</>;
 };
