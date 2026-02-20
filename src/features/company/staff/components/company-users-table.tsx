@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 
 import { DataTable } from '@/components/table';
-import { useCompany } from '@/contexts';
+import { useCompany, usePermissions } from '@/contexts';
 import { useCompanyUsers } from '../api/get-company-users';
 import { InviteUserDialog } from './invite-user-dialog';
 
@@ -24,7 +24,12 @@ const searchFields: (keyof CompanyUserRow)[] = ['name', 'email'];
 const CompanyUsersTable = () => {
   const { t } = useTranslation();
   const { selectedCompany } = useCompany();
+  const { hasPermission } = usePermissions();
   const companyId = selectedCompany?.id ?? '';
+
+  const canInvite = hasPermission('staff', 'invite');
+  const canWrite = hasPermission('staff', 'write');
+  const canDelete = hasPermission('staff', 'delete');
 
   const { data: users = [], error, isLoading } = useCompanyUsers(companyId);
   const [isInviteOpen, setIsInviteOpen] = useState(false);
@@ -101,13 +106,29 @@ const CompanyUsersTable = () => {
         enableColumnVisibility
         storageKey="company-users-table"
         toolbarActions={
-          <Button size="sm" colorPalette="brand" onClick={() => setIsInviteOpen(true)}>
-            <Icon boxSize={4}>
-              <Plus />
-            </Icon>
-            {t('companySettings.users.inviteUser')}
-          </Button>
+          canInvite ? (
+            <Button size="sm" colorPalette="brand" onClick={() => setIsInviteOpen(true)}>
+              <Icon boxSize={4}>
+                <Plus />
+              </Icon>
+              {t('companySettings.users.inviteUser')}
+            </Button>
+          ) : undefined
         }
+        rowActions={{
+          canEdit: canWrite,
+          canDelete,
+          actions: [
+            {
+              type: 'edit',
+              onClick: () => {},
+            },
+            {
+              type: 'delete',
+              onClick: () => {},
+            },
+          ],
+        }}
       />
       <InviteUserDialog isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} />
     </>

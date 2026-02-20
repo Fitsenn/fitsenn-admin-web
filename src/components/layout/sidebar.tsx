@@ -1,7 +1,8 @@
+import type { Permission } from '@/types/permissions';
 import type { FileRouteTypes } from '@/routeTree.gen';
 import type { ReactNode } from 'react';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Box, Collapsible, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
@@ -18,9 +19,12 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { usePermissions } from '@/contexts';
+
 type BaseSidebarItem = {
   labelKey: string;
   icon: ReactNode;
+  permission?: Permission;
 };
 
 type SidebarLinkItem = BaseSidebarItem & {
@@ -28,13 +32,16 @@ type SidebarLinkItem = BaseSidebarItem & {
   to: FileRouteTypes['to'];
 };
 
+type SidebarChildItem = {
+  labelKey: string;
+  to: FileRouteTypes['to'];
+  icon?: ReactNode;
+  permission?: Permission;
+};
+
 type SidebarGroupItem = BaseSidebarItem & {
   type: 'group';
-  children: Array<{
-    labelKey: string;
-    to: FileRouteTypes['to'];
-    icon?: ReactNode;
-  }>;
+  children: SidebarChildItem[];
 };
 
 type SidebarItem = SidebarLinkItem | SidebarGroupItem;
@@ -51,6 +58,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     labelKey: 'navigation.users',
     to: '/users',
     icon: <Users />,
+    permission: 'users:read',
   },
   {
     type: 'group',
@@ -61,16 +69,19 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
         labelKey: 'navigation.companyLocations',
         to: '/company/locations',
         icon: <MapPin />,
+        permission: 'locations:read',
       },
       {
         labelKey: 'navigation.companyStaff',
         to: '/company/staff',
         icon: <Users2 />,
+        permission: 'staff:read',
       },
       {
         labelKey: 'navigation.companySettings',
         to: '/company/settings',
         icon: <Settings />,
+        permission: 'company-settings:read',
       },
     ],
   },
@@ -81,9 +92,30 @@ const SIDEBAR_WIDTH_COLLAPSED = '72px';
 
 const Sidebar = () => {
   const { t } = useTranslation();
+  const { permissions } = usePermissions();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+
+  const visibleItems = useMemo(() => {
+    return SIDEBAR_ITEMS.reduce<SidebarItem[]>((acc, item) => {
+      if (item.permission && !permissions.includes(item.permission)) {
+        return acc;
+      }
+
+      if (item.type === 'group') {
+        const visibleChildren = item.children.filter(
+          (child) => !child.permission || permissions.includes(child.permission),
+        );
+        if (visibleChildren.length === 0) return acc;
+        acc.push({ ...item, children: visibleChildren });
+        return acc;
+      }
+
+      acc.push(item);
+      return acc;
+    }, []);
+  }, [permissions]);
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
@@ -114,7 +146,7 @@ const Sidebar = () => {
         </Flex>
 
         <VStack gap={1} px={3} align="stretch">
-          {SIDEBAR_ITEMS.map((item) => {
+          {visibleItems.map((item) => {
             if (item.type === 'link') {
               const isActive = currentPath.includes(item.to);
 

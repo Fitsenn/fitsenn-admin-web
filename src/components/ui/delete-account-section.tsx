@@ -9,9 +9,10 @@ import { toaster } from '@/components/ui/toaster';
 type DeleteAccountSectionProps = {
   onDelete: () => void;
   isPending: boolean;
+  disabled?: boolean;
 };
 
-const DeleteAccountSection = ({ onDelete, isPending }: DeleteAccountSectionProps) => {
+const DeleteAccountSection = ({ onDelete, isPending, disabled = false }: DeleteAccountSectionProps) => {
   const { t } = useTranslation();
   const [confirmText, setConfirmText] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +52,7 @@ const DeleteAccountSection = ({ onDelete, isPending }: DeleteAccountSectionProps
               </Text>
             </Box>
 
-            <Button colorPalette="red" variant="outline" alignSelf="flex-start" onClick={() => setIsOpen(true)}>
+            <Button colorPalette="red" variant="outline" alignSelf="flex-start" onClick={() => setIsOpen(true)} disabled={disabled}>
               {t('account.deleteAccountButton')}
             </Button>
 

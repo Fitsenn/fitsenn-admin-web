@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { toaster } from '@/components/ui/toaster';
-import { useCompany } from '@/contexts';
+import { useCompany, usePermissions } from '@/contexts';
 import { useCompanySettings } from '../api/get-company-settings';
 import { useUpdateCompanySettings } from '../api/update-company-settings';
 import { useUploadCompanyLogo } from '../api/upload-company-logo';
@@ -25,7 +25,10 @@ const CompanySettingsPage = () => {
 
   const { t } = useTranslation();
   const { selectedCompany } = useCompany();
+  const { hasPermission } = usePermissions();
   const companyId = selectedCompany?.id ?? '';
+
+  const canWrite = hasPermission('company-settings', 'write');
   const updateMutation = useUpdateCompanySettings(companyId);
   const uploadLogoMutation = useUploadCompanyLogo();
 
@@ -127,26 +130,29 @@ const CompanySettingsPage = () => {
           <Fieldset.Content>
             <FormRHF methods={methods} onSubmit={handleSubmit}>
               <Stack gap={4}>
-                <InputRHF control={control} name="name" label={t('companySettings.general.name')} required />
+                <InputRHF control={control} name="name" label={t('companySettings.general.name')} required disabled={!canWrite} />
                 <InputRHF
                   control={control}
                   name="code"
                   label={t('companySettings.general.code')}
                   helperText={t('companySettings.general.codeHelperText')}
                   required
+                  disabled={!canWrite}
                 />
 
-                <LogoUpload key={logoResetKey} currentLogoUrl={settings.logoUrl} onFileSelected={handleFileSelected} />
+                <LogoUpload key={logoResetKey} currentLogoUrl={settings.logoUrl} onFileSelected={handleFileSelected} disabled={!canWrite} />
 
-                <Button
-                  type="submit"
-                  colorPalette="brand"
-                  alignSelf="flex-start"
-                  disabled={!hasChanges}
-                  loading={isMutationPending}
-                  loadingText={t('companySettings.general.saving')}>
-                  {t('companySettings.general.saveChanges')}
-                </Button>
+                {canWrite && (
+                  <Button
+                    type="submit"
+                    colorPalette="brand"
+                    alignSelf="flex-start"
+                    disabled={!hasChanges}
+                    loading={isMutationPending}
+                    loadingText={t('companySettings.general.saving')}>
+                    {t('companySettings.general.saveChanges')}
+                  </Button>
+                )}
               </Stack>
             </FormRHF>
           </Fieldset.Content>

@@ -14,7 +14,8 @@ const getUserPermissions = async (companyId: string): Promise<Permission[]> => {
     throw error;
   }
 
-  return (data ?? []) as Permission[];
+  const permissions = (data as { permissions: string[] })?.permissions ?? [];
+  return permissions as Permission[];
 };
 
 export const userPermissionsQueryOptions = (companyId: string) => {

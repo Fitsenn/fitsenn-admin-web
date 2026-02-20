@@ -12,6 +12,7 @@ import { FormRHF } from '@/components/form/form';
 import { InputRHF } from '@/components/form/input';
 import { DeleteAccountSection } from '@/components/ui/delete-account-section';
 import { toaster } from '@/components/ui/toaster';
+import { usePermissions } from '@/contexts';
 import { HARDCODED_COMPANY_ID, useCompanyUser } from '../../api/get-company-users';
 import { useUpdateUserProfile } from '../../api/update-user-profile';
 import { editUserProfileSchema } from './user-details-tab.schema';
@@ -35,6 +36,10 @@ const userDetailsLabels = {
 const EditUserProfile = ({ userId }: { userId: string }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermission } = usePermissions();
+
+  const canEdit = hasPermission('users', 'write');
+  const canDelete = hasPermission('users', 'delete');
 
   const updateUserProfileMutation = useUpdateUserProfile();
   const { data: user } = useCompanyUser({
@@ -101,7 +106,7 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
                 size="xs"
                 type="submit"
                 colorPalette="brand"
-                disabled={!isDirty}
+                disabled={!canEdit || !isDirty}
                 loading={updateUserProfileMutation.isPending}
                 loadingText={t('users.editProfile.saving')}>
                 {t('users.editProfile.save')}
@@ -115,10 +120,11 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
                 label={t('users.editProfile.firstName')}
                 required
                 size="sm"
+                disabled={!canEdit}
               />
-              <InputRHF control={control} name="lastName" label={t('users.editProfile.lastName')} required size="sm" />
-              <InputRHF control={control} name="email" label={t('users.editProfile.email')} required size="sm" />
-              <InputRHF control={control} name="phone" type="tel" label={t('users.editProfile.phone')} size="sm" />
+              <InputRHF control={control} name="lastName" label={t('users.editProfile.lastName')} required size="sm" disabled={!canEdit} />
+              <InputRHF control={control} name="email" label={t('users.editProfile.email')} required size="sm" disabled={!canEdit} />
+              <InputRHF control={control} name="phone" type="tel" label={t('users.editProfile.phone')} size="sm" disabled={!canEdit} />
             </SimpleGrid>
           </FormRHF>
         </Box>
@@ -140,7 +146,7 @@ const EditUserProfile = ({ userId }: { userId: string }) => {
       </Flex>
 
       <Box mt="6" />
-      <DeleteAccountSection onDelete={deleteAccount} isPending={false} />
+      <DeleteAccountSection onDelete={deleteAccount} isPending={false} disabled={!canDelete} />
     </>
   );
 };

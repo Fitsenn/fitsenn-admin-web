@@ -30,30 +30,34 @@ const BUILT_IN_ACTIONS = {
     translationKey: 'table.actions.view',
     isDestructive: false,
     requiresEdit: false,
+    requiresDelete: false,
   },
   edit: {
     icon: Pencil,
     translationKey: 'table.actions.edit',
     isDestructive: false,
     requiresEdit: true,
+    requiresDelete: false,
   },
   duplicate: {
     icon: Copy,
     translationKey: 'table.actions.duplicate',
     isDestructive: false,
     requiresEdit: true,
+    requiresDelete: false,
   },
   delete: {
     icon: Trash2,
     translationKey: 'table.actions.delete',
     isDestructive: true,
-    requiresEdit: true,
+    requiresEdit: false,
+    requiresDelete: true,
   },
 } as const;
 
 const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => {
   const { t } = useTranslation();
-  const { actions, canEdit = false } = config;
+  const { actions, canEdit = false, canDelete = canEdit } = config;
 
   const visibleActions = useMemo(() => {
     return actions
@@ -63,9 +67,14 @@ const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => 
           return undefined;
         }
 
-        // For built-in actions, apply canEdit logic
+        // For built-in actions, apply canEdit/canDelete logic
         if (isBuiltInAction(action)) {
           const builtIn = BUILT_IN_ACTIONS[action.type];
+
+          // If action requires delete permission and user can't delete, hide it
+          if (builtIn.requiresDelete && !canDelete) {
+            return undefined;
+          }
 
           // If action requires edit permission and user can't edit, hide it
           if (builtIn.requiresEdit && !canEdit) {
@@ -76,8 +85,8 @@ const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => 
             return undefined;
           }
 
-          // If action doesn't require edit (view) and user can edit, hide it
-          if (!builtIn.requiresEdit && canEdit) {
+          // If action doesn't require edit or delete (view) and user can edit, hide it
+          if (!builtIn.requiresEdit && !builtIn.requiresDelete && canEdit) {
             return undefined;
           }
         }
@@ -86,7 +95,7 @@ const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => 
         return action;
       })
       .filter(Boolean) as RowAction<TData>[];
-  }, [actions, canEdit, row]);
+  }, [actions, canEdit, canDelete, row]);
 
   if (visibleActions.length === 0) {
     return null;

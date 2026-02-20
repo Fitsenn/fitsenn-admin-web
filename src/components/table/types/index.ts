@@ -42,8 +42,10 @@ export const isBuiltInAction = <TData>(action: RowAction<TData>): action is Buil
 export type RowActionsConfig<TData> = {
   /** Array of actions to display */
   actions: RowAction<TData>[];
-  /** Controls visibility of built-in edit/duplicate/delete vs view (default: true) */
+  /** Controls visibility of built-in edit/duplicate actions vs view (default: true) */
   canEdit?: boolean;
+  /** Controls visibility of built-in delete action (default: follows canEdit) */
+  canDelete?: boolean;
   /** Header text for actions column */
   columnHeader?: string;
 };

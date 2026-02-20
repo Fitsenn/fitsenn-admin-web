@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
-import { useCompany } from '@/contexts';
+import { useCompany, usePermissions } from '@/contexts';
 import { useToggleLocationStatus } from '../api/toggle-location-status';
 import { CreateLocationModal } from './create-location-modal';
 import { DeactivateLocationDialog } from './deactivate-location-dialog';
@@ -21,7 +21,11 @@ const searchFields: (keyof Location)[] = ['name', 'address'];
 const LocationsTable = () => {
   const { t } = useTranslation();
   const { selectedCompany } = useCompany();
+  const { hasPermission } = usePermissions();
   const companyId = selectedCompany?.id ?? '';
+
+  const canWrite = hasPermission('locations', 'write');
+  const canDelete = hasPermission('locations', 'delete');
 
   const {
     data: locations = [],
@@ -99,7 +103,7 @@ const LocationsTable = () => {
                 size="sm"
                 checked={isActive}
                 onCheckedChange={(e) => handleToggleStatus(location, e.checked)}
-                disabled={toggleMutation.isPending}>
+                disabled={!canWrite || toggleMutation.isPending}>
                 <Switch.HiddenInput />
                 <Switch.Control>
                   <Switch.Thumb />
@@ -113,7 +117,7 @@ const LocationsTable = () => {
         },
       },
     ],
-    [t, toggleMutation.isPending, handleToggleStatus],
+    [t, toggleMutation.isPending, handleToggleStatus, canWrite],
   );
 
   return (
@@ -130,21 +134,34 @@ const LocationsTable = () => {
         enableColumnVisibility
         storageKey="locations-table"
         toolbarActions={
-          <Button size="sm" colorPalette="brand" onClick={handleAddLocation}>
-            <Icon boxSize={4}>
-              <Plus />
-            </Icon>
-            {t('locations.addLocation')}
-          </Button>
+          canWrite ? (
+            <Button size="sm" colorPalette="brand" onClick={handleAddLocation}>
+              <Icon boxSize={4}>
+                <Plus />
+              </Icon>
+              {t('locations.addLocation')}
+            </Button>
+          ) : undefined
         }
         rowActions={{
-          //TODO: replace with permissions when we have them
-          canEdit: true,
+          canEdit: canWrite || canDelete,
           actions: [
-            {
-              type: 'edit',
-              onClick: handleEditLocation,
-            },
+            ...(canWrite
+              ? [
+                  {
+                    type: 'edit' as const,
+                    onClick: handleEditLocation,
+                  },
+                ]
+              : []),
+            ...(canDelete
+              ? [
+                  {
+                    type: 'delete' as const,
+                    onClick: (location: Location) => setDeactivatingLocation(location),
+                  },
+                ]
+              : []),
           ],
         }}
       />

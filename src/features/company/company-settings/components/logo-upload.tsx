@@ -7,11 +7,12 @@ import { Building2, Trash2, Upload } from 'lucide-react';
 type LogoUploadProps = {
   currentLogoUrl: string | null;
   onFileSelected: (file: File | null) => void;
+  disabled?: boolean;
 };
 
 const ACCEPTED_TYPES = 'image/jpeg,image/png,image/webp,image/svg+xml';
 
-const LogoUpload = ({ currentLogoUrl, onFileSelected }: LogoUploadProps) => {
+const LogoUpload = ({ currentLogoUrl, onFileSelected, disabled }: LogoUploadProps) => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -67,14 +68,14 @@ const LogoUpload = ({ currentLogoUrl, onFileSelected }: LogoUploadProps) => {
             {t('companySettings.general.logoDescription')}
           </Text>
           <Flex gap={2}>
-            <Button size="xs" variant="outline" onClick={() => inputRef.current?.click()}>
+            <Button size="xs" variant="outline" onClick={() => inputRef.current?.click()} disabled={disabled}>
               <Icon boxSize={3}>
                 <Upload />
               </Icon>
               {t('companySettings.general.changeLogo')}
             </Button>
             {displayUrl && (
-              <Button size="xs" variant="ghost" colorPalette="red" onClick={handleRemove}>
+              <Button size="xs" variant="ghost" colorPalette="red" onClick={handleRemove} disabled={disabled}>
                 <Icon boxSize={3}>
                   <Trash2 />
                 </Icon>
