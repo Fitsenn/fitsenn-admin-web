@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toaster } from '@/components/ui/toaster';
 import { useCompany } from '@/contexts';
 import { transformers } from '@/utils/data-transformers';
-import { useCreateMembershipPlan } from '../api/create-membership-plan';
+import { useCreateMembershipPlan } from '../../api/create-membership-plan';
 import { PlanForm } from './plan-form';
 
 const CreatePlanModal = () => {

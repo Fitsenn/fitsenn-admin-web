@@ -329,7 +329,6 @@
         "tiersHelper": "Leave empty to allow all tiers",
         "maxFreezeDays": "Max Freeze Days",
         "maxFreezeCount": "Max Freeze Count",
-        "gracePeriodDays": "Grace Period (Days)",
         "isActive": "Active",
         "sectionBasicInfo": "Basic Information",
         "sectionDuration": "Duration & Sessions",
@@ -347,6 +346,14 @@
       "create": {
         "success": "Plan created successfully",
         "error": "Failed to create plan"
+      },
+      "update": {
+        "success": "Plan updated successfully",
+        "error": "Failed to update plan"
+      },
+      "edit": {
+        "activeMembershipsWarning_one": "{{count}} active membership uses this plan. Changes will affect existing memberships.",
+        "activeMembershipsWarning_other": "{{count}} active memberships use this plan. Changes will affect existing memberships."
       }
     }
   }

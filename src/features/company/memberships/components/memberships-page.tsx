@@ -1,7 +1,7 @@
 import { Box, Heading, Stack, Tabs, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
-import { PlansTable } from './plans-table';
+import { PlansTable } from './plans/plans-table';
 
 const MembershipsPage = () => {
   const { t } = useTranslation();

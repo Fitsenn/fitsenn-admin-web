@@ -3,7 +3,7 @@ import type { PlanFormData } from './plan-form.schema';
 
 import { useEffect, useMemo } from 'react';
 
-import { Box, Button, Fieldset, HStack, Stack, Textarea } from '@chakra-ui/react';
+import { Alert, Box, Button, Fieldset, HStack, Stack, Text, Textarea } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,7 @@ type PlanFormProps = {
   onSubmit: (data: PlanFormData) => Promise<void>;
   initialValues?: Partial<PlanFormData>;
   isSubmitting?: boolean;
+  activeMembershipCount?: number;
 };
 
 const defaultValues: DefaultValues<PlanFormData> = {
@@ -33,7 +34,7 @@ const defaultValues: DefaultValues<PlanFormData> = {
   isActive: true,
 };
 
-const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }: PlanFormProps) => {
+const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activeMembershipCount }: PlanFormProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { selectedCompany } = useCompany();
@@ -53,7 +54,13 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }: Pla
     defaultValues: values,
   });
 
-  const { control, watch, reset, register } = methods;
+  const {
+    control,
+    watch,
+    reset,
+    register,
+    formState: { isDirty },
+  } = methods;
 
   useEffect(() => {
     if (initialValues) {
@@ -94,6 +101,15 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }: Pla
       <FormRHF methods={methods} onSubmit={handleFormSubmit} id="plan-form">
         <Modal.Body>
           <Stack gap={6}>
+            {isEdit && !!activeMembershipCount && activeMembershipCount > 0 && (
+              <Alert.Root status="warning">
+                <Alert.Indicator />
+                <Text fontSize="sm">
+                  {t('memberships.plans.edit.activeMembershipsWarning', { count: activeMembershipCount })}
+                </Text>
+              </Alert.Root>
+            )}
+
             {/* Section 1: Basic Information */}
             <Fieldset.Root>
               <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
@@ -242,7 +258,7 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false }: Pla
           <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
             {t('common.cancel')}
           </Button>
-          <Button type="submit" form="plan-form" colorPalette="brand" loading={isSubmitting}>
+          <Button type="submit" form="plan-form" colorPalette="brand" loading={isSubmitting} disabled={!isDirty}>
             {isEdit ? t('common.save') : t('common.create')}
           </Button>
         </Modal.Footer>

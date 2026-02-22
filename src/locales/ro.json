@@ -329,7 +329,6 @@
         "tiersHelper": "Lasă gol pentru a permite toate nivelurile",
         "maxFreezeDays": "Zile maxime de înghețare",
         "maxFreezeCount": "Număr maxim de înghețări",
-        "gracePeriodDays": "Perioadă de grație (zile)",
         "isActive": "Activ",
         "sectionBasicInfo": "Informații de bază",
         "sectionDuration": "Durată și ședințe",
@@ -347,6 +346,14 @@
       "create": {
         "success": "Planul a fost creat cu succes",
         "error": "Nu s-a putut crea planul"
+      },
+      "update": {
+        "success": "Planul a fost actualizat cu succes",
+        "error": "Nu s-a putut actualiza planul"
+      },
+      "edit": {
+        "activeMembershipsWarning_one": "{{count}} abonament activ folosește acest plan. Modificările vor afecta abonamentele existente.",
+        "activeMembershipsWarning_other": "{{count}} abonamente active folosesc acest plan. Modificările vor afecta abonamentele existente."
       }
     }
   }

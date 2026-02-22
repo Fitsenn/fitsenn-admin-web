@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from '@/components/ui/modal';
 import { toaster } from '@/components/ui/toaster';
 import { useCompany } from '@/contexts';
-import { useDeleteMembershipPlan } from '../api/delete-membership-plan';
-import { useActiveMembershipCount } from '../api/get-active-membership-count';
+import { useDeleteMembershipPlan } from '../../api/delete-membership-plan';
+import { useActiveMembershipCount } from '../../api/get-active-membership-count';
 
 type DeletePlanDialogProps = {
   isOpen: boolean;

@@ -11,9 +11,10 @@ import { useTranslation } from 'react-i18next';
 import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
 import { useCompany, usePermissions } from '@/contexts';
-import { useMembershipPlans } from '../api/get-membership-plans';
+import { useMembershipPlans } from '../../api/get-membership-plans';
 import { CreatePlanModal } from './create-plan-modal';
 import { DeletePlanDialog } from './delete-plan-dialog';
+import { EditPlanModal } from './edit-plan-modal';
 import { formatDuration, formatPrice } from './plans-table.utils';
 
 const searchFields: (keyof MembershipPlan)[] = ['name'];
@@ -33,10 +34,7 @@ const PlansTable = () => {
   const navigate = useNavigate();
   const [deletingPlan, setDeletingPlan] = useState<MembershipPlan | null>(null);
 
-  const locationMap = useMemo(
-    () => new Map(locations.map((loc) => [loc.id, loc.name])),
-    [locations],
-  );
+  const locationMap = useMemo(() => new Map(locations.map((loc) => [loc.id, loc.name])), [locations]);
 
   const handleCreatePlan = () => {
     navigate({ to: '/company/memberships/add' });
@@ -44,10 +42,6 @@ const PlansTable = () => {
 
   const handleEditPlan = (plan: MembershipPlan) => {
     navigate({ to: '/company/memberships/$planId', params: { planId: plan.id } });
-  };
-
-  const handleDuplicatePlan = (_plan: MembershipPlan) => {
-    navigate({ to: '/company/memberships/add' });
   };
 
   const columns: ColumnDef<MembershipPlan>[] = useMemo(
@@ -66,9 +60,7 @@ const PlansTable = () => {
           const isUnlimited = type === 'unlimited';
           return (
             <Badge colorPalette={isUnlimited ? 'blue' : 'purple'}>
-              {isUnlimited
-                ? t('memberships.plans.type.unlimited')
-                : t('memberships.plans.type.sessions')}
+              {isUnlimited ? t('memberships.plans.type.unlimited') : t('memberships.plans.type.sessions')}
             </Badge>
           );
         },
@@ -110,9 +102,7 @@ const PlansTable = () => {
           const isActive = getValue<boolean>();
           return (
             <Badge colorPalette={isActive ? 'green' : 'gray'}>
-              {isActive
-                ? t('memberships.plans.status.active')
-                : t('memberships.plans.status.inactive')}
+              {isActive ? t('memberships.plans.status.active') : t('memberships.plans.status.inactive')}
             </Badge>
           );
         },
@@ -145,37 +135,23 @@ const PlansTable = () => {
           ) : undefined
         }
         rowActions={{
-          canEdit: canWrite || canDelete,
+          canEdit: canWrite,
+          canDelete: canDelete,
           actions: [
-            ...(canWrite
-              ? [
-                  {
-                    type: 'edit' as const,
-                    onClick: handleEditPlan,
-                  },
-                  {
-                    type: 'duplicate' as const,
-                    onClick: handleDuplicatePlan,
-                  },
-                ]
-              : []),
-            ...(canDelete
-              ? [
-                  {
-                    type: 'delete' as const,
-                    onClick: (plan: MembershipPlan) => setDeletingPlan(plan),
-                  },
-                ]
-              : []),
+            {
+              type: 'edit',
+              onClick: handleEditPlan,
+            },
+            {
+              type: 'delete',
+              onClick: (plan: MembershipPlan) => setDeletingPlan(plan),
+            },
           ],
         }}
       />
-      <DeletePlanDialog
-        isOpen={!!deletingPlan}
-        onClose={() => setDeletingPlan(null)}
-        plan={deletingPlan}
-      />
+      <DeletePlanDialog isOpen={!!deletingPlan} onClose={() => setDeletingPlan(null)} plan={deletingPlan} />
       <CreatePlanModal />
+      <EditPlanModal />
     </>
   );
 };
