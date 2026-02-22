@@ -360,6 +360,7 @@
       "searchPlaceholder": "Search discounts...",
       "loadError": "Failed to load discounts. Please try again.",
       "allPlans": "All Plans",
+      "indefinitely": "Indefinitely",
       "addDiscount": "Create Discount",
       "editDiscount": "Edit Discount",
       "table": {
@@ -367,6 +368,8 @@
         "appliesTo": "Applies To",
         "discountType": "Discount Type",
         "value": "Value",
+        "startsAt": "Start Date",
+        "endsAt": "End Date",
         "status": "Status"
       },
       "discountType": {

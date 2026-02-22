@@ -4,11 +4,13 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 
 import { Badge, Button, Icon, Text } from '@chakra-ui/react';
+import { DateTime } from 'luxon';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { DataTable } from '@/components/table';
 import { useCompany, usePermissions } from '@/contexts';
+import { useDateHelpers } from '@/hooks/use-date-helpers';
 import { useMembershipDiscounts } from '../../api/get-membership-discounts';
 import { useMembershipPlans } from '../../api/get-membership-plans';
 import { CreateDiscountModal } from './create-discount-modal';
@@ -23,6 +25,7 @@ const searchFields: (keyof MembershipDiscount)[] = ['name'];
 
 const DiscountsTable = () => {
   const { t } = useTranslation();
+  const { dateFormatHelper } = useDateHelpers();
   const { selectedCompany } = useCompany();
   const { hasPermission } = usePermissions();
   const companyId = selectedCompany?.id ?? '';
@@ -65,6 +68,26 @@ const DiscountsTable = () => {
         cell: ({ row }) => formatDiscountValue(row.original.discountType, row.original.discountValue),
       },
       {
+        accessorKey: 'startsAt',
+        header: t('memberships.discounts.table.startsAt'),
+        enableSorting: true,
+        cell: ({ getValue }) => {
+          const startsAt = getValue<string | null>();
+          if (!startsAt) return '—';
+          return dateFormatHelper(DateTime.fromISO(startsAt).toSeconds(), 'SHORT_DATE');
+        },
+      },
+      {
+        accessorKey: 'endsAt',
+        header: t('memberships.discounts.table.endsAt'),
+        enableSorting: true,
+        cell: ({ getValue }) => {
+          const endsAt = getValue<string | null>();
+          if (!endsAt) return <Text color="fg.muted">{t('memberships.discounts.indefinitely')}</Text>;
+          return dateFormatHelper(DateTime.fromISO(endsAt).toSeconds(), 'SHORT_DATE');
+        },
+      },
+      {
         accessorKey: 'isActive',
         header: t('memberships.discounts.table.status'),
         enableSorting: true,
@@ -78,7 +101,7 @@ const DiscountsTable = () => {
         },
       },
     ],
-    [t, planMap],
+    [t, planMap, dateFormatHelper],
   );
 
   return (

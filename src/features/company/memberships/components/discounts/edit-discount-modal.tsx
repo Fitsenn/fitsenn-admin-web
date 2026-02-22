@@ -55,8 +55,8 @@ const EditDiscountModal = ({ discount, onClose }: EditDiscountModalProps) => {
       discountValue: discount.discountValue,
       planIds: discount.planIds ?? [],
       isAllPlans: discount.planIds === null,
-      startsAt: discount.startsAt ?? '',
-      endsAt: discount.endsAt ?? '',
+      startsAt: discount.startsAt ? discount.startsAt.split('T')[0] : '',
+      endsAt: discount.endsAt ? discount.endsAt.split('T')[0] : '',
       isIndefinite: discount.endsAt === null,
       isActive: discount.isActive,
     };

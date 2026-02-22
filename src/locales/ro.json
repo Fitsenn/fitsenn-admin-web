@@ -360,6 +360,7 @@
       "searchPlaceholder": "Caută reduceri...",
       "loadError": "Nu s-au putut încărca reducerile. Te rugăm să încerci din nou.",
       "allPlans": "Toate planurile",
+      "indefinitely": "Nelimitat",
       "addDiscount": "Creează reducere",
       "editDiscount": "Editează reducere",
       "table": {
@@ -367,6 +368,8 @@
         "appliesTo": "Se aplică la",
         "discountType": "Tip reducere",
         "value": "Valoare",
+        "startsAt": "Data de început",
+        "endsAt": "Data de sfârșit",
         "status": "Status"
       },
       "discountType": {
