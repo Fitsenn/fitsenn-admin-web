@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { FieldPath, FieldValues } from 'react-hook-form';
 
 import { Field as ChakraField } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { get, useFormContext } from 'react-hook-form';
 
 type FieldWrapperRHFProps<TFieldValues extends FieldValues> = {
   label?: ReactNode;
@@ -28,7 +28,7 @@ const FieldWrapperRHF = <TFieldValues extends FieldValues>({
     formState: { errors },
   } = useFormContext<TFieldValues>();
 
-  const error = errors[name];
+  const error = get(errors, name);
   const isInvalid = !!error;
   const errorMessage = error?.message as string | undefined;
 

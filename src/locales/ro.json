@@ -309,6 +309,44 @@
         "confirmButton": "Șterge",
         "success": "Planul a fost șters cu succes",
         "error": "Nu s-a putut șterge planul"
+      },
+      "editPlan": "Editează plan",
+      "form": {
+        "name": "Numele planului",
+        "description": "Descriere",
+        "descriptionPlaceholder": "Scurtă descriere a acestui plan...",
+        "type": "Tipul planului",
+        "location": "Locație",
+        "allLocations": "Toate locațiile",
+        "durationValue": "Durată",
+        "durationUnit": "Unitate",
+        "sessionsCount": "Număr de ședințe",
+        "price": "Preț",
+        "comparePrice": "Preț de comparație",
+        "comparePriceHelper": "Prețul original afișat cu linie tăiată",
+        "savingsPreview": "Economisești {{percent}}%",
+        "tiers": "Niveluri de acces",
+        "tiersHelper": "Lasă gol pentru a permite toate nivelurile",
+        "maxFreezeDays": "Zile maxime de înghețare",
+        "maxFreezeCount": "Număr maxim de înghețări",
+        "gracePeriodDays": "Perioadă de grație (zile)",
+        "isActive": "Activ",
+        "sectionBasicInfo": "Informații de bază",
+        "sectionDuration": "Durată și ședințe",
+        "sectionPricing": "Prețuri",
+        "sectionAccess": "Acces și niveluri",
+        "sectionFreeze": "Setări de înghețare",
+        "sectionStatus": "Status",
+        "durationUnits": {
+          "days": "Zile",
+          "weeks": "Săptămâni",
+          "months": "Luni",
+          "years": "Ani"
+        }
+      },
+      "create": {
+        "success": "Planul a fost creat cu succes",
+        "error": "Nu s-a putut crea planul"
       }
     }
   }

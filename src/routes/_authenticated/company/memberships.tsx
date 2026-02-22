@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 import { PermissionsGuard } from '@/components/ui/permissions-guard';
 import { MembershipsPage } from '@/features/company/memberships';
@@ -11,6 +11,7 @@ function MembershipsLayout() {
   return (
     <PermissionsGuard resource="company-memberships" action="read" redirectTo="/dashboard">
       <MembershipsPage />
+      <Outlet />
     </PermissionsGuard>
   );
 }

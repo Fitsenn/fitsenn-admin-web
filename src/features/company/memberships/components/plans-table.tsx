@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 
 import { Badge, Button, Icon } from '@chakra-ui/react';
+import { useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +12,7 @@ import { useCompanyLocations } from '@/api/get-company-locations';
 import { DataTable } from '@/components/table';
 import { useCompany, usePermissions } from '@/contexts';
 import { useMembershipPlans } from '../api/get-membership-plans';
+import { CreatePlanModal } from './create-plan-modal';
 import { DeletePlanDialog } from './delete-plan-dialog';
 import { formatDuration, formatPrice } from './plans-table.utils';
 
@@ -28,6 +30,7 @@ const PlansTable = () => {
   const { data: plans = [], error, isLoading } = useMembershipPlans(companyId);
   const { data: locations = [] } = useCompanyLocations({ companyId });
 
+  const navigate = useNavigate();
   const [deletingPlan, setDeletingPlan] = useState<MembershipPlan | null>(null);
 
   const locationMap = useMemo(
@@ -36,15 +39,15 @@ const PlansTable = () => {
   );
 
   const handleCreatePlan = () => {
-    // TODO: navigate to create plan modal
+    navigate({ to: '/company/memberships/add' });
   };
 
-  const handleEditPlan = (_plan: MembershipPlan) => {
-    // TODO: navigate to edit plan modal
+  const handleEditPlan = (plan: MembershipPlan) => {
+    navigate({ to: '/company/memberships/$planId', params: { planId: plan.id } });
   };
 
   const handleDuplicatePlan = (_plan: MembershipPlan) => {
-    // TODO: navigate to create plan modal with pre-filled data
+    navigate({ to: '/company/memberships/add' });
   };
 
   const columns: ColumnDef<MembershipPlan>[] = useMemo(
@@ -71,10 +74,10 @@ const PlansTable = () => {
         },
       },
       {
-        accessorKey: 'durationDays',
+        accessorKey: 'duration',
         header: t('memberships.plans.table.duration'),
         enableSorting: true,
-        cell: ({ getValue }) => formatDuration(getValue<number>(), t),
+        cell: ({ row }) => formatDuration(row.original.duration, row.original.durationUnit, t),
       },
       {
         accessorKey: 'sessionsCount',
@@ -172,6 +175,7 @@ const PlansTable = () => {
         onClose={() => setDeletingPlan(null)}
         plan={deletingPlan}
       />
+      <CreatePlanModal />
     </>
   );
 };

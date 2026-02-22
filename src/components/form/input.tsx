@@ -40,7 +40,16 @@ const InputRHF = <TFieldValues extends FieldValues>({
       label={label}
       name={name}
       {...containerSx}>
-      <Input type={type} placeholder={placeholder} {...register(name)} {...inputProps} />
+      <Input
+        type={type}
+        placeholder={placeholder}
+        {...register(name, {
+          ...(type === 'number' && {
+            setValueAs: (v: string) => (v === '' ? undefined : Number(v)),
+          }),
+        })}
+        {...inputProps}
+      />
     </FieldWrapperRHF>
   );
 };

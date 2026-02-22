@@ -22,6 +22,8 @@ import { Route as AuthenticatedCompanyStaffRouteImport } from './routes/_authent
 import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company/settings'
 import { Route as AuthenticatedCompanyMembershipsRouteImport } from './routes/_authenticated/company/memberships'
 import { Route as AuthenticatedCompanyLocationsRouteImport } from './routes/_authenticated/company/locations'
+import { Route as AuthenticatedCompanyMembershipsAddRouteImport } from './routes/_authenticated/company/memberships/add'
+import { Route as AuthenticatedCompanyMembershipsPlanIdRouteImport } from './routes/_authenticated/company/memberships/$planId'
 import { Route as AuthenticatedCompanyLocationsAddRouteImport } from './routes/_authenticated/company/locations/add'
 import { Route as AuthenticatedCompanyLocationsLocationIdRouteImport } from './routes/_authenticated/company/locations/$locationId'
 
@@ -94,6 +96,18 @@ const AuthenticatedCompanyLocationsRoute =
     path: '/locations',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
+const AuthenticatedCompanyMembershipsAddRoute =
+  AuthenticatedCompanyMembershipsAddRouteImport.update({
+    id: '/add',
+    path: '/add',
+    getParentRoute: () => AuthenticatedCompanyMembershipsRoute,
+  } as any)
+const AuthenticatedCompanyMembershipsPlanIdRoute =
+  AuthenticatedCompanyMembershipsPlanIdRouteImport.update({
+    id: '/$planId',
+    path: '/$planId',
+    getParentRoute: () => AuthenticatedCompanyMembershipsRoute,
+  } as any)
 const AuthenticatedCompanyLocationsAddRoute =
   AuthenticatedCompanyLocationsAddRouteImport.update({
     id: '/add',
@@ -116,12 +130,14 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
   '/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
-  '/company/memberships': typeof AuthenticatedCompanyMembershipsRoute
+  '/company/memberships': typeof AuthenticatedCompanyMembershipsRouteWithChildren
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
   '/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
   '/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
+  '/company/memberships/$planId': typeof AuthenticatedCompanyMembershipsPlanIdRoute
+  '/company/memberships/add': typeof AuthenticatedCompanyMembershipsAddRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -132,12 +148,14 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRouteWithChildren
   '/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
-  '/company/memberships': typeof AuthenticatedCompanyMembershipsRoute
+  '/company/memberships': typeof AuthenticatedCompanyMembershipsRouteWithChildren
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/users/$userId': typeof AuthenticatedUsersUserIdRoute
   '/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
   '/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
+  '/company/memberships/$planId': typeof AuthenticatedCompanyMembershipsPlanIdRoute
+  '/company/memberships/add': typeof AuthenticatedCompanyMembershipsAddRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,12 +168,14 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRouteWithChildren
   '/_authenticated/company/locations': typeof AuthenticatedCompanyLocationsRouteWithChildren
-  '/_authenticated/company/memberships': typeof AuthenticatedCompanyMembershipsRoute
+  '/_authenticated/company/memberships': typeof AuthenticatedCompanyMembershipsRouteWithChildren
   '/_authenticated/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/company/staff': typeof AuthenticatedCompanyStaffRoute
   '/_authenticated/users/$userId': typeof AuthenticatedUsersUserIdRoute
   '/_authenticated/company/locations/$locationId': typeof AuthenticatedCompanyLocationsLocationIdRoute
   '/_authenticated/company/locations/add': typeof AuthenticatedCompanyLocationsAddRoute
+  '/_authenticated/company/memberships/$planId': typeof AuthenticatedCompanyMembershipsPlanIdRoute
+  '/_authenticated/company/memberships/add': typeof AuthenticatedCompanyMembershipsAddRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -174,6 +194,8 @@ export interface FileRouteTypes {
     | '/users/$userId'
     | '/company/locations/$locationId'
     | '/company/locations/add'
+    | '/company/memberships/$planId'
+    | '/company/memberships/add'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -190,6 +212,8 @@ export interface FileRouteTypes {
     | '/users/$userId'
     | '/company/locations/$locationId'
     | '/company/locations/add'
+    | '/company/memberships/$planId'
+    | '/company/memberships/add'
   id:
     | '__root__'
     | '/'
@@ -207,6 +231,8 @@ export interface FileRouteTypes {
     | '/_authenticated/users/$userId'
     | '/_authenticated/company/locations/$locationId'
     | '/_authenticated/company/locations/add'
+    | '/_authenticated/company/memberships/$planId'
+    | '/_authenticated/company/memberships/add'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -308,6 +334,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyLocationsRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
+    '/_authenticated/company/memberships/add': {
+      id: '/_authenticated/company/memberships/add'
+      path: '/add'
+      fullPath: '/company/memberships/add'
+      preLoaderRoute: typeof AuthenticatedCompanyMembershipsAddRouteImport
+      parentRoute: typeof AuthenticatedCompanyMembershipsRoute
+    }
+    '/_authenticated/company/memberships/$planId': {
+      id: '/_authenticated/company/memberships/$planId'
+      path: '/$planId'
+      fullPath: '/company/memberships/$planId'
+      preLoaderRoute: typeof AuthenticatedCompanyMembershipsPlanIdRouteImport
+      parentRoute: typeof AuthenticatedCompanyMembershipsRoute
+    }
     '/_authenticated/company/locations/add': {
       id: '/_authenticated/company/locations/add'
       path: '/add'
@@ -343,9 +383,27 @@ const AuthenticatedCompanyLocationsRouteWithChildren =
     AuthenticatedCompanyLocationsRouteChildren,
   )
 
+interface AuthenticatedCompanyMembershipsRouteChildren {
+  AuthenticatedCompanyMembershipsPlanIdRoute: typeof AuthenticatedCompanyMembershipsPlanIdRoute
+  AuthenticatedCompanyMembershipsAddRoute: typeof AuthenticatedCompanyMembershipsAddRoute
+}
+
+const AuthenticatedCompanyMembershipsRouteChildren: AuthenticatedCompanyMembershipsRouteChildren =
+  {
+    AuthenticatedCompanyMembershipsPlanIdRoute:
+      AuthenticatedCompanyMembershipsPlanIdRoute,
+    AuthenticatedCompanyMembershipsAddRoute:
+      AuthenticatedCompanyMembershipsAddRoute,
+  }
+
+const AuthenticatedCompanyMembershipsRouteWithChildren =
+  AuthenticatedCompanyMembershipsRoute._addFileChildren(
+    AuthenticatedCompanyMembershipsRouteChildren,
+  )
+
 interface AuthenticatedCompanyRouteChildren {
   AuthenticatedCompanyLocationsRoute: typeof AuthenticatedCompanyLocationsRouteWithChildren
-  AuthenticatedCompanyMembershipsRoute: typeof AuthenticatedCompanyMembershipsRoute
+  AuthenticatedCompanyMembershipsRoute: typeof AuthenticatedCompanyMembershipsRouteWithChildren
   AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
   AuthenticatedCompanyStaffRoute: typeof AuthenticatedCompanyStaffRoute
 }
@@ -353,7 +411,8 @@ interface AuthenticatedCompanyRouteChildren {
 const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
   AuthenticatedCompanyLocationsRoute:
     AuthenticatedCompanyLocationsRouteWithChildren,
-  AuthenticatedCompanyMembershipsRoute: AuthenticatedCompanyMembershipsRoute,
+  AuthenticatedCompanyMembershipsRoute:
+    AuthenticatedCompanyMembershipsRouteWithChildren,
   AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
   AuthenticatedCompanyStaffRoute: AuthenticatedCompanyStaffRoute,
 }

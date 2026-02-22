@@ -309,6 +309,44 @@
         "confirmButton": "Delete",
         "success": "Plan deleted successfully",
         "error": "Failed to delete plan"
+      },
+      "editPlan": "Edit Plan",
+      "form": {
+        "name": "Plan Name",
+        "description": "Description",
+        "descriptionPlaceholder": "Brief description of this plan...",
+        "type": "Plan Type",
+        "location": "Location",
+        "allLocations": "All Locations",
+        "durationValue": "Duration",
+        "durationUnit": "Unit",
+        "sessionsCount": "Number of Sessions",
+        "price": "Price",
+        "comparePrice": "Compare Price",
+        "comparePriceHelper": "Original price shown with strikethrough",
+        "savingsPreview": "Save {{percent}}%",
+        "tiers": "Access Tiers",
+        "tiersHelper": "Leave empty to allow all tiers",
+        "maxFreezeDays": "Max Freeze Days",
+        "maxFreezeCount": "Max Freeze Count",
+        "gracePeriodDays": "Grace Period (Days)",
+        "isActive": "Active",
+        "sectionBasicInfo": "Basic Information",
+        "sectionDuration": "Duration & Sessions",
+        "sectionPricing": "Pricing",
+        "sectionAccess": "Access & Tiers",
+        "sectionFreeze": "Freeze Settings",
+        "sectionStatus": "Status",
+        "durationUnits": {
+          "days": "Days",
+          "weeks": "Weeks",
+          "months": "Months",
+          "years": "Years"
+        }
+      },
+      "create": {
+        "success": "Plan created successfully",
+        "error": "Failed to create plan"
       }
     }
   }

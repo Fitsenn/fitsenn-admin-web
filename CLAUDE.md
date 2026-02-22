@@ -42,7 +42,7 @@ src/
 | What | Where/How |
 |------|-----------|
 | Icons | `lucide-react` |
-| Forms | `FormRHF` + `InputRHF` from `@/components/form` |
+| Forms | `FormRHF` + form input components from `@/components/form` |
 | Form schemas | `<form-name>.schema.ts` (separate file) |
 | Modals | `Modal` from `@/components/ui/modal` |
 | Tables | `DataTable` - see [types](src/components/table/types/index.ts) |
