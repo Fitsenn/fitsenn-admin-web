@@ -1,6 +1,7 @@
 import { Box, Heading, Stack, Tabs, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
+import { DiscountsTable } from './discounts/discounts-table';
 import { PlansTable } from './plans/plans-table';
 
 const MembershipsPage = () => {
@@ -23,7 +24,9 @@ const MembershipsPage = () => {
         <Tabs.Content value="plans">
           <PlansTable />
         </Tabs.Content>
-        <Tabs.Content value="discounts">{/* Discounts tab content */}</Tabs.Content>
+        <Tabs.Content value="discounts">
+          <DiscountsTable />
+        </Tabs.Content>
         <Tabs.Content value="penalties">{/* Penalties tab content */}</Tabs.Content>
       </Tabs.Root>
     </Stack>

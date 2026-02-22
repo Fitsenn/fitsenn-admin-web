@@ -207,9 +207,8 @@ export type Database = {
           id: string
           is_active: boolean
           name: string
-          plan_id: string | null
+          plan_ids: string[] | null
           starts_at: string | null
-          type: string
           updated_at: string
         }
         Insert: {
@@ -221,9 +220,8 @@ export type Database = {
           id?: string
           is_active?: boolean
           name: string
-          plan_id?: string | null
+          plan_ids?: string[] | null
           starts_at?: string | null
-          type: string
           updated_at?: string
         }
         Update: {
@@ -235,9 +233,8 @@ export type Database = {
           id?: string
           is_active?: boolean
           name?: string
-          plan_id?: string | null
+          plan_ids?: string[] | null
           starts_at?: string | null
-          type?: string
           updated_at?: string
         }
         Relationships: [
@@ -246,13 +243,6 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "membership_discounts_plan_id_fkey"
-            columns: ["plan_id"]
-            isOneToOne: false
-            referencedRelation: "membership_plans"
             referencedColumns: ["id"]
           },
         ]

@@ -21,6 +21,7 @@ export type SelectRHFProps<TFieldValues extends FieldValues> = {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
+  multiple?: boolean;
   options: SelectOption[];
   containerSx?: HTMLChakraProps<'div'>;
 };
@@ -33,6 +34,7 @@ const SelectRHF = <TFieldValues extends FieldValues>({
   placeholder,
   disabled,
   required,
+  multiple,
   options,
   containerSx = {},
 }: SelectRHFProps<TFieldValues>) => {
@@ -52,8 +54,9 @@ const SelectRHF = <TFieldValues extends FieldValues>({
       {...containerSx}>
       <Select.Root
         collection={collection}
-        value={value ? [value] : []}
-        onValueChange={(details) => onChange(details.value[0])}
+        multiple={multiple}
+        value={multiple ? (value ?? []) : value ? [value] : []}
+        onValueChange={(details) => onChange(multiple ? details.value : details.value[0])}
         disabled={disabled}>
         <Select.HiddenSelect ref={ref} />
         <Select.Control>

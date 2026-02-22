@@ -355,6 +355,47 @@
         "activeMembershipsWarning_one": "{{count}} abonament activ folosește acest plan. Modificările vor afecta abonamentele existente.",
         "activeMembershipsWarning_other": "{{count}} abonamente active folosesc acest plan. Modificările vor afecta abonamentele existente."
       }
+    },
+    "discounts": {
+      "searchPlaceholder": "Caută reduceri...",
+      "loadError": "Nu s-au putut încărca reducerile. Te rugăm să încerci din nou.",
+      "allPlans": "Toate planurile",
+      "addDiscount": "Creează reducere",
+      "editDiscount": "Editează reducere",
+      "table": {
+        "name": "Nume",
+        "appliesTo": "Se aplică la",
+        "discountType": "Tip reducere",
+        "value": "Valoare",
+        "status": "Status"
+      },
+      "discountType": {
+        "percentage": "Procentaj",
+        "fixed": "Fix"
+      },
+      "status": {
+        "active": "Activ",
+        "inactive": "Inactiv"
+      },
+      "form": {
+        "name": "Numele reducerii",
+        "discountType": "Tip reducere",
+        "discountValue": "Valoare",
+        "planIds": "Planuri",
+        "isAllPlans": "Toate planurile",
+        "startsAt": "Ora de început",
+        "endsAt": "Ora de sfârșit",
+        "isIndefinite": "Nelimitat",
+        "isActive": "Activ"
+      },
+      "create": {
+        "success": "Reducerea a fost creată cu succes",
+        "error": "Nu s-a putut crea reducerea"
+      },
+      "update": {
+        "success": "Reducerea a fost actualizată cu succes",
+        "error": "Nu s-a putut actualiza reducerea"
+      }
     }
   }
 }

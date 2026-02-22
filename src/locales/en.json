@@ -355,6 +355,47 @@
         "activeMembershipsWarning_one": "{{count}} active membership uses this plan. Changes will affect existing memberships.",
         "activeMembershipsWarning_other": "{{count}} active memberships use this plan. Changes will affect existing memberships."
       }
+    },
+    "discounts": {
+      "searchPlaceholder": "Search discounts...",
+      "loadError": "Failed to load discounts. Please try again.",
+      "allPlans": "All Plans",
+      "addDiscount": "Create Discount",
+      "editDiscount": "Edit Discount",
+      "table": {
+        "name": "Name",
+        "appliesTo": "Applies To",
+        "discountType": "Discount Type",
+        "value": "Value",
+        "status": "Status"
+      },
+      "discountType": {
+        "percentage": "Percentage",
+        "fixed": "Fixed"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "form": {
+        "name": "Discount Name",
+        "discountType": "Discount Type",
+        "discountValue": "Value",
+        "planIds": "Plans",
+        "isAllPlans": "All Plans",
+        "startsAt": "Start Time",
+        "endsAt": "End Time",
+        "isIndefinite": "Indefinitely",
+        "isActive": "Active"
+      },
+      "create": {
+        "success": "Discount created successfully",
+        "error": "Failed to create discount"
+      },
+      "update": {
+        "success": "Discount updated successfully",
+        "error": "Failed to update discount"
+      }
     }
   }
 }
