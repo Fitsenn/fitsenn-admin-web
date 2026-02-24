@@ -14,6 +14,7 @@ import { useDateHelpers } from '@/hooks/use-date-helpers';
 import { useMembershipDiscounts } from '../../api/get-membership-discounts';
 import { useMembershipPlans } from '../../api/get-membership-plans';
 import { CreateDiscountModal } from './create-discount-modal';
+import { DeleteDiscountDialog } from './delete-discount-dialog';
 import { EditDiscountModal } from './edit-discount-modal';
 
 const formatDiscountValue = (discountType: string, value: number): string => {
@@ -37,6 +38,7 @@ const DiscountsTable = () => {
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingDiscount, setEditingDiscount] = useState<MembershipDiscount | null>(null);
+  const [deletingDiscount, setDeletingDiscount] = useState<MembershipDiscount | null>(null);
 
   const planMap = useMemo(() => new Map(plans.map((plan) => [plan.id, plan.name])), [plans]);
 
@@ -129,16 +131,22 @@ const DiscountsTable = () => {
         }
         rowActions={{
           canEdit: canWrite,
+          canDelete: canWrite,
           actions: [
             {
               type: 'edit',
               onClick: (discount: MembershipDiscount) => setEditingDiscount(discount),
+            },
+            {
+              type: 'delete',
+              onClick: (discount: MembershipDiscount) => setDeletingDiscount(discount),
             },
           ],
         }}
       />
       <CreateDiscountModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
       <EditDiscountModal discount={editingDiscount} onClose={() => setEditingDiscount(null)} />
+      <DeleteDiscountDialog discount={deletingDiscount} onClose={() => setDeletingDiscount(null)} />
     </>
   );
 };

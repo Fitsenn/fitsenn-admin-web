@@ -1,13 +1,11 @@
-import type { HTMLChakraProps } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+import type { CheckboxOption } from './checkbox';
 
 import { Checkbox, Stack } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
 
-import type { CheckboxOption } from './checkbox';
-
-import { FieldWrapperRHF } from './field-wrapper';
+import { FieldsetWrapperRHF } from './fieldset-wrapper';
 
 export type CheckboxGroupRHFProps<TFieldValues extends FieldValues> = {
   name: FieldPath<TFieldValues>;
@@ -16,8 +14,6 @@ export type CheckboxGroupRHFProps<TFieldValues extends FieldValues> = {
   label?: ReactNode;
   helperText?: ReactNode;
   disabled?: boolean;
-  required?: boolean;
-  containerSx?: HTMLChakraProps<'div'>;
 };
 
 const CheckboxGroupRHF = <TFieldValues extends FieldValues>({
@@ -27,8 +23,6 @@ const CheckboxGroupRHF = <TFieldValues extends FieldValues>({
   label,
   helperText,
   disabled,
-  required,
-  containerSx = {},
 }: CheckboxGroupRHFProps<TFieldValues>) => {
   const {
     field: { value, onChange },
@@ -45,17 +39,12 @@ const CheckboxGroupRHF = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <FieldWrapperRHF
-      required={required}
-      disabled={disabled}
-      helperText={helperText}
-      label={label}
-      name={name}
-      {...containerSx}>
-      <Stack gap={2}>
+    <FieldsetWrapperRHF name={name} label={label} helperText={helperText} disabled={disabled}>
+      <Stack gap={2} mt={0.5}>
         {options.map((option) => (
           <Checkbox.Root
             key={option.value}
+            value={option.value}
             checked={selectedValues.includes(option.value)}
             onCheckedChange={(e) => handleToggle(option.value, !!e.checked)}
             disabled={disabled}>
@@ -65,7 +54,7 @@ const CheckboxGroupRHF = <TFieldValues extends FieldValues>({
           </Checkbox.Root>
         ))}
       </Stack>
-    </FieldWrapperRHF>
+    </FieldsetWrapperRHF>
   );
 };
 

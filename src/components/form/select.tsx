@@ -2,8 +2,9 @@ import type { HTMLChakraProps } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
 
-import { Select, createListCollection } from '@chakra-ui/react';
 import { useMemo } from 'react';
+
+import { Select, createListCollection } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
 
 import { FieldWrapperRHF } from './field-wrapper';
@@ -24,6 +25,7 @@ export type SelectRHFProps<TFieldValues extends FieldValues> = {
   multiple?: boolean;
   options: SelectOption[];
   containerSx?: HTMLChakraProps<'div'>;
+  showClearIcon?: boolean;
 };
 
 const SelectRHF = <TFieldValues extends FieldValues>({
@@ -37,6 +39,7 @@ const SelectRHF = <TFieldValues extends FieldValues>({
   multiple,
   options,
   containerSx = {},
+  showClearIcon = false,
 }: SelectRHFProps<TFieldValues>) => {
   const {
     field: { value, onChange, ref },
@@ -64,6 +67,7 @@ const SelectRHF = <TFieldValues extends FieldValues>({
             <Select.ValueText placeholder={placeholder} />
           </Select.Trigger>
           <Select.IndicatorGroup>
+            {showClearIcon && <Select.ClearTrigger />}
             <Select.Indicator />
           </Select.IndicatorGroup>
         </Select.Control>

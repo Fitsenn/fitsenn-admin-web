@@ -144,24 +144,17 @@ const LocationsTable = () => {
           ) : undefined
         }
         rowActions={{
-          canEdit: canWrite || canDelete,
+          canEdit: canWrite,
+          canDelete,
           actions: [
-            ...(canWrite
-              ? [
-                  {
-                    type: 'edit' as const,
-                    onClick: handleEditLocation,
-                  },
-                ]
-              : []),
-            ...(canDelete
-              ? [
-                  {
-                    type: 'delete' as const,
-                    onClick: (location: Location) => setDeactivatingLocation(location),
-                  },
-                ]
-              : []),
+            {
+              type: 'edit',
+              onClick: handleEditLocation,
+            },
+            {
+              type: 'delete',
+              onClick: (location: Location) => setDeactivatingLocation(location),
+            },
           ],
         }}
       />

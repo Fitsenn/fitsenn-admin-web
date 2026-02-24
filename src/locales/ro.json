@@ -318,6 +318,7 @@
         "type": "Tipul planului",
         "location": "Locație",
         "allLocations": "Toate locațiile",
+        "locationHelper": "Lasă gol pentru a face planul disponibil pentru toate locațiile",
         "durationValue": "Durată",
         "durationUnit": "Unitate",
         "sessionsCount": "Număr de ședințe",
@@ -325,17 +326,11 @@
         "comparePrice": "Preț de comparație",
         "comparePriceHelper": "Prețul original afișat cu linie tăiată",
         "savingsPreview": "Economisești {{percent}}%",
-        "tiers": "Niveluri de acces",
         "tiersHelper": "Lasă gol pentru a permite toate nivelurile",
         "maxFreezeDays": "Zile maxime de înghețare",
         "maxFreezeCount": "Număr maxim de înghețări",
         "isActive": "Activ",
-        "sectionBasicInfo": "Informații de bază",
-        "sectionDuration": "Durată și ședințe",
-        "sectionPricing": "Prețuri",
         "sectionAccess": "Acces și niveluri",
-        "sectionFreeze": "Setări de înghețare",
-        "sectionStatus": "Status",
         "durationUnits": {
           "days": "Zile",
           "weeks": "Săptămâni",
@@ -398,6 +393,13 @@
       "update": {
         "success": "Reducerea a fost actualizată cu succes",
         "error": "Nu s-a putut actualiza reducerea"
+      },
+      "delete": {
+        "title": "Șterge reducerea",
+        "confirm": "Ești sigur că vrei să ștergi \"{{name}}\"? Reducerea va fi arhivată și nu va mai fi aplicată.",
+        "confirmButton": "Șterge",
+        "success": "Reducerea a fost ștearsă cu succes",
+        "error": "Nu s-a putut șterge reducerea"
       }
     }
   }

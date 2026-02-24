@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig, defineConfig, defineRecipe } from '@chakra-ui/react';
+import { createSystem, defaultConfig, defineConfig, defineRecipe, defineSlotRecipe } from '@chakra-ui/react';
 
 const buttonRecipe = defineRecipe({
   base: {
@@ -75,6 +75,21 @@ const config = defineConfig({
     },
     recipes: {
       button: buttonRecipe,
+    },
+    slotRecipes: {
+      fieldset: defineSlotRecipe({
+        slots: ['root', 'content', 'legend', 'helperText', 'errorText'],
+        base: {
+          helperText: {
+            textStyle: 'xs',
+            marginTop: '1 !important',
+          },
+          errorText: {
+            textStyle: 'xs',
+            marginTop: '1 !important',
+          },
+        },
+      }),
     },
   },
 });

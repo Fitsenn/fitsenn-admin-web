@@ -3,7 +3,7 @@ import type { PlanFormData } from './plan-form.schema';
 
 import { useEffect, useMemo } from 'react';
 
-import { Alert, Box, Button, Fieldset, HStack, Stack, Text, Textarea } from '@chakra-ui/react';
+import { Alert, Box, Button, HStack, Stack, Text, Textarea } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
@@ -95,12 +95,13 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
 
   return (
     <Modal
+      size="lg"
       open={isOpen}
       onClose={handleClose}
       title={isEdit ? t('memberships.plans.editPlan') : t('memberships.plans.addPlan')}>
       <FormRHF methods={methods} onSubmit={handleFormSubmit} id="plan-form">
         <Modal.Body>
-          <Stack gap={6}>
+          <Stack gap={2}>
             {isEdit && !!activeMembershipCount && activeMembershipCount > 0 && (
               <Alert.Root status="warning">
                 <Alert.Indicator />
@@ -109,23 +110,24 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                 </Text>
               </Alert.Root>
             )}
-
-            {/* Section 1: Basic Information */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionBasicInfo')}
-              </Fieldset.Legend>
-              <Stack gap={4}>
+            <HStack gap={4} align="flex-start">
+              <Box flex={3}>
                 <InputRHF name="name" control={control} label={t('memberships.plans.form.name')} required />
+              </Box>
+              <Box flex={1} mt={10}>
+                <SwitchRHF name="isActive" control={control} label={t('memberships.plans.form.isActive')} />
+              </Box>
+            </HStack>
+            <FieldWrapperRHF name="description" label={t('memberships.plans.form.description')}>
+              <Textarea
+                placeholder={t('memberships.plans.form.descriptionPlaceholder')}
+                {...register('description')}
+                rows={3}
+              />
+            </FieldWrapperRHF>
 
-                <FieldWrapperRHF name="description" label={t('memberships.plans.form.description')}>
-                  <Textarea
-                    placeholder={t('memberships.plans.form.descriptionPlaceholder')}
-                    {...register('description')}
-                    rows={3}
-                  />
-                </FieldWrapperRHF>
-
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
                 <SelectRHF
                   name="type"
                   control={control}
@@ -133,45 +135,9 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                   options={typeOptions}
                   required
                 />
-
-                <SelectRHF
-                  name="locationId"
-                  control={control}
-                  label={t('memberships.plans.form.location')}
-                  placeholder={t('memberships.plans.form.allLocations')}
-                  options={locationOptions}
-                />
-              </Stack>
-            </Fieldset.Root>
-
-            {/* Section 2: Duration & Sessions */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionDuration')}
-              </Fieldset.Legend>
-              <Stack gap={4}>
-                <HStack gap={4} align="flex-end">
-                  <Box flex={1}>
-                    <InputRHF
-                      name="duration"
-                      control={control}
-                      label={t('memberships.plans.form.durationValue')}
-                      type="number"
-                      required
-                    />
-                  </Box>
-                  <Box flex={1}>
-                    <SelectRHF
-                      name="durationUnit"
-                      control={control}
-                      label={t('memberships.plans.form.durationUnit')}
-                      options={durationUnitOptions}
-                      required
-                    />
-                  </Box>
-                </HStack>
-
-                {planType === 'sessions' && (
+              </Box>
+              {planType === 'sessions' && (
+                <Box flex={1}>
                   <InputRHF
                     name="sessionsCount"
                     control={control}
@@ -179,24 +145,46 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                     type="number"
                     required
                   />
-                )}
-              </Stack>
-            </Fieldset.Root>
+                </Box>
+              )}
+            </HStack>
 
-            {/* Section 3: Pricing */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionPricing')}
-              </Fieldset.Legend>
-              <Stack gap={4}>
+            <SelectRHF
+              name="locationId"
+              showClearIcon
+              control={control}
+              label={t('memberships.plans.form.location')}
+              placeholder={t('memberships.plans.form.allLocations')}
+              options={locationOptions}
+              helperText={t('memberships.plans.form.locationHelper')}
+            />
+
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
                 <InputRHF
-                  name="price"
+                  name="duration"
                   control={control}
-                  label={t('memberships.plans.form.price')}
+                  label={t('memberships.plans.form.durationValue')}
                   type="number"
                   required
                 />
+              </Box>
+              <Box flex={1}>
+                <SelectRHF
+                  name="durationUnit"
+                  control={control}
+                  label={t('memberships.plans.form.durationUnit')}
+                  options={durationUnitOptions}
+                  required
+                />
+              </Box>
+            </HStack>
 
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
+                <InputRHF name="price" control={control} label={t('memberships.plans.form.price')} type="number" required />
+              </Box>
+              <Box flex={1}>
                 <InputRHF
                   name="comparePrice"
                   control={control}
@@ -204,30 +192,21 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                   helperText={t('memberships.plans.form.comparePriceHelper')}
                   type="number"
                 />
+              </Box>
+            </HStack>
 
-                <SavingsPreview control={control} />
-              </Stack>
-            </Fieldset.Root>
+            <SavingsPreview control={control} />
 
-            {/* Section 4: Access & Tiers */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionAccess')}
-              </Fieldset.Legend>
-              <CheckboxGroupRHF
-                name="tiers"
-                control={control}
-                options={TIER_OPTIONS as unknown as { value: string; label: string }[]}
-                helperText={t('memberships.plans.form.tiersHelper')}
-              />
-            </Fieldset.Root>
+            <CheckboxGroupRHF
+              name="tiers"
+              control={control}
+              label={t('memberships.plans.form.sectionAccess')}
+              options={TIER_OPTIONS}
+              helperText={t('memberships.plans.form.tiersHelper')}
+            />
 
-            {/* Section 5: Freeze Settings */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionFreeze')}
-              </Fieldset.Legend>
-              <Stack gap={4}>
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
                 <InputRHF
                   name="maxFreezeDays"
                   control={control}
@@ -235,6 +214,8 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                   type="number"
                   required
                 />
+              </Box>
+              <Box flex={1}>
                 <InputRHF
                   name="maxFreezeCount"
                   control={control}
@@ -242,16 +223,8 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
                   type="number"
                   required
                 />
-              </Stack>
-            </Fieldset.Root>
-
-            {/* Section 6: Status */}
-            <Fieldset.Root>
-              <Fieldset.Legend fontSize="sm" fontWeight="semibold" mb={2}>
-                {t('memberships.plans.form.sectionStatus')}
-              </Fieldset.Legend>
-              <SwitchRHF name="isActive" control={control} label={t('memberships.plans.form.isActive')} />
-            </Fieldset.Root>
+              </Box>
+            </HStack>
           </Stack>
         </Modal.Body>
         <Modal.Footer>

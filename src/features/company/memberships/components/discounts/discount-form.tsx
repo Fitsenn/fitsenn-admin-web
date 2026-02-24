@@ -3,7 +3,7 @@ import type { DiscountFormData } from './discount-form.schema';
 
 import { useEffect, useMemo } from 'react';
 
-import { Button, HStack, Stack } from '@chakra-ui/react';
+import { Box, Button, HStack, Stack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -72,7 +72,6 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const isIndefinite = watch('isIndefinite');
-  // eslint-disable-next-line react-hooks/incompatible-library
   const isAllPlans = watch('isAllPlans');
 
   // Clear endsAt when indefinite is toggled on
@@ -108,70 +107,82 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
 
   return (
     <Modal
+      size="lg"
       open={isOpen}
       onClose={handleClose}
       title={isEdit ? t('memberships.discounts.editDiscount') : t('memberships.discounts.addDiscount')}>
       <FormRHF methods={methods} onSubmit={handleFormSubmit} id="discount-form">
         <Modal.Body>
-          <Stack gap={4}>
-            <InputRHF name="name" control={control} label={t('memberships.discounts.form.name')} required />
-
-            <SelectRHF
-              name="discountType"
-              control={control}
-              label={t('memberships.discounts.form.discountType')}
-              options={discountTypeOptions}
-              required
-            />
-
-            <InputRHF
-              name="discountValue"
-              control={control}
-              label={t('memberships.discounts.form.discountValue')}
-              type="number"
-              required
-            />
-
-            <HStack gap={4} align="flex-end">
-              <SelectRHF
-                name="planIds"
-                control={control}
-                label={t('memberships.discounts.form.planIds')}
-                options={planOptions}
-                multiple
-                disabled={isAllPlans}
-              />
-              <SwitchRHF
-                name="isAllPlans"
-                control={control}
-                label={t('memberships.discounts.form.isAllPlans')}
-              />
+          <Stack gap={2}>
+            <HStack gap={4} align="flex-start">
+              <Box flex={3}>
+                <InputRHF name="name" control={control} label={t('memberships.discounts.form.name')} required />
+              </Box>
+              <Box flex={1} mt={10}>
+                <SwitchRHF name="isActive" control={control} label={t('memberships.discounts.form.isActive')} />
+              </Box>
             </HStack>
 
-            <InputRHF
-              name="startsAt"
-              control={control}
-              label={t('memberships.discounts.form.startsAt')}
-              type="date"
-              required
-            />
-
-            <HStack gap={4} align="flex-end">
-              <InputRHF
-                name="endsAt"
-                control={control}
-                label={t('memberships.discounts.form.endsAt')}
-                type="date"
-                disabled={isIndefinite}
-              />
-              <SwitchRHF
-                name="isIndefinite"
-                control={control}
-                label={t('memberships.discounts.form.isIndefinite')}
-              />
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
+                <SelectRHF
+                  name="discountType"
+                  control={control}
+                  label={t('memberships.discounts.form.discountType')}
+                  options={discountTypeOptions}
+                  required
+                />
+              </Box>
+              <Box flex={1}>
+                <InputRHF
+                  name="discountValue"
+                  control={control}
+                  label={t('memberships.discounts.form.discountValue')}
+                  type="number"
+                  required
+                />
+              </Box>
             </HStack>
 
-            <SwitchRHF name="isActive" control={control} label={t('memberships.discounts.form.isActive')} />
+            <HStack gap={4} align="flex-start">
+              <Box flex={3}>
+                <SelectRHF
+                  name="planIds"
+                  control={control}
+                  label={t('memberships.discounts.form.planIds')}
+                  options={planOptions}
+                  multiple
+                  disabled={isAllPlans}
+                />
+              </Box>
+              <Box flex={1} mt={10}>
+                <SwitchRHF name="isAllPlans" control={control} label={t('memberships.discounts.form.isAllPlans')} />
+              </Box>
+            </HStack>
+
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
+                <InputRHF
+                  name="startsAt"
+                  control={control}
+                  label={t('memberships.discounts.form.startsAt')}
+                  type="date"
+                  required
+                />
+              </Box>
+              <Box flex={1}>
+                <InputRHF
+                  name="endsAt"
+                  control={control}
+                  label={t('memberships.discounts.form.endsAt')}
+                  type="date"
+                  disabled={isIndefinite}
+                />
+              </Box>
+              <Box flex={1} mt={10}>
+                <SwitchRHF name="isIndefinite" control={control} label={t('memberships.discounts.form.isIndefinite')} />
+              </Box>
+            </HStack>
           </Stack>
         </Modal.Body>
         <Modal.Footer>

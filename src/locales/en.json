@@ -318,6 +318,7 @@
         "type": "Plan Type",
         "location": "Location",
         "allLocations": "All Locations",
+        "locationHelper": "Leave empty to make this plan available for all locations",
         "durationValue": "Duration",
         "durationUnit": "Unit",
         "sessionsCount": "Number of Sessions",
@@ -325,17 +326,11 @@
         "comparePrice": "Compare Price",
         "comparePriceHelper": "Original price shown with strikethrough",
         "savingsPreview": "Save {{percent}}%",
-        "tiers": "Access Tiers",
         "tiersHelper": "Leave empty to allow all tiers",
         "maxFreezeDays": "Max Freeze Days",
         "maxFreezeCount": "Max Freeze Count",
         "isActive": "Active",
-        "sectionBasicInfo": "Basic Information",
-        "sectionDuration": "Duration & Sessions",
-        "sectionPricing": "Pricing",
         "sectionAccess": "Access & Tiers",
-        "sectionFreeze": "Freeze Settings",
-        "sectionStatus": "Status",
         "durationUnits": {
           "days": "Days",
           "weeks": "Weeks",
@@ -398,6 +393,13 @@
       "update": {
         "success": "Discount updated successfully",
         "error": "Failed to update discount"
+      },
+      "delete": {
+        "title": "Delete Discount",
+        "confirm": "Are you sure you want to delete \"{{name}}\"? This discount will be archived and no longer applied.",
+        "confirmButton": "Delete",
+        "success": "Discount deleted successfully",
+        "error": "Failed to delete discount"
       }
     }
   }
