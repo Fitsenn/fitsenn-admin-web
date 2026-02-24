@@ -11,7 +11,8 @@ const getMembershipDiscounts = async (companyId: string): Promise<MembershipDisc
   const { data, error } = await supabase
     .from('membership_discounts')
     .select('*')
-    .eq('company_id', companyId);
+    .eq('company_id', companyId)
+    .is('deleted_at', null);
 
   if (error) throw error;
 

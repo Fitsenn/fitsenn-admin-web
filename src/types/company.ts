@@ -12,3 +12,7 @@ export type MembershipPlan = SnakeToCamel<DatabaseMembershipPlan>;
 export type DatabaseMembershipDiscount = Tables<'membership_discounts'>;
 
 export type MembershipDiscount = SnakeToCamel<DatabaseMembershipDiscount>;
+
+export type DatabaseMembershipPlanPenalty = Tables<'membership_plan_penalties'>;
+
+export type MembershipPlanPenalty = SnakeToCamel<DatabaseMembershipPlanPenalty>;

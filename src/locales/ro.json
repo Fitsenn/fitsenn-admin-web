@@ -401,6 +401,51 @@
         "success": "Reducerea a fost ștearsă cu succes",
         "error": "Nu s-a putut șterge reducerea"
       }
+    },
+    "penalties": {
+      "searchPlaceholder": "Caută penalizări...",
+      "loadError": "Nu s-au putut încărca penalizările. Te rugăm să încerci din nou.",
+      "allPlans": "Toate planurile",
+      "addPenalty": "Creează penalizare",
+      "editPenalty": "Editează penalizare",
+      "table": {
+        "name": "Nume",
+        "triggerType": "Tip declanșare",
+        "triggerCount": "Număr declanșări",
+        "triggerWindowDays": "Fereastră de timp",
+        "banDays": "Durata suspendării",
+        "appliesTo": "Se aplică la"
+      },
+      "triggerType": {
+        "no_show": "Neprezentare",
+        "late_cancel": "Anulare tardivă"
+      },
+      "daysCount_one": "{{count}} zi",
+      "daysCount_other": "{{count}} zile",
+      "form": {
+        "name": "Nume",
+        "triggerType": "Tip declanșare",
+        "triggerCount": "Număr declanșări",
+        "triggerWindowDays": "Fereastră de timp (zile)",
+        "banDays": "Durata suspendării (zile)",
+        "planIds": "Planuri",
+        "isAllPlans": "Toate planurile"
+      },
+      "create": {
+        "success": "Penalizarea a fost creată cu succes",
+        "error": "Nu s-a putut crea penalizarea"
+      },
+      "update": {
+        "success": "Penalizarea a fost actualizată cu succes",
+        "error": "Nu s-a putut actualiza penalizarea"
+      },
+      "delete": {
+        "title": "Șterge penalizarea",
+        "confirm": "Ești sigur că vrei să ștergi \"{{name}}\"? Această acțiune nu poate fi anulată.",
+        "confirmButton": "Șterge",
+        "success": "Penalizarea a fost ștearsă cu succes",
+        "error": "Nu s-a putut șterge penalizarea"
+      }
     }
   }
 }

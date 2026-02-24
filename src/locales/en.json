@@ -401,6 +401,51 @@
         "success": "Discount deleted successfully",
         "error": "Failed to delete discount"
       }
+    },
+    "penalties": {
+      "searchPlaceholder": "Search penalties...",
+      "loadError": "Failed to load penalties. Please try again.",
+      "allPlans": "All Plans",
+      "addPenalty": "Create Penalty",
+      "editPenalty": "Edit Penalty",
+      "table": {
+        "name": "Name",
+        "triggerType": "Trigger Type",
+        "triggerCount": "Trigger Count",
+        "triggerWindowDays": "Time Window",
+        "banDays": "Ban Duration",
+        "appliesTo": "Applies To"
+      },
+      "triggerType": {
+        "no_show": "No Show",
+        "late_cancel": "Late Cancel"
+      },
+      "daysCount_one": "{{count}} day",
+      "daysCount_other": "{{count}} days",
+      "form": {
+        "name": "Name",
+        "triggerType": "Trigger Type",
+        "triggerCount": "Trigger Count",
+        "triggerWindowDays": "Time Window (days)",
+        "banDays": "Ban Duration (days)",
+        "planIds": "Plans",
+        "isAllPlans": "All Plans"
+      },
+      "create": {
+        "success": "Penalty created successfully",
+        "error": "Failed to create penalty"
+      },
+      "update": {
+        "success": "Penalty updated successfully",
+        "error": "Failed to update penalty"
+      },
+      "delete": {
+        "title": "Delete Penalty",
+        "confirm": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+        "confirmButton": "Delete",
+        "success": "Penalty deleted successfully",
+        "error": "Failed to delete penalty"
+      }
     }
   }
 }

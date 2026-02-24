@@ -111,7 +111,7 @@ const PlanForm = ({ isOpen, onSubmit, initialValues, isSubmitting = false, activ
               </Alert.Root>
             )}
             <HStack gap={4} align="flex-start">
-              <Box flex={3}>
+              <Box flex={4}>
                 <InputRHF name="name" control={control} label={t('memberships.plans.form.name')} required />
               </Box>
               <Box flex={1} mt={10}>

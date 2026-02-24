@@ -1,5 +1,5 @@
 import type { DefaultValues } from 'react-hook-form';
-import type { DiscountFormData } from './discount-form.schema';
+import type { PenaltyFormData } from './penalty-form.schema';
 
 import { useEffect, useMemo } from 'react';
 
@@ -15,43 +15,41 @@ import { SwitchRHF } from '@/components/form/switch';
 import { Modal } from '@/components/ui/modal';
 import { useCompany } from '@/contexts';
 import { useMembershipPlans } from '../../api/get-membership-plans';
-import { DISCOUNT_TYPE_OPTIONS, discountFormSchema } from './discount-form.schema';
+import { TRIGGER_TYPE_OPTIONS, penaltyFormSchema } from './penalty-form.schema';
 
-type DiscountFormProps = {
+type PenaltyFormProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: DiscountFormData) => Promise<void>;
-  initialValues?: Partial<DiscountFormData>;
+  onSubmit: (data: PenaltyFormData) => Promise<void>;
+  initialValues?: Partial<PenaltyFormData>;
   isSubmitting?: boolean;
 };
 
-const defaultValues: DefaultValues<DiscountFormData> = {
+const defaultValues: DefaultValues<PenaltyFormData> = {
   name: '',
-  discountType: undefined,
-  discountValue: undefined,
+  triggerType: undefined,
+  triggerCount: undefined,
+  triggerWindowDays: undefined,
+  banDays: undefined,
   planIds: [],
   isAllPlans: false,
-  startsAt: '',
-  endsAt: '',
-  isIndefinite: false,
-  isActive: true,
 };
 
-const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting = false }: DiscountFormProps) => {
+const PenaltyForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting = false }: PenaltyFormProps) => {
   const { t } = useTranslation();
   const isEdit = !!initialValues;
   const { selectedCompany } = useCompany();
   const companyId = selectedCompany?.id ?? '';
   const { data: plans = [] } = useMembershipPlans(companyId);
 
-  const values: DefaultValues<DiscountFormData> = useMemo(
+  const values: DefaultValues<PenaltyFormData> = useMemo(
     () => (initialValues ? { ...defaultValues, ...initialValues } : defaultValues),
     [initialValues],
   );
 
-  const methods = useForm<DiscountFormData>({
+  const methods = useForm<PenaltyFormData>({
     mode: 'onChange',
-    resolver: zodResolver(discountFormSchema),
+    resolver: zodResolver(penaltyFormSchema),
     defaultValues: values,
   });
 
@@ -71,15 +69,7 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
   }, [reset, initialValues]);
 
   // eslint-disable-next-line react-hooks/incompatible-library
-  const isIndefinite = watch('isIndefinite');
   const isAllPlans = watch('isAllPlans');
-
-  // Clear endsAt when indefinite is toggled on
-  useEffect(() => {
-    if (isIndefinite) {
-      setValue('endsAt', '', { shouldValidate: true });
-    }
-  }, [isIndefinite, setValue]);
 
   // Clear planIds when all plans is toggled on
   useEffect(() => {
@@ -88,8 +78,8 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
     }
   }, [isAllPlans, setValue]);
 
-  const discountTypeOptions = useMemo(
-    () => DISCOUNT_TYPE_OPTIONS.map((opt) => ({ value: opt.value, label: t(opt.labelKey) })),
+  const triggerTypeOptions = useMemo(
+    () => TRIGGER_TYPE_OPTIONS.map((opt) => ({ value: opt.value, label: t(opt.labelKey) })),
     [t],
   );
 
@@ -100,7 +90,7 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
     onClose();
   };
 
-  const handleFormSubmit = async (data: DiscountFormData) => {
+  const handleFormSubmit = async (data: PenaltyFormData) => {
     await onSubmit(data);
     reset(defaultValues);
   };
@@ -110,34 +100,48 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
       size="lg"
       open={isOpen}
       onClose={handleClose}
-      title={isEdit ? t('memberships.discounts.editDiscount') : t('memberships.discounts.addDiscount')}>
-      <FormRHF methods={methods} onSubmit={handleFormSubmit} id="discount-form">
+      title={isEdit ? t('memberships.penalties.editPenalty') : t('memberships.penalties.addPenalty')}>
+      <FormRHF methods={methods} onSubmit={handleFormSubmit} id="penalty-form">
         <Modal.Body>
           <Stack gap={2}>
-            <HStack gap={4} align="flex-start">
-              <Box flex={4}>
-                <InputRHF name="name" control={control} label={t('memberships.discounts.form.name')} required />
-              </Box>
-              <Box flex={1} mt={10}>
-                <SwitchRHF name="isActive" control={control} label={t('memberships.discounts.form.isActive')} />
-              </Box>
-            </HStack>
+            <InputRHF name="name" control={control} label={t('memberships.penalties.form.name')} required />
 
             <HStack gap={4} align="flex-start">
               <Box flex={1}>
                 <SelectRHF
-                  name="discountType"
+                  name="triggerType"
                   control={control}
-                  label={t('memberships.discounts.form.discountType')}
-                  options={discountTypeOptions}
+                  label={t('memberships.penalties.form.triggerType')}
+                  options={triggerTypeOptions}
                   required
                 />
               </Box>
               <Box flex={1}>
                 <InputRHF
-                  name="discountValue"
+                  name="triggerCount"
                   control={control}
-                  label={t('memberships.discounts.form.discountValue')}
+                  label={t('memberships.penalties.form.triggerCount')}
+                  type="number"
+                  required
+                />
+              </Box>
+            </HStack>
+
+            <HStack gap={4} align="flex-start">
+              <Box flex={1}>
+                <InputRHF
+                  name="triggerWindowDays"
+                  control={control}
+                  label={t('memberships.penalties.form.triggerWindowDays')}
+                  type="number"
+                  required
+                />
+              </Box>
+              <Box flex={1}>
+                <InputRHF
+                  name="banDays"
+                  control={control}
+                  label={t('memberships.penalties.form.banDays')}
                   type="number"
                   required
                 />
@@ -149,38 +153,14 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
                 <SelectRHF
                   name="planIds"
                   control={control}
-                  label={t('memberships.discounts.form.planIds')}
+                  label={t('memberships.penalties.form.planIds')}
                   options={planOptions}
                   multiple
                   disabled={isAllPlans}
                 />
               </Box>
               <Box flex={1} mt={10}>
-                <SwitchRHF name="isAllPlans" control={control} label={t('memberships.discounts.form.isAllPlans')} />
-              </Box>
-            </HStack>
-
-            <HStack gap={4} align="flex-start">
-              <Box flex={1.5}>
-                <InputRHF
-                  name="startsAt"
-                  control={control}
-                  label={t('memberships.discounts.form.startsAt')}
-                  type="date"
-                  required
-                />
-              </Box>
-              <Box flex={1.5}>
-                <InputRHF
-                  name="endsAt"
-                  control={control}
-                  label={t('memberships.discounts.form.endsAt')}
-                  type="date"
-                  disabled={isIndefinite}
-                />
-              </Box>
-              <Box flex={1} mt={10}>
-                <SwitchRHF name="isIndefinite" control={control} label={t('memberships.discounts.form.isIndefinite')} />
+                <SwitchRHF name="isAllPlans" control={control} label={t('memberships.penalties.form.isAllPlans')} />
               </Box>
             </HStack>
           </Stack>
@@ -189,7 +169,7 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
           <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
             {t('common.cancel')}
           </Button>
-          <Button type="submit" form="discount-form" colorPalette="brand" loading={isSubmitting} disabled={!isDirty}>
+          <Button type="submit" form="penalty-form" colorPalette="brand" loading={isSubmitting} disabled={!isDirty}>
             {isEdit ? t('common.save') : t('common.create')}
           </Button>
         </Modal.Footer>
@@ -198,4 +178,4 @@ const DiscountForm = ({ isOpen, onClose, onSubmit, initialValues, isSubmitting =
   );
 };
 
-export { DiscountForm };
+export { PenaltyForm };

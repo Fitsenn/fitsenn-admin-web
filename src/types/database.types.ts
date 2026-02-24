@@ -201,6 +201,7 @@ export type Database = {
         Row: {
           company_id: string
           created_at: string
+          deleted_at: string | null
           discount_type: string
           discount_value: number
           ends_at: string | null
@@ -214,6 +215,7 @@ export type Database = {
         Insert: {
           company_id: string
           created_at?: string
+          deleted_at?: string | null
           discount_type: string
           discount_value: number
           ends_at?: string | null
@@ -227,6 +229,7 @@ export type Database = {
         Update: {
           company_id?: string
           created_at?: string
+          deleted_at?: string | null
           discount_type?: string
           discount_value?: number
           ends_at?: string | null
@@ -291,37 +294,46 @@ export type Database = {
       membership_plan_penalties: {
         Row: {
           ban_days: number
+          company_id: string | null
           created_at: string
+          deleted_at: string | null
           id: string
-          plan_id: string
+          name: string | null
+          plan_ids: string[] | null
           trigger_count: number
           trigger_type: string
           trigger_window_days: number
         }
         Insert: {
           ban_days: number
+          company_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           id?: string
-          plan_id: string
+          name?: string | null
+          plan_ids?: string[] | null
           trigger_count: number
           trigger_type: string
           trigger_window_days: number
         }
         Update: {
           ban_days?: number
+          company_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           id?: string
-          plan_id?: string
+          name?: string | null
+          plan_ids?: string[] | null
           trigger_count?: number
           trigger_type?: string
           trigger_window_days?: number
         }
         Relationships: [
           {
-            foreignKeyName: "membership_plan_penalties_plan_id_fkey"
-            columns: ["plan_id"]
+            foreignKeyName: "fk_membership_plan_penalties_company_id"
+            columns: ["company_id"]
             isOneToOne: false
-            referencedRelation: "membership_plans"
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
         ]
