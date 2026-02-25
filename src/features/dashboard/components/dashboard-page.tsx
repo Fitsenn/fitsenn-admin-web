@@ -1,11 +1,24 @@
-import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
-import { useUser } from '@/contexts';
+import { useCompany, useUser } from '@/contexts';
 
-export function DashboardPage() {
+import { useDashboardStats } from '../api/get-dashboard-stats';
+
+const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
+
+const DashboardPage = () => {
   const { t } = useTranslation();
   const { user } = useUser();
+  const { selectedCompany } = useCompany();
+  const { data: stats, isLoading } = useDashboardStats(selectedCompany?.id ?? '');
 
   return (
     <Stack gap={6}>
@@ -16,11 +29,22 @@ export function DashboardPage() {
         </Text>
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>
-        <StatCard title={t('dashboard.totalUsers')} value="1,234" />
-        <StatCard title={t('dashboard.activeSessions')} value="856" />
-        <StatCard title={t('dashboard.revenue')} value="$12,345" />
-        <StatCard title={t('dashboard.growth')} value="+12.5%" />
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={6}>
+        <StatCard
+          title={t('dashboard.totalUsers')}
+          value={stats?.totalUsers.toLocaleString()}
+          isLoading={isLoading}
+        />
+        <StatCard
+          title={t('dashboard.activeMemberships')}
+          value={stats?.activeMemberships.toLocaleString()}
+          isLoading={isLoading}
+        />
+        <StatCard
+          title={t('dashboard.revenue')}
+          value={stats ? formatCurrency(stats.revenue) : undefined}
+          isLoading={isLoading}
+        />
       </SimpleGrid>
 
       <Box bg="bg.panel" p={6} borderRadius="lg">
@@ -31,15 +55,27 @@ export function DashboardPage() {
       </Box>
     </Stack>
   );
-}
+};
 
-function StatCard({ title, value }: { title: string; value: string }) {
+type StatCardProps = {
+  title: string;
+  value: string | undefined;
+  isLoading: boolean;
+};
+
+const StatCard = ({ title, value, isLoading }: StatCardProps) => {
   return (
     <Box bg="bg.panel" p={6} borderRadius="lg" boxShadow="sm">
       <Text fontSize="sm" color="fg.muted" mb={2}>
         {title}
       </Text>
-      <Heading size="lg">{value}</Heading>
+      {isLoading ? (
+        <Skeleton height="32px" width="80px" />
+      ) : (
+        <Heading size="lg">{value}</Heading>
+      )}
     </Box>
   );
-}
+};
+
+export { DashboardPage };

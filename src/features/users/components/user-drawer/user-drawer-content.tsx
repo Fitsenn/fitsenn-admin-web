@@ -3,6 +3,7 @@ import { Mail, Phone } from 'lucide-react';
 
 import { HARDCODED_COMPANY_ID, useCompanyUser } from '../../api/get-company-users';
 import { EditUserProfile } from './user-details-tab';
+import { UserMembershipsTab } from './user-memberships-tab';
 
 const UserDrawerContent = ({ userId }: { userId: string }) => {
   const { data: user } = useCompanyUser({
@@ -25,11 +26,11 @@ const UserDrawerContent = ({ userId }: { userId: string }) => {
             </Badge>
           </Flex>
           <Flex alignItems="center" gap="2">
-            <Phone />
+            <Phone size={16} />
             <Text>{user?.profile.phone}</Text>
           </Flex>
           <Flex alignItems="center" gap="2">
-            <Mail />
+            <Mail size={16} />
             <Text>{user?.profile.email}</Text>
           </Flex>
         </Flex>
@@ -44,7 +45,9 @@ const UserDrawerContent = ({ userId }: { userId: string }) => {
           <Tabs.Trigger value="edit-profile">Details</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="overview">Manage your team members</Tabs.Content>
-        <Tabs.Content value="membership">Manage your projects</Tabs.Content>
+        <Tabs.Content value="membership">
+          <UserMembershipsTab userId={userId} />
+        </Tabs.Content>
         <Tabs.Content value="transactions">Manage your tasks for freelancers</Tabs.Content>
         <Tabs.Content value="edit-profile">
           <EditUserProfile userId={userId} />

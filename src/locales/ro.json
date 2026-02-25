@@ -87,9 +87,8 @@
     "title": "Panou de control",
     "welcomeBack": "Bine ai revenit, {{firstName}} {{lastName}}",
     "totalUsers": "Total utilizatori",
-    "activeSessions": "Sesiuni active",
+    "activeMemberships": "Abonamente active",
     "revenue": "Venituri",
-    "growth": "Creștere",
     "recentActivity": "Activitate recentă",
     "noRecentActivity": "Nu există activitate recentă de afișat"
   },
@@ -106,6 +105,48 @@
       "phone": "Telefon",
       "email": "Email",
       "membership": "Abonament"
+    },
+    "memberships": {
+      "title": "Abonamente",
+      "loadError": "Nu s-au putut încărca abonamentele. Te rugăm să încerci din nou.",
+      "table": {
+        "planName": "Plan",
+        "type": "Tip",
+        "startDate": "Data de început",
+        "endDate": "Data de sfârșit",
+        "sessionsRemaining": "Ședințe rămase",
+        "pricePaid": "Preț plătit",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Activ",
+        "expired": "Expirat"
+      },
+      "addMembership": "Adaugă abonament",
+      "editMembership": "Editează abonament",
+      "form": {
+        "plan": "Plan",
+        "startDate": "Data de început",
+        "endDate": "Data de sfârșit",
+        "pricePaid": "Preț plătit",
+        "sessionsRemaining": "Ședințe rămase",
+        "autoRenew": "Reînnoire automată"
+      },
+      "create": {
+        "success": "Abonamentul a fost creat cu succes",
+        "error": "Nu s-a putut crea abonamentul"
+      },
+      "update": {
+        "success": "Abonamentul a fost actualizat cu succes",
+        "error": "Nu s-a putut actualiza abonamentul"
+      },
+      "delete": {
+        "title": "Șterge abonament",
+        "confirm": "Ești sigur că vrei să ștergi abonamentul \"{{name}}\"? Această acțiune nu poate fi anulată.",
+        "confirmButton": "Șterge",
+        "success": "Abonamentul a fost șters cu succes",
+        "error": "Nu s-a putut șterge abonamentul"
+      }
     },
     "editProfile": {
       "firstName": "Prenume",

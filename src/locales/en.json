@@ -87,9 +87,8 @@
     "title": "Dashboard",
     "welcomeBack": "Welcome back, {{firstName}} {{lastName}}",
     "totalUsers": "Total Users",
-    "activeSessions": "Active Sessions",
+    "activeMemberships": "Active Memberships",
     "revenue": "Revenue",
-    "growth": "Growth",
     "recentActivity": "Recent Activity",
     "noRecentActivity": "No recent activity to display"
   },
@@ -106,6 +105,48 @@
       "phone": "Phone",
       "email": "Email",
       "membership": "Membership"
+    },
+    "memberships": {
+      "title": "Memberships",
+      "loadError": "Failed to load memberships. Please try again.",
+      "table": {
+        "planName": "Plan",
+        "type": "Type",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "sessionsRemaining": "Sessions Left",
+        "pricePaid": "Price Paid",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "expired": "Expired"
+      },
+      "addMembership": "Add Membership",
+      "editMembership": "Edit Membership",
+      "form": {
+        "plan": "Plan",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "pricePaid": "Price Paid",
+        "sessionsRemaining": "Sessions Remaining",
+        "autoRenew": "Auto Renew"
+      },
+      "create": {
+        "success": "Membership created successfully",
+        "error": "Failed to create membership"
+      },
+      "update": {
+        "success": "Membership updated successfully",
+        "error": "Failed to update membership"
+      },
+      "delete": {
+        "title": "Delete Membership",
+        "confirm": "Are you sure you want to delete the \"{{name}}\" membership? This action cannot be undone.",
+        "confirmButton": "Delete",
+        "success": "Membership deleted successfully",
+        "error": "Failed to delete membership"
+      }
     },
     "editProfile": {
       "firstName": "First name",

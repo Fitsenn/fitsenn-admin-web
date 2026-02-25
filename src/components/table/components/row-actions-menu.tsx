@@ -11,7 +11,6 @@ import {
   MenuRoot,
   MenuSeparator,
   MenuTrigger,
-  Portal,
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
@@ -148,11 +147,9 @@ const RowActionsMenu = <TData,>({ row, config }: RowActionsMenuProps<TData>) => 
           <EllipsisVertical />
         </IconButton>
       </MenuTrigger>
-      <Portal>
-        <MenuPositioner>
-          <MenuContent minW="150px">{visibleActions.map((action, index) => renderAction(action, index))}</MenuContent>
-        </MenuPositioner>
-      </Portal>
+      <MenuPositioner>
+        <MenuContent minW="150px">{visibleActions.map((action, index) => renderAction(action, index))}</MenuContent>
+      </MenuPositioner>
     </MenuRoot>
   );
 };

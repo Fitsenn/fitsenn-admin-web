@@ -1,6 +1,6 @@
 import type { Table } from '@tanstack/react-table';
 
-import { Box, HStack, IconButton, Portal, Select, Text, createListCollection } from '@chakra-ui/react';
+import { Box, HStack, IconButton, Select, Text, createListCollection } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
@@ -47,17 +47,15 @@ const TablePagination = <TData,>({ table, pageSizeOptions = [10, 20, 50, 100] }:
                   <Select.ValueText />
                 </Select.Trigger>
               </Select.Control>
-              <Portal>
-                <Select.Positioner>
-                  <Select.Content>
-                    {pageSizeCollection.items.map((item) => (
-                      <Select.Item key={item.value} item={item}>
-                        <Select.ItemText>{item.label}</Select.ItemText>
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Positioner>
-              </Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {pageSizeCollection.items.map((item) => (
+                    <Select.Item key={item.value} item={item}>
+                      <Select.ItemText>{item.label}</Select.ItemText>
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
             </Select.Root>
           </HStack>
         </HStack>
