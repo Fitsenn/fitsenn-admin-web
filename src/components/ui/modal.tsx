@@ -24,7 +24,7 @@ const Modal = ({ open, onClose, title, description, size = 'md', children }: Mod
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
-            <Dialog.Header>
+            <Dialog.Header flexDirection="column" alignItems="flex-start">
               <Dialog.Title>{title}</Dialog.Title>
               {description && <Dialog.Description>{description}</Dialog.Description>}
             </Dialog.Header>

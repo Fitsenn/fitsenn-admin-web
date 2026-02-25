@@ -1,98 +1,16 @@
-import type { Permission } from '@/types/permissions';
-import type { FileRouteTypes } from '@/routeTree.gen';
-import type { ReactNode } from 'react';
+import type { SidebarItem } from './sidebar.types';
 
 import { useMemo, useState } from 'react';
 
 import { Box, Collapsible, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 import { Link, useRouterState } from '@tanstack/react-router';
-import {
-  Building2,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  CreditCard,
-  House,
-  MapPin,
-  Settings,
-  Users2,
-  Users,
-} from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { usePermissions } from '@/contexts';
 
-type BaseSidebarItem = {
-  labelKey: string;
-  icon: ReactNode;
-  permission?: Permission;
-};
-
-type SidebarLinkItem = BaseSidebarItem & {
-  type: 'link';
-  to: FileRouteTypes['to'];
-};
-
-type SidebarChildItem = {
-  labelKey: string;
-  to: FileRouteTypes['to'];
-  icon?: ReactNode;
-  permission?: Permission;
-};
-
-type SidebarGroupItem = BaseSidebarItem & {
-  type: 'group';
-  children: SidebarChildItem[];
-};
-
-type SidebarItem = SidebarLinkItem | SidebarGroupItem;
-
-const SIDEBAR_ITEMS: SidebarItem[] = [
-  {
-    type: 'link',
-    labelKey: 'navigation.dashboard',
-    to: '/dashboard',
-    icon: <House />,
-  },
-  {
-    type: 'link',
-    labelKey: 'navigation.users',
-    to: '/users',
-    icon: <Users />,
-    permission: 'users:read',
-  },
-  {
-    type: 'group',
-    labelKey: 'navigation.company',
-    icon: <Building2 />,
-    children: [
-      {
-        labelKey: 'navigation.companyLocations',
-        to: '/company/locations',
-        icon: <MapPin />,
-        permission: 'locations:read',
-      },
-      {
-        labelKey: 'navigation.companyStaff',
-        to: '/company/staff',
-        icon: <Users2 />,
-        permission: 'staff:read',
-      },
-      {
-        labelKey: 'navigation.companyMemberships',
-        to: '/company/memberships',
-        icon: <CreditCard />,
-        permission: 'company-memberships:read',
-      },
-      {
-        labelKey: 'navigation.companySettings',
-        to: '/company/settings',
-        icon: <Settings />,
-        permission: 'company-settings:read',
-      },
-    ],
-  },
-];
+import { QuickActions } from './quick-actions';
+import { SIDEBAR_ITEMS } from './sidebar.utils';
 
 const SIDEBAR_WIDTH_EXPANDED = '240px';
 const SIDEBAR_WIDTH_COLLAPSED = '72px';
@@ -151,6 +69,8 @@ const Sidebar = () => {
             <Icon boxSize={5}>{isCollapsed ? <ChevronRight /> : <ChevronLeft />}</Icon>
           </Box>
         </Flex>
+
+        <QuickActions isCollapsed={isCollapsed} />
 
         <VStack gap={1} px={3} align="stretch">
           {visibleItems.map((item) => {

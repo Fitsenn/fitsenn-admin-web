@@ -1,4 +1,11 @@
 {
+  "quickActions": {
+    "title": "Quick Actions",
+    "edit": "Edit quick actions",
+    "modalTitle": "Edit Quick Actions",
+    "modalDescription": "Choose which pages to show as quick actions",
+    "empty": "No quick actions selected"
+  },
   "company": {
     "selectCompany": "Select Company",
     "yourCompanies": "Your Companies"

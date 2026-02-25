@@ -1,4 +1,11 @@
 {
+  "quickActions": {
+    "title": "Acces rapid",
+    "edit": "Editează accesul rapid",
+    "modalTitle": "Editează Accesul Rapid",
+    "modalDescription": "Alege ce pagini să fie afișate ca acces rapid",
+    "empty": "Niciun acces rapid selectat"
+  },
   "company": {
     "selectCompany": "Selecteaza compania",
     "yourCompanies": "Companiile tale"
